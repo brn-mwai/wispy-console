@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wispy Console -- MX Creative Console Demo</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface-2: #1a1a28;
+    --border: #2a2a3a;
+    --text: #e8e8f0;
+    --text-dim: #8888aa;
+    --accent: #00d4aa;
+    --accent-glow: rgba(0,212,170,0.25);
+    --blue: #4488ff;
+    --red: #ff4466;
+    --orange: #ff8844;
+    --purple: #aa66ff;
+    --yellow: #ffcc00;
+  }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow: hidden;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ─── TOP BAR ─── */
+  .top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+  .top-bar .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+  }
+  .top-bar .brand .ghost { font-size: 20px; }
+  .top-bar .status-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    background: rgba(0,212,170,0.1);
+    color: var(--accent);
+    border: 1px solid rgba(0,212,170,0.2);
+  }
+  .status-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  .top-bar .hw-label {
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+
+  /* ─── MAIN LAYOUT ─── */
+  .main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 360px 1fr 320px;
+    gap: 0;
+    overflow: hidden;
+  }
+
+  /* ─── LEFT: HARDWARE PANEL ─── */
+  .hw-panel {
+    background: var(--surface);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+    gap: 16px;
+    overflow-y: auto;
+  }
+  .hw-panel h3 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+  }
+
+  /* ─── KEYPAD (9 LCD buttons) ─── */
+  .keypad-section { }
+  .keypad-label {
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .keypad-label .usb { color: var(--yellow); font-size: 9px; }
+  .keypad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+  .key-btn {
+    aspect-ratio: 1;
+    border-radius: 10px;
+    background: #0c0c14;
+    border: 1.5px solid var(--border);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    transition: all 0.15s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .key-btn::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, var(--glow-color, transparent) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  .key-btn:hover { border-color: var(--accent); }
+  .key-btn:hover::before { opacity: 0.15; }
+  .key-btn.active {
+    border-color: var(--accent);
+    box-shadow: 0 0 16px var(--accent-glow), inset 0 0 12px rgba(0,212,170,0.08);
+  }
+  .key-btn.active::before { opacity: 0.25; }
+  .key-btn.pressed {
+    transform: scale(0.92);
+    filter: brightness(1.3);
+  }
+  .key-icon { font-size: 22px; z-index: 1; }
+  .key-label {
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-dim);
+    z-index: 1;
+  }
+  .key-btn.active .key-label { color: var(--accent); }
+
+  /* Paging buttons */
+  .page-nav {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 6px;
+  }
+  .page-btn {
+    width: 28px; height: 20px;
+    border-radius: 4px;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .page-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .page-indicator {
+    font-size: 10px;
+    color: var(--text-dim);
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .page-indicator .current { color: var(--accent); font-weight: 600; }
+
+  /* ─── DIAL ─── */
+  .dial-section { }
+  .dial-label {
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .dial-label .wireless { color: var(--blue); font-size: 9px; }
+  .dial-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background: #0c0c14;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+  }
+  .dial-track {
+    width: 100%;
+    position: relative;
+    height: 8px;
+    background: var(--surface-2);
+    border-radius: 4px;
+    overflow: visible;
+  }
+  .dial-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--blue), var(--accent), var(--orange), var(--red));
+    transition: width 0.2s ease;
+  }
+  .dial-thumb {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid var(--accent);
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    cursor: grab;
+    box-shadow: 0 0 8px var(--accent-glow);
+    transition: left 0.2s ease;
+    z-index: 2;
+  }
+  .dial-thumb:active { cursor: grabbing; }
+  .dial-zones {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    font-size: 9px;
+    color: var(--text-dim);
+  }
+  .dial-zones span.active-zone { color: var(--accent); font-weight: 600; }
+  .dial-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+  .dial-mode {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .dial-reset {
+    padding: 4px 16px;
+    border-radius: 4px;
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 10px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .dial-reset:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ─── ACTIONS RING PREVIEW ─── */
+  .ring-section {
+    background: #0c0c14;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    padding: 16px;
+    text-align: center;
+  }
+  .ring-app {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .ring-app-icon { font-size: 16px; }
+  .ring-visual {
+    width: 140px; height: 140px;
+    margin: 0 auto;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ring-center {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+  }
+  .ring-item {
+    position: absolute;
+    width: 30px; height: 30px;
+    border-radius: 50%;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .ring-item:hover {
+    border-color: var(--accent);
+    background: rgba(0,212,170,0.1);
+    transform: scale(1.15);
+  }
+  .ring-item.ring-active {
+    border-color: var(--accent);
+    box-shadow: 0 0 8px var(--accent-glow);
+  }
+
+  /* ─── CENTER: TERMINAL ─── */
+  .terminal-panel {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+  }
+  .terminal-header {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  .terminal-header .agent-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    background: rgba(0,212,170,0.08);
+    border: 1px solid rgba(0,212,170,0.15);
+    font-weight: 500;
+    color: var(--accent);
+    font-size: 11px;
+  }
+  .terminal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .terminal-body::-webkit-scrollbar { width: 6px; }
+  .terminal-body::-webkit-scrollbar-track { background: transparent; }
+  .terminal-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  .term-line { display: flex; gap: 8px; }
+  .term-prompt { color: var(--accent); white-space: nowrap; font-weight: 600; }
+  .term-output { color: var(--text-dim); }
+  .term-system { color: var(--blue); font-style: italic; }
+  .term-success { color: var(--accent); }
+  .term-error { color: var(--red); }
+  .term-agent { color: var(--purple); }
+  .term-thinking {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--orange);
+  }
+  .term-thinking .dots span {
+    display: inline-block;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--orange);
+    margin: 0 1px;
+    animation: dot-bounce 1.2s ease-in-out infinite;
+  }
+  .term-thinking .dots span:nth-child(2) { animation-delay: 0.15s; }
+  .term-thinking .dots span:nth-child(3) { animation-delay: 0.3s; }
+  @keyframes dot-bounce {
+    0%, 80%, 100% { opacity: 0.3; transform: scale(0.8); }
+    40% { opacity: 1; transform: scale(1.2); }
+  }
+
+  .term-tool {
+    padding: 6px 10px;
+    background: rgba(68,136,255,0.06);
+    border-left: 2px solid var(--blue);
+    border-radius: 0 4px 4px 0;
+    font-size: 12px;
+    color: var(--blue);
+  }
+  .term-code {
+    padding: 8px 12px;
+    background: #0c0c18;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    font-size: 12px;
+    white-space: pre-wrap;
+    color: var(--text);
+  }
+  .term-code .kw { color: var(--purple); }
+  .term-code .fn { color: var(--blue); }
+  .term-code .str { color: var(--accent); }
+  .term-code .cm { color: var(--text-dim); }
+
+  .term-input-row {
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .term-input-row .prompt-icon { color: var(--accent); font-weight: 700; font-size: 14px; }
+  .term-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+  }
+  .term-input::placeholder { color: #444; }
+
+  /* ─── RIGHT: FEEDBACK PANEL ─── */
+  .feedback-panel {
+    background: var(--surface);
+    border-left: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 16px;
+    gap: 16px;
+  }
+
+  .fb-card {
+    background: #0c0c14;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    padding: 14px;
+  }
+  .fb-card h4 {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--text-dim);
+    margin-bottom: 10px;
+  }
+  .fb-stat {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+    font-size: 12px;
+  }
+  .fb-stat .label { color: var(--text-dim); }
+  .fb-stat .value { font-weight: 600; font-variant-numeric: tabular-nums; }
+
+  .haptic-log {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    max-height: 150px;
+    overflow-y: auto;
+  }
+  .haptic-event {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    background: var(--surface-2);
+    animation: haptic-in 0.3s ease;
+  }
+  @keyframes haptic-in {
+    from { opacity: 0; transform: translateX(10px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  .haptic-wave {
+    display: flex;
+    gap: 1px;
+    align-items: center;
+    height: 14px;
+  }
+  .haptic-wave span {
+    width: 2px;
+    background: var(--accent);
+    border-radius: 1px;
+    animation: wave-bar 0.8s ease-in-out infinite;
+  }
+  .haptic-wave span:nth-child(1) { height: 4px; animation-delay: 0s; }
+  .haptic-wave span:nth-child(2) { height: 8px; animation-delay: 0.1s; }
+  .haptic-wave span:nth-child(3) { height: 12px; animation-delay: 0.2s; }
+  .haptic-wave span:nth-child(4) { height: 8px; animation-delay: 0.3s; }
+  .haptic-wave span:nth-child(5) { height: 4px; animation-delay: 0.4s; }
+  @keyframes wave-bar {
+    0%, 100% { transform: scaleY(0.5); }
+    50% { transform: scaleY(1); }
+  }
+
+  .task-list { display: flex; flex-direction: column; gap: 4px; }
+  .task-item {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; color: var(--text-dim);
+  }
+  .task-item .check { color: var(--accent); }
+  .task-item .pending { color: var(--border); }
+  .task-item .running { color: var(--orange); animation: pulse-dot 1s ease-in-out infinite; }
+
+  /* ─── SCENE OVERLAY ─── */
+  .scene-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+  }
+  .scene-overlay.hidden { opacity: 0; pointer-events: none; }
+  .scene-content {
+    text-align: center;
+    max-width: 600px;
+  }
+  .scene-title {
+    font-size: 36px;
+    font-weight: 800;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, var(--accent), var(--blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .scene-sub {
+    font-size: 16px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+  .scene-cta {
+    margin-top: 24px;
+    padding: 10px 28px;
+    border-radius: 8px;
+    background: var(--accent);
+    color: var(--bg);
+    font-weight: 700;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .scene-cta:hover { filter: brightness(1.1); }
+
+  /* ─── HAPTIC FLASH ─── */
+  .haptic-flash {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    z-index: 50;
+    opacity: 0;
+  }
+  .haptic-flash.buzz {
+    animation: flash-buzz 0.3s ease;
+  }
+  @keyframes flash-buzz {
+    0% { opacity: 0; background: var(--accent); }
+    30% { opacity: 0.06; }
+    100% { opacity: 0; }
+  }
+
+  /* ─── END CARD ─── */
+  .end-card {
+    position: fixed;
+    inset: 0;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .end-card.visible { opacity: 1; pointer-events: auto; }
+  .end-logo { font-size: 64px; margin-bottom: 8px; }
+  .end-title {
+    font-size: 32px;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent), var(--blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .end-subtitle {
+    font-size: 14px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .end-by {
+    margin-top: 20px;
+    font-size: 13px;
+    color: var(--text-dim);
+  }
+
+  /* ─── DEMO CONTROLS ─── */
+  .demo-bar {
+    padding: 8px 24px;
+    background: var(--surface-2);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-dim);
+  }
+  .demo-bar button {
+    padding: 4px 14px;
+    border-radius: 4px;
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    font-weight: 600;
+    font-size: 11px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .demo-bar button:hover { filter: brightness(1.1); }
+  .demo-bar .keys-hint { display: flex; gap: 12px; }
+  .demo-bar kbd {
+    padding: 1px 6px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    font-family: inherit;
+    font-size: 10px;
+    color: var(--text);
+  }
+</style>
+</head>
+<body>
+
+<!-- Intro overlay -->
+<div class="scene-overlay" id="introOverlay">
+  <div class="scene-content">
+    <div style="font-size:64px;margin-bottom:16px;">&#x1F47B;</div>
+    <div class="scene-title">Wispy Console</div>
+    <div class="scene-sub">
+      AI Agent Control Center<br>
+      for Logitech MX Creative Console
+    </div>
+    <button class="scene-cta" onclick="startDemo()">Start Demo</button>
+    <div style="margin-top:16px;font-size:11px;color:var(--text-dim);">
+      Press <kbd style="padding:1px 6px;background:var(--surface);border:1px solid var(--border);border-radius:3px;color:var(--text);">Space</kbd> to start &middot; Click buttons to interact
+    </div>
+  </div>
+</div>
+
+<!-- Haptic flash overlay -->
+<div class="haptic-flash" id="hapticFlash"></div>
+
+<!-- End card -->
+<div class="end-card" id="endCard">
+  <div class="end-logo">&#x1F47B;</div>
+  <div class="end-title">Wispy Console</div>
+  <div class="end-subtitle">AI Agent Control Center</div>
+  <div style="font-size:13px;color:var(--text-dim);margin-top:4px;">
+    for Logitech MX Creative Console
+  </div>
+  <div style="margin-top:24px;display:flex;gap:24px;font-size:12px;color:var(--text-dim);">
+    <span>wispy-ai on npm</span>
+    <span>&middot;</span>
+    <span>hausorlabs.tech</span>
+  </div>
+  <div class="end-by">
+    Wispy Console by Hausor Labs
+  </div>
+</div>
+
+<!-- Top bar -->
+<div class="top-bar">
+  <div class="brand">
+    <span class="ghost">&#x1F47B;</span>
+    <span>WISPY CONSOLE</span>
+  </div>
+  <div class="status-pill">
+    <div class="status-dot"></div>
+    <span id="statusText">Connected to Wispy</span>
+  </div>
+  <div class="hw-label">MX Creative Console + MX Master 4</div>
+</div>
+
+<!-- Main 3-column layout -->
+<div class="main">
+
+  <!-- LEFT: Hardware Panel -->
+  <div class="hw-panel">
+    <h3>MX Creative Console</h3>
+
+    <!-- Keypad -->
+    <div class="keypad-section">
+      <div class="keypad-label">
+        <span>KEYPAD</span>
+        <span class="usb">USB-C WIRED</span>
+      </div>
+      <div class="keypad" id="keypad">
+        <button class="key-btn" data-action="code" style="--glow-color: var(--accent);" onclick="pressKey('code')">
+          <span class="key-icon">&#x1F9E0;</span>
+          <span class="key-label">Code</span>
+        </button>
+        <button class="key-btn" data-action="research" style="--glow-color: var(--blue);" onclick="pressKey('research')">
+          <span class="key-icon">&#x1F50D;</span>
+          <span class="key-label">Research</span>
+        </button>
+        <button class="key-btn" data-action="deploy" style="--glow-color: var(--orange);" onclick="pressKey('deploy')">
+          <span class="key-icon">&#x1F4E4;</span>
+          <span class="key-label">Deploy</span>
+        </button>
+        <button class="key-btn" data-action="approve" style="--glow-color: var(--accent);" onclick="pressKey('approve')">
+          <span class="key-icon">&#x2705;</span>
+          <span class="key-label">Approve</span>
+        </button>
+        <button class="key-btn" data-action="reject" style="--glow-color: var(--red);" onclick="pressKey('reject')">
+          <span class="key-icon">&#x274C;</span>
+          <span class="key-label">Reject</span>
+        </button>
+        <button class="key-btn" data-action="voice" style="--glow-color: var(--purple);" onclick="pressKey('voice')">
+          <span class="key-icon">&#x1F3A4;</span>
+          <span class="key-label">Voice</span>
+        </button>
+        <button class="key-btn" data-action="status" style="--glow-color: var(--blue);" onclick="pressKey('status')">
+          <span class="key-icon">&#x1F4CA;</span>
+          <span class="key-label">Status</span>
+        </button>
+        <button class="key-btn" data-action="quick" style="--glow-color: var(--yellow);" onclick="pressKey('quick')">
+          <span class="key-icon">&#x26A1;</span>
+          <span class="key-label">Quick</span>
+        </button>
+        <button class="key-btn" data-action="dial-info" style="--glow-color: var(--accent);" onclick="pressKey('dial-info')">
+          <span class="key-icon">&#x1F504;</span>
+          <span class="key-label">Dial</span>
+        </button>
+      </div>
+      <div class="page-nav">
+        <button class="page-btn" onclick="pageKey(-1)">&uarr;</button>
+        <div class="page-indicator">
+          Page <span class="current" id="pageNum">1</span> / 3
+        </div>
+        <button class="page-btn" onclick="pageKey(1)">&darr;</button>
+      </div>
+    </div>
+
+    <!-- Dial -->
+    <div class="dial-section">
+      <div class="dial-label">
+        <span>PRECISION DIAL</span>
+        <span class="wireless">WIRELESS</span>
+      </div>
+      <div class="dial-container">
+        <div class="dial-mode" id="dialMode">STANDARD</div>
+        <div class="dial-value" id="dialValue">35</div>
+        <div class="dial-track" id="dialTrack">
+          <div class="dial-fill" id="dialFill" style="width: 35%;"></div>
+          <div class="dial-thumb" id="dialThumb" style="left: 35%;"></div>
+        </div>
+        <div class="dial-zones">
+          <span id="z-flash">Flash</span>
+          <span id="z-standard" class="active-zone">Standard</span>
+          <span id="z-deep">Deep Think</span>
+          <span id="z-marathon">Marathon</span>
+        </div>
+        <button class="dial-reset" onclick="resetDial()">Press to Reset (Auto)</button>
+      </div>
+    </div>
+
+    <!-- Actions Ring -->
+    <div class="ring-section">
+      <h3 style="text-align:left;margin-bottom:8px;">Actions Ring (MX Master 4)</h3>
+      <div class="ring-app">
+        <span class="ring-app-icon" id="ringAppIcon">&#x1F4BB;</span>
+        <span id="ringAppName">VS Code</span>
+      </div>
+      <div class="ring-visual" id="ringVisual">
+        <div class="ring-center">&#x1F47B;</div>
+        <!-- Ring items positioned via JS -->
+      </div>
+      <div style="margin-top:8px;font-size:10px;color:var(--text-dim);">
+        Thumb-activated radial menu &middot; Haptic taps on hover
+      </div>
+    </div>
+  </div>
+
+  <!-- CENTER: Terminal -->
+  <div class="terminal-panel">
+    <div class="terminal-header">
+      <span>Wispy Terminal</span>
+      <div class="agent-badge">
+        <div class="status-dot" style="width:5px;height:5px;"></div>
+        <span id="agentLabel">Coder Agent</span>
+      </div>
+      <span id="thinkingLabel" style="color:var(--orange);font-size:11px;display:none;">
+        Thinking...
+      </span>
+    </div>
+    <div class="terminal-body" id="terminal">
+      <div class="term-line">
+        <span class="term-system">Wispy Console v1.4.1 connected via MX Creative Console</span>
+      </div>
+      <div class="term-line">
+        <span class="term-system">9 actions registered. Dial set to Standard (35). Ready.</span>
+      </div>
+    </div>
+    <div class="term-input-row">
+      <span class="prompt-icon">&#x276F;</span>
+      <input class="term-input" id="termInput" placeholder="Type a command or press a button..." onkeydown="if(event.key==='Enter')sendInput()">
+    </div>
+  </div>
+
+  <!-- RIGHT: Feedback Panel -->
+  <div class="feedback-panel">
+    <div class="fb-card">
+      <h4>Agent Status</h4>
+      <div class="fb-stat">
+        <span class="label">Active Agent</span>
+        <span class="value" id="fbAgent" style="color:var(--accent);">Coder</span>
+      </div>
+      <div class="fb-stat">
+        <span class="label">Thinking Depth</span>
+        <span class="value" id="fbThinking">Standard (35)</span>
+      </div>
+      <div class="fb-stat">
+        <span class="label">Tokens Used</span>
+        <span class="value" id="fbTokens">0</span>
+      </div>
+      <div class="fb-stat">
+        <span class="label">Tasks Completed</span>
+        <span class="value" id="fbTasks">0</span>
+      </div>
+    </div>
+
+    <div class="fb-card">
+      <h4>Haptic Feedback Log</h4>
+      <div class="haptic-log" id="hapticLog">
+        <div class="haptic-event">
+          <div class="haptic-wave">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <span style="color:var(--accent);">connected</span>
+          <span style="color:var(--text-dim);margin-left:auto;font-size:10px;">just now</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="fb-card">
+      <h4>Current Task</h4>
+      <div class="task-list" id="taskList">
+        <div class="task-item">
+          <span class="pending">&#x25CB;</span>
+          <span>No active task</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="fb-card">
+      <h4>Wallet</h4>
+      <div class="fb-stat">
+        <span class="label">Balance</span>
+        <span class="value" style="color:var(--accent);">2.50 USDC</span>
+      </div>
+      <div class="fb-stat">
+        <span class="label">Network</span>
+        <span class="value">Base</span>
+      </div>
+      <div class="fb-stat">
+        <span class="label">Tx Count</span>
+        <span class="value" id="fbTx">0</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Demo controls bar -->
+<div class="demo-bar">
+  <div class="keys-hint">
+    <span><kbd>1</kbd>-<kbd>9</kbd> Buttons</span>
+    <span><kbd>&larr;</kbd><kbd>&rarr;</kbd> Dial</span>
+    <span><kbd>A</kbd> Approve</span>
+    <span><kbd>R</kbd> Run Demo</span>
+    <span><kbd>E</kbd> End Card</span>
+  </div>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <span id="demoStep" style="color:var(--accent);">Interactive Mode</span>
+    <button onclick="runAutoDemo()">Run Full Demo</button>
+  </div>
+</div>
+
+<script>
+  // ─── STATE ───
+  let dialValue = 35;
+  let activeAgent = 'code';
+  let tokensUsed = 0;
+  let tasksCompleted = 0;
+  let txCount = 0;
+  let currentPage = 1;
+  let isRunningDemo = false;
+
+  const agents = {
+    code: { label: 'Coder Agent', icon: '\u{1F9E0}', color: 'var(--accent)' },
+    research: { label: 'Researcher Agent', icon: '\u{1F50D}', color: 'var(--blue)' },
+    deploy: { label: 'DevOps Agent', icon: '\u{1F4E4}', color: 'var(--orange)' },
+  };
+
+  const modes = [
+    { min: 0, max: 20, name: 'FLASH', zone: 'z-flash' },
+    { min: 21, max: 50, name: 'STANDARD', zone: 'z-standard' },
+    { min: 51, max: 80, name: 'DEEP THINK', zone: 'z-deep' },
+    { min: 81, max: 100, name: 'MARATHON', zone: 'z-marathon' },
+  ];
+
+  const terminal = document.getElementById('terminal');
+
+  // ─── ACTIONS RING ───
+  function renderRing(app) {
+    const ringConfigs = {
+      vscode: {
+        icon: '\u{1F4BB}', name: 'VS Code',
+        items: ['\u{1F9E0} Code', '\u{1F527} Fix', '\u{1F504} Refactor', '\u{1F9EA} Test', '\u{1F4DD} Docs', '\u{2705} Approve']
+      },
+      chrome: {
+        icon: '\u{1F310}', name: 'Chrome',
+        items: ['\u{1F50D} Search', '\u{1F4CB} Summarize', '\u{1F4CA} Analyze', '\u{2705} Fact-check', '\u{1F4E5} Save', '\u{1F517} Share']
+      },
+      terminal: {
+        icon: '\u{1F5A5}\uFE0F', name: 'Terminal',
+        items: ['\u{1F680} Deploy', '\u{1F527} Build', '\u{1F9EA} Test', '\u{1F4E6} Publish', '\u{1F50D} Debug', '\u{1F4CA} Monitor']
+      },
+    };
+    const cfg = ringConfigs[app] || ringConfigs.vscode;
+    document.getElementById('ringAppIcon').textContent = cfg.icon;
+    document.getElementById('ringAppName').textContent = cfg.name;
+
+    const ring = document.getElementById('ringVisual');
+    ring.querySelectorAll('.ring-item').forEach(e => e.remove());
+    const r = 56;
+    cfg.items.forEach((item, i) => {
+      const angle = (i / cfg.items.length) * Math.PI * 2 - Math.PI / 2;
+      const el = document.createElement('div');
+      el.className = 'ring-item' + (i === 0 ? ' ring-active' : '');
+      el.textContent = item.split(' ')[0];
+      el.title = item;
+      el.style.left = (70 + r * Math.cos(angle) - 15) + 'px';
+      el.style.top = (70 + r * Math.sin(angle) - 15) + 'px';
+      el.onclick = () => {
+        ring.querySelectorAll('.ring-item').forEach(e2 => e2.classList.remove('ring-active'));
+        el.classList.add('ring-active');
+        triggerHaptic('subtle_collision');
+      };
+      ring.appendChild(el);
+    });
+  }
+  renderRing('vscode');
+
+  // ─── DIAL ───
+  function updateDial(val) {
+    dialValue = Math.max(0, Math.min(100, val));
+    document.getElementById('dialValue').textContent = dialValue;
+    document.getElementById('dialFill').style.width = dialValue + '%';
+    document.getElementById('dialThumb').style.left = dialValue + '%';
+
+    const mode = modes.find(m => dialValue >= m.min && dialValue <= m.max) || modes[1];
+    document.getElementById('dialMode').textContent = mode.name;
+    document.getElementById('fbThinking').textContent = mode.name + ' (' + dialValue + ')';
+
+    modes.forEach(m => {
+      const el = document.getElementById(m.zone);
+      el.className = m === mode ? 'active-zone' : '';
+    });
+  }
+
+  function resetDial() {
+    updateDial(35);
+    appendLine('system', 'Thinking depth reset to Auto (Standard/35)');
+    triggerHaptic('sharp_state_change');
+  }
+
+  // Dial drag
+  let dragging = false;
+  const dialTrack = document.getElementById('dialTrack');
+  const dialThumb = document.getElementById('dialThumb');
+
+  dialThumb.addEventListener('mousedown', () => { dragging = true; });
+  document.addEventListener('mouseup', () => { dragging = false; });
+  document.addEventListener('mousemove', (e) => {
+    if (!dragging) return;
+    const rect = dialTrack.getBoundingClientRect();
+    const pct = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+    updateDial(Math.round(pct));
+  });
+  dialTrack.addEventListener('click', (e) => {
+    const rect = dialTrack.getBoundingClientRect();
+    const pct = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+    updateDial(Math.round(pct));
+  });
+
+  // ─── KEY PRESS ───
+  function pressKey(action) {
+    // Visual feedback
+    const btn = document.querySelector(`[data-action="${action}"]`);
+    if (btn) {
+      btn.classList.add('pressed');
+      setTimeout(() => btn.classList.remove('pressed'), 150);
+    }
+
+    switch(action) {
+      case 'code':
+        switchAgent('code');
+        appendLine('system', 'Coder agent activated. Ready for code tasks.');
+        break;
+      case 'research':
+        switchAgent('research');
+        appendLine('system', 'Researcher agent activated. Ready for web search and analysis.');
+        renderRing('chrome');
+        break;
+      case 'deploy':
+        switchAgent('deploy');
+        appendLine('system', 'Starting Marathon deployment pipeline...');
+        renderRing('terminal');
+        simulateDeploy();
+        break;
+      case 'approve':
+        appendLine('success', 'Action approved.');
+        triggerHaptic('completed');
+        tasksCompleted++;
+        document.getElementById('fbTasks').textContent = tasksCompleted;
+        break;
+      case 'reject':
+        appendLine('error', 'Action rejected. Trying a different approach...');
+        triggerHaptic('angry_alert');
+        break;
+      case 'voice':
+        appendLine('agent', 'Listening... (hold to speak, release to send)');
+        triggerHaptic('subtle_collision');
+        setTimeout(() => {
+          appendLine('output', '"Build me a REST API with authentication and rate limiting."');
+          addTokens(120);
+        }, 1500);
+        break;
+      case 'status':
+        showStatus();
+        break;
+      case 'quick':
+        appendLine('system', 'Quick action: Analyzing current context...');
+        addTokens(50);
+        setTimeout(() => {
+          appendLine('agent', 'Suggestion: The function on line 42 has an unused import. Remove it?');
+          triggerHaptic('subtle_collision');
+        }, 800);
+        break;
+      case 'dial-info':
+        appendLine('system', `Thinking depth: ${document.getElementById('dialMode').textContent} (${dialValue}/100)`);
+        break;
+    }
+  }
+
+  function switchAgent(agent) {
+    activeAgent = agent;
+    const a = agents[agent];
+
+    // Update active button
+    document.querySelectorAll('.key-btn').forEach(b => b.classList.remove('active'));
+    const btn = document.querySelector(`[data-action="${agent}"]`);
+    if (btn) btn.classList.add('active');
+
+    document.getElementById('agentLabel').textContent = a.label;
+    document.getElementById('fbAgent').textContent = a.label.replace(' Agent', '');
+    document.getElementById('fbAgent').style.color = a.color;
+
+    triggerHaptic('sharp_state_change');
+  }
+
+  // ─── TERMINAL ───
+  function appendLine(type, text) {
+    const div = document.createElement('div');
+    div.className = 'term-line';
+
+    switch(type) {
+      case 'prompt':
+        div.innerHTML = `<span class="term-prompt">wispy &#x276F;</span> <span>${esc(text)}</span>`;
+        break;
+      case 'output':
+        div.innerHTML = `<span class="term-output">${esc(text)}</span>`;
+        break;
+      case 'system':
+        div.innerHTML = `<span class="term-system">${esc(text)}</span>`;
+        break;
+      case 'success':
+        div.innerHTML = `<span class="term-success">\u2713 ${esc(text)}</span>`;
+        break;
+      case 'error':
+        div.innerHTML = `<span class="term-error">\u2717 ${esc(text)}</span>`;
+        break;
+      case 'agent':
+        div.innerHTML = `<span class="term-agent">${agents[activeAgent]?.icon || '\u{1F47B}'} ${esc(text)}</span>`;
+        break;
+      case 'tool':
+        div.className = 'term-tool';
+        div.textContent = text;
+        break;
+      case 'code':
+        div.className = 'term-code';
+        div.innerHTML = text; // pre-formatted HTML
+        break;
+      case 'thinking':
+        div.className = 'term-thinking';
+        div.innerHTML = `<span>${esc(text)}</span> <span class="dots"><span></span><span></span><span></span></span>`;
+        div.id = 'thinkingLine';
+        break;
+    }
+    terminal.appendChild(div);
+    terminal.scrollTop = terminal.scrollHeight;
+    return div;
+  }
+
+  function removeThinking() {
+    const el = document.getElementById('thinkingLine');
+    if (el) el.remove();
+  }
+
+  function esc(text) {
+    return text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function addTokens(n) {
+    tokensUsed += n;
+    document.getElementById('fbTokens').textContent = tokensUsed.toLocaleString();
+  }
+
+  function sendInput() {
+    const input = document.getElementById('termInput');
+    const text = input.value.trim();
+    if (!text) return;
+    input.value = '';
+    appendLine('prompt', text);
+    addTokens(Math.floor(text.length * 1.5));
+
+    appendLine('thinking', 'Processing');
+    setTimeout(() => {
+      removeThinking();
+      appendLine('agent', `I'll help you with that. Let me analyze your request...`);
+      addTokens(200);
+      triggerHaptic('happy_alert');
+    }, 1200);
+  }
+
+  // ─── HAPTIC FEEDBACK ───
+  function triggerHaptic(waveform) {
+    const flash = document.getElementById('hapticFlash');
+    flash.classList.remove('buzz');
+    void flash.offsetWidth;
+    flash.classList.add('buzz');
+
+    const colors = {
+      happy_alert: 'var(--accent)',
+      completed: 'var(--accent)',
+      angry_alert: 'var(--red)',
+      sharp_state_change: 'var(--blue)',
+      subtle_collision: 'var(--purple)',
+      wave: 'var(--orange)',
+      knock: 'var(--yellow)',
+    };
+    flash.style.background = colors[waveform] || 'var(--accent)';
+
+    // Add to log
+    const log = document.getElementById('hapticLog');
+    const ev = document.createElement('div');
+    ev.className = 'haptic-event';
+    ev.innerHTML = `
+      <div class="haptic-wave"><span></span><span></span><span></span><span></span><span></span></div>
+      <span style="color:${colors[waveform] || 'var(--accent)'}">${waveform}</span>
+      <span style="color:var(--text-dim);margin-left:auto;font-size:10px;">now</span>
+    `;
+    log.insertBefore(ev, log.firstChild);
+    if (log.children.length > 8) log.lastChild.remove();
+  }
+
+  // ─── STATUS ───
+  function showStatus() {
+    appendLine('system', '--- Agent Status ---');
+    appendLine('output', `Agent: ${agents[activeAgent]?.label || 'Unknown'}`);
+    appendLine('output', `Thinking: ${document.getElementById('dialMode').textContent} (${dialValue})`);
+    appendLine('output', `Tokens: ${tokensUsed.toLocaleString()}`);
+    appendLine('output', `Tasks: ${tasksCompleted} completed`);
+    appendLine('output', `Wallet: 2.50 USDC on Base`);
+  }
+
+  // ─── DEPLOY SIMULATION ───
+  function simulateDeploy() {
+    const steps = [
+      { text: 'Running tests...', tool: 'tool:bash npm test', delay: 600 },
+      { text: null, tool: null, success: 'All 47 tests passed', delay: 800 },
+      { text: 'Building project...', tool: 'tool:bash npm run build', delay: 500 },
+      { text: null, tool: null, success: 'Build complete (2.3s)', delay: 700 },
+      { text: 'Deploying to production...', tool: 'tool:deploy vercel --prod', delay: 500 },
+      { text: null, tool: null, success: 'Deployed to hausorlabs.tech', delay: 1000 },
+    ];
+
+    updateTaskList([
+      { text: 'Run tests', status: 'running' },
+      { text: 'Build project', status: 'pending' },
+      { text: 'Deploy to production', status: 'pending' },
+    ]);
+
+    let i = 0;
+    function next() {
+      if (i >= steps.length) {
+        triggerHaptic('happy_alert');
+        tasksCompleted++;
+        document.getElementById('fbTasks').textContent = tasksCompleted;
+        updateTaskList([
+          { text: 'Run tests', status: 'done' },
+          { text: 'Build project', status: 'done' },
+          { text: 'Deploy to production', status: 'done' },
+        ]);
+        return;
+      }
+      const step = steps[i];
+      if (step.text) appendLine('agent', step.text);
+      if (step.tool) appendLine('tool', step.tool);
+      if (step.success) {
+        appendLine('success', step.success);
+        addTokens(150);
+        // Update task list
+        if (i === 1) updateTaskList([
+          { text: 'Run tests', status: 'done' },
+          { text: 'Build project', status: 'running' },
+          { text: 'Deploy to production', status: 'pending' },
+        ]);
+        if (i === 3) updateTaskList([
+          { text: 'Run tests', status: 'done' },
+          { text: 'Build project', status: 'done' },
+          { text: 'Deploy to production', status: 'running' },
+        ]);
+      }
+      i++;
+      setTimeout(next, step.delay);
+    }
+    next();
+  }
+
+  function updateTaskList(tasks) {
+    const el = document.getElementById('taskList');
+    el.innerHTML = tasks.map(t => {
+      const icon = t.status === 'done' ? '<span class="check">\u2713</span>'
+        : t.status === 'running' ? '<span class="running">\u25CF</span>'
+        : '<span class="pending">\u25CB</span>';
+      return `<div class="task-item">${icon}<span>${t.text}</span></div>`;
+    }).join('');
+  }
+
+  // ─── PAGE NAVIGATION (15 pages of shortcuts) ───
+  function pageKey(dir) {
+    currentPage = Math.max(1, Math.min(3, currentPage + dir));
+    document.getElementById('pageNum').textContent = currentPage;
+    appendLine('system', `Page ${currentPage}/3`);
+    triggerHaptic('subtle_collision');
+  }
+
+  // ─── KEYBOARD SHORTCUTS ───
+  document.addEventListener('keydown', (e) => {
+    if (e.target === document.getElementById('termInput')) return;
+
+    const keyMap = {
+      '1': 'code', '2': 'research', '3': 'deploy',
+      '4': 'approve', '5': 'reject', '6': 'voice',
+      '7': 'status', '8': 'quick', '9': 'dial-info',
+    };
+    if (keyMap[e.key]) { pressKey(keyMap[e.key]); return; }
+    if (e.key === 'ArrowLeft') { updateDial(dialValue - 5); return; }
+    if (e.key === 'ArrowRight') { updateDial(dialValue + 5); return; }
+    if (e.key === 'a' || e.key === 'A') { pressKey('approve'); return; }
+    if (e.key === 'r' || e.key === 'R') { runAutoDemo(); return; }
+    if (e.key === 'e' || e.key === 'E') { showEndCard(); return; }
+    if (e.key === ' ') { e.preventDefault(); startDemo(); return; }
+  });
+
+  // ─── INTRO ───
+  function startDemo() {
+    document.getElementById('introOverlay').classList.add('hidden');
+  }
+
+  // ─── END CARD ───
+  function showEndCard() {
+    document.getElementById('endCard').classList.add('visible');
+  }
+
+  // ─── AUTO DEMO (for video recording) ───
+  async function runAutoDemo() {
+    if (isRunningDemo) return;
+    isRunningDemo = true;
+    const stepEl = document.getElementById('demoStep');
+
+    // Clear terminal
+    terminal.innerHTML = '';
+    appendLine('system', 'Wispy Console v1.4.1 connected via MX Creative Console');
+    appendLine('system', '9 actions registered. Dial set to Standard (35). Ready.');
+
+    async function wait(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+    // Scene 1: Code
+    stepEl.textContent = 'Scene: Code Agent';
+    await wait(800);
+    pressKey('code');
+    await wait(400);
+    appendLine('prompt', 'Build a REST API with auth and rate limiting');
+    addTokens(80);
+    await wait(600);
+    appendLine('thinking', 'Analyzing request');
+    await wait(1200);
+    removeThinking();
+    appendLine('tool', 'tool:file_write src/api/server.ts');
+    addTokens(350);
+    await wait(400);
+    appendLine('code',
+      '<span class="kw">import</span> { <span class="fn">Hono</span> } <span class="kw">from</span> <span class="str">"hono"</span>;\n' +
+      '<span class="kw">import</span> { <span class="fn">jwt</span> } <span class="kw">from</span> <span class="str">"hono/jwt"</span>;\n' +
+      '<span class="kw">import</span> { <span class="fn">rateLimiter</span> } <span class="kw">from</span> <span class="str">"hono-rate-limiter"</span>;\n\n' +
+      '<span class="kw">const</span> app = <span class="kw">new</span> <span class="fn">Hono</span>();\n' +
+      'app.<span class="fn">use</span>(<span class="str">"/*"</span>, <span class="fn">rateLimiter</span>({ <span class="fn">limit</span>: <span class="str">100</span> }));\n' +
+      'app.<span class="fn">use</span>(<span class="str">"/api/*"</span>, <span class="fn">jwt</span>({ <span class="fn">secret</span>: process.env.JWT_SECRET }));'
+    );
+    await wait(800);
+    appendLine('agent', 'REST API created with JWT auth and 100 req/min rate limiting. Approve?');
+    triggerHaptic('subtle_collision');
+
+    // Scene 2: Approve
+    await wait(1000);
+    stepEl.textContent = 'Scene: Approve';
+    pressKey('approve');
+    await wait(300);
+    appendLine('success', 'Code written to src/api/server.ts');
+    await wait(500);
+
+    // Scene 3: Dial -- change thinking depth
+    stepEl.textContent = 'Scene: Thinking Dial';
+    await wait(600);
+    // Animate dial from 35 to 75
+    for (let v = 35; v <= 75; v += 2) {
+      updateDial(v);
+      await wait(30);
+    }
+    appendLine('system', 'Thinking depth: DEEP THINK (75). Extended chain-of-thought enabled.');
+    await wait(400);
+    appendLine('prompt', 'Analyze the security implications of this API design');
+    addTokens(60);
+    await wait(600);
+    appendLine('thinking', 'Deep analysis in progress');
+    await wait(1800);
+    removeThinking();
+    addTokens(800);
+    appendLine('agent', 'Deep analysis complete. 3 findings:');
+    appendLine('output', '1. JWT secret should rotate every 24h -- add key rotation middleware');
+    appendLine('output', '2. Rate limiter needs per-user limits, not just global');
+    appendLine('output', '3. Add CORS headers for browser clients');
+    triggerHaptic('happy_alert');
+
+    // Scene 4: Research
+    await wait(1000);
+    stepEl.textContent = 'Scene: Research Agent';
+    pressKey('research');
+    await wait(400);
+    appendLine('prompt', 'Find best practices for API key rotation in 2026');
+    addTokens(70);
+    await wait(500);
+    appendLine('tool', 'tool:web_search "API key rotation best practices 2026"');
+    await wait(1000);
+    addTokens(400);
+    appendLine('agent', 'Found 5 relevant sources. Key recommendation: Use rotating JWK sets with a 4-hour rotation window. Libraries: jose@5.x supports this natively.');
+    triggerHaptic('happy_alert');
+
+    // Scene 5: Deploy
+    await wait(1000);
+    stepEl.textContent = 'Scene: Deploy';
+    pressKey('deploy');
+    await wait(3500); // Deploy simulation runs
+
+    // Scene 6: Voice
+    await wait(800);
+    stepEl.textContent = 'Scene: Voice Command';
+    pressKey('voice');
+    await wait(2500);
+
+    // End
+    await wait(1200);
+    stepEl.textContent = 'Demo Complete';
+    showEndCard();
+    isRunningDemo = false;
+  }
+</script>
+</body>
+</html>

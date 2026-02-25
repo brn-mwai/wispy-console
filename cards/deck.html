@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wispy Console -- Visual Deck</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0f;
+  --surface: #12121a;
+  --surface-2: #1a1a28;
+  --border: #2a2a3a;
+  --text: #e8e8f0;
+  --text-dim: #8888aa;
+  --text-muted: #555570;
+  --cyan: #00DDFF;
+  --magenta: #FF00E9;
+  --orange: #FF7000;
+  --yellow: #FFB800;
+  --green: #00CC66;
+  --red: #FF4466;
+  --cyan-dim: rgba(0, 221, 255, 0.15);
+  --magenta-dim: rgba(255, 0, 233, 0.15);
+  --orange-dim: rgba(255, 112, 0, 0.15);
+  --yellow-dim: rgba(255, 184, 0, 0.15);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html {
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+.card {
+  width: 100vw;
+  height: 100vh;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+
+.card-number {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+}
+
+.card-brand {
+  position: absolute;
+  bottom: 30px;
+  left: 40px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+}
+
+.card-brand span { color: var(--cyan); }
+
+.section-label {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.card-title {
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 40px;
+  max-width: 900px;
+  text-align: center;
+}
+
+.card-subtitle {
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--text-dim);
+  max-width: 700px;
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 48px;
+}
+
+/* ===== CARD 1: THE PROBLEM ===== */
+.problem-columns {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  max-width: 1100px;
+  width: 100%;
+}
+
+.problem-col {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px 28px;
+  position: relative;
+}
+
+.problem-col::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  border-radius: 12px 12px 0 0;
+}
+
+.problem-col:nth-child(1)::before { background: var(--magenta); }
+.problem-col:nth-child(2)::before { background: var(--red); }
+.problem-col:nth-child(3)::before { background: var(--orange); }
+
+.problem-icon {
+  font-size: 28px;
+  margin-bottom: 16px;
+}
+
+.problem-col h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.problem-col p {
+  font-size: 14px;
+  color: var(--text-dim);
+  line-height: 1.6;
+}
+
+.problem-stat {
+  margin-top: 16px;
+  padding: 12px;
+  background: rgba(255,0,233,0.08);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--magenta);
+  font-weight: 600;
+}
+
+.problem-quote {
+  margin-top: 40px;
+  max-width: 800px;
+  text-align: center;
+  font-style: italic;
+  font-size: 18px;
+  color: var(--text-dim);
+  line-height: 1.6;
+  padding: 0 40px;
+}
+
+.problem-quote .source {
+  display: block;
+  margin-top: 8px;
+  font-size: 13px;
+  font-style: normal;
+  color: var(--text-muted);
+}
+
+/* ===== CARD 2: THE SOLUTION ===== */
+.solution-tagline {
+  font-size: 56px;
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.solution-tagline .accent-cyan { color: var(--cyan); }
+.solution-tagline .accent-mag { color: var(--magenta); }
+.solution-tagline .accent-ora { color: var(--orange); }
+
+.devices-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  max-width: 900px;
+  width: 100%;
+  margin-top: 48px;
+}
+
+.device-card {
+  text-align: center;
+  padding: 32px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  transition: transform 0.3s, border-color 0.3s;
+}
+
+.device-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--cyan);
+}
+
+.device-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 20px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+}
+
+.device-card:nth-child(1) .device-icon { background: var(--cyan-dim); }
+.device-card:nth-child(2) .device-icon { background: var(--magenta-dim); }
+.device-card:nth-child(3) .device-icon { background: var(--orange-dim); }
+
+.device-card h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.device-card p {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+/* ===== CARD 3: 9 LCD BUTTONS ===== */
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  max-width: 560px;
+  width: 100%;
+  margin-bottom: 32px;
+}
+
+.lcd-button {
+  aspect-ratio: 1;
+  background: #111118;
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.lcd-button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.3s;
+  border-radius: 10px;
+}
+
+.lcd-button:hover { transform: scale(1.05); }
+.lcd-button:hover::after { opacity: 1; }
+
+.lcd-button:nth-child(1) { border-color: var(--cyan); }
+.lcd-button:nth-child(1)::after { background: radial-gradient(circle, rgba(0,221,255,0.15), transparent 70%); }
+.lcd-button:nth-child(2) { border-color: var(--cyan); }
+.lcd-button:nth-child(2)::after { background: radial-gradient(circle, rgba(0,221,255,0.15), transparent 70%); }
+.lcd-button:nth-child(3) { border-color: var(--orange); }
+.lcd-button:nth-child(3)::after { background: radial-gradient(circle, rgba(255,112,0,0.15), transparent 70%); }
+.lcd-button:nth-child(4) { border-color: var(--green); }
+.lcd-button:nth-child(4)::after { background: radial-gradient(circle, rgba(0,204,102,0.15), transparent 70%); }
+.lcd-button:nth-child(5) { border-color: var(--red); }
+.lcd-button:nth-child(5)::after { background: radial-gradient(circle, rgba(255,68,102,0.15), transparent 70%); }
+.lcd-button:nth-child(6) { border-color: var(--magenta); }
+.lcd-button:nth-child(6)::after { background: radial-gradient(circle, rgba(255,0,233,0.15), transparent 70%); }
+.lcd-button:nth-child(7) { border-color: #4488ff; }
+.lcd-button:nth-child(7)::after { background: radial-gradient(circle, rgba(68,136,255,0.15), transparent 70%); }
+.lcd-button:nth-child(8) { border-color: var(--yellow); }
+.lcd-button:nth-child(8)::after { background: radial-gradient(circle, rgba(255,184,0,0.15), transparent 70%); }
+.lcd-button:nth-child(9) { border-color: #aa66ff; }
+.lcd-button:nth-child(9)::after { background: radial-gradient(circle, rgba(170,102,255,0.15), transparent 70%); }
+
+.lcd-icon { font-size: 32px; z-index: 1; }
+.lcd-label { font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--text-dim); z-index: 1; }
+
+.lcd-button:nth-child(1) .lcd-icon { color: var(--cyan); }
+.lcd-button:nth-child(2) .lcd-icon { color: var(--cyan); }
+.lcd-button:nth-child(3) .lcd-icon { color: var(--orange); }
+.lcd-button:nth-child(4) .lcd-icon { color: var(--green); }
+.lcd-button:nth-child(5) .lcd-icon { color: var(--red); }
+.lcd-button:nth-child(6) .lcd-icon { color: var(--magenta); }
+.lcd-button:nth-child(7) .lcd-icon { color: #4488ff; }
+.lcd-button:nth-child(8) .lcd-icon { color: var(--yellow); }
+.lcd-button:nth-child(9) .lcd-icon { color: #aa66ff; }
+
+.pages-note {
+  font-size: 14px;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.pages-note strong { color: var(--cyan); }
+
+/* ===== CARD 4: THINKING DIAL ===== */
+.dial-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px;
+  max-width: 800px;
+  width: 100%;
+}
+
+.dial-visual {
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  background: conic-gradient(
+    from 200deg,
+    var(--cyan) 0deg,
+    #00BBDD 60deg,
+    var(--orange) 140deg,
+    var(--magenta) 200deg,
+    var(--magenta) 240deg,
+    var(--cyan) 360deg
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  animation: dial-glow 4s ease-in-out infinite;
+}
+
+@keyframes dial-glow {
+  0%, 100% { box-shadow: 0 0 40px rgba(0,221,255,0.3), 0 0 80px rgba(0,221,255,0.1); }
+  50% { box-shadow: 0 0 60px rgba(255,0,233,0.3), 0 0 100px rgba(255,0,233,0.1); }
+}
+
+.dial-inner {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #1a1a28, #12121a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.dial-value {
+  font-size: 48px;
+  font-weight: 800;
+  color: var(--cyan);
+}
+
+.dial-mode {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-dim);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.zones-bar {
+  display: flex;
+  width: 100%;
+  max-width: 700px;
+  height: 48px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.zone {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.3s;
+}
+
+.zone:nth-child(1) { background: rgba(0,221,255,0.15); color: var(--cyan); }
+.zone:nth-child(2) { background: rgba(0,187,221,0.1); color: #88ccdd; }
+.zone:nth-child(3) { background: rgba(255,112,0,0.12); color: var(--orange); }
+.zone:nth-child(4) { background: rgba(255,0,233,0.12); color: var(--magenta); }
+
+.zone-range {
+  display: block;
+  font-size: 10px;
+  font-weight: 400;
+  margin-top: 2px;
+  opacity: 0.7;
+}
+
+.dial-quote {
+  font-size: 18px;
+  font-style: italic;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+/* ===== CARD 5: ACTIONS RING ===== */
+.ring-layout {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.ring-visual {
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  position: relative;
+  flex-shrink: 0;
+  background: radial-gradient(circle, var(--surface) 40%, transparent 70%);
+}
+
+.ring-center {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: var(--surface-2);
+  border: 2px solid var(--cyan);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  box-shadow: 0 0 30px rgba(0,221,255,0.2);
+}
+
+.ring-item {
+  position: absolute;
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  transition: all 0.3s;
+}
+
+.ring-item:hover {
+  transform: scale(1.15);
+  border-color: var(--cyan);
+  box-shadow: 0 0 20px rgba(0,221,255,0.3);
+}
+
+.ring-item:nth-child(2) { top: 10px; left: 50%; transform: translateX(-50%); }
+.ring-item:nth-child(3) { top: 50%; right: 10px; transform: translateY(-50%); }
+.ring-item:nth-child(4) { bottom: 10px; left: 50%; transform: translateX(-50%); }
+.ring-item:nth-child(5) { top: 50%; left: 10px; transform: translateY(-50%); }
+
+.ring-item:nth-child(2):hover { transform: translateX(-50%) scale(1.15); }
+.ring-item:nth-child(3):hover { transform: translateY(-50%) scale(1.15); }
+.ring-item:nth-child(4):hover { transform: translateX(-50%) scale(1.15); }
+.ring-item:nth-child(5):hover { transform: translateY(-50%) scale(1.15); }
+
+.contexts-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.context-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: border-color 0.3s;
+}
+
+.context-row:hover { border-color: var(--cyan); }
+
+.context-app {
+  font-size: 14px;
+  font-weight: 700;
+  min-width: 100px;
+}
+
+.context-arrow { color: var(--text-muted); font-size: 18px; }
+
+.context-agent {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--cyan);
+}
+
+.context-actions {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-left: auto;
+}
+
+/* ===== CARD 6: ARCHITECTURE ===== */
+.arch-layers {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 800px;
+  width: 100%;
+}
+
+.arch-layer {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 28px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  position: relative;
+}
+
+.arch-layer::after {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 4px;
+  border-radius: 12px 0 0 12px;
+}
+
+.arch-layer:nth-child(1) { background: rgba(0,221,255,0.06); }
+.arch-layer:nth-child(1)::after { background: var(--cyan); }
+.arch-layer:nth-child(2) { background: rgba(255,184,0,0.06); }
+.arch-layer:nth-child(2)::after { background: var(--yellow); }
+.arch-layer:nth-child(3) { background: rgba(255,112,0,0.06); }
+.arch-layer:nth-child(3)::after { background: var(--orange); }
+.arch-layer:nth-child(4) { background: rgba(255,0,233,0.06); }
+.arch-layer:nth-child(4)::after { background: var(--magenta); }
+
+.arch-icon {
+  font-size: 28px;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+
+.arch-layer:nth-child(1) .arch-icon { background: var(--cyan-dim); color: var(--cyan); }
+.arch-layer:nth-child(2) .arch-icon { background: var(--yellow-dim); color: var(--yellow); }
+.arch-layer:nth-child(3) .arch-icon { background: var(--orange-dim); color: var(--orange); }
+.arch-layer:nth-child(4) .arch-icon { background: var(--magenta-dim); color: var(--magenta); }
+
+.arch-info { flex: 1; }
+.arch-info h3 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.arch-info p { font-size: 13px; color: var(--text-dim); }
+
+.arch-connector {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 20px;
+  padding: 0;
+  margin: -12px 0;
+  position: relative;
+  z-index: 1;
+}
+
+.agents-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.agent-badge {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.agent-badge.primary { border-color: var(--cyan); color: var(--cyan); }
+.agent-badge.ready { border-color: var(--green); color: var(--green); }
+.agent-badge.planned { border-color: var(--text-muted); color: var(--text-muted); }
+
+/* ===== CARD 7: HAPTIC FEEDBACK ===== */
+.haptic-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 900px;
+  width: 100%;
+}
+
+.haptic-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.haptic-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--cyan);
+}
+
+.haptic-wave {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  margin-bottom: 16px;
+}
+
+.haptic-wave .bar {
+  width: 4px;
+  border-radius: 2px;
+  animation: pulse-bar 1.5s ease-in-out infinite;
+}
+
+.haptic-card:nth-child(1) .bar { background: var(--green); }
+.haptic-card:nth-child(2) .bar { background: var(--cyan); }
+.haptic-card:nth-child(3) .bar { background: var(--red); }
+.haptic-card:nth-child(4) .bar { background: #4488ff; }
+.haptic-card:nth-child(5) .bar { background: var(--orange); }
+.haptic-card:nth-child(6) .bar { background: var(--yellow); }
+
+@keyframes pulse-bar {
+  0%, 100% { height: 8px; }
+  50% { height: 32px; }
+}
+
+.haptic-card h4 {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.haptic-waveform {
+  font-size: 11px;
+  font-family: 'Consolas', 'Monaco', monospace;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.haptic-desc {
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+/* ===== CARD 8: MARKET OPPORTUNITY ===== */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  max-width: 900px;
+  width: 100%;
+  margin-bottom: 48px;
+}
+
+.stat-card {
+  text-align: center;
+  padding: 32px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.stat-number {
+  font-size: 64px;
+  font-weight: 900;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.stat-card:nth-child(1) .stat-number { color: var(--cyan); }
+.stat-card:nth-child(2) .stat-number { color: var(--orange); }
+.stat-card:nth-child(3) .stat-number { color: var(--magenta); }
+
+.stat-label {
+  font-size: 14px;
+  color: var(--text-dim);
+  font-weight: 500;
+}
+
+.pricing-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 800px;
+  width: 100%;
+}
+
+.price-card {
+  text-align: center;
+  padding: 28px 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  transition: all 0.3s;
+}
+
+.price-card.featured {
+  border-color: var(--cyan);
+  background: rgba(0,221,255,0.05);
+  transform: scale(1.05);
+}
+
+.price-tier {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.price-amount {
+  font-size: 36px;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.price-card.featured .price-amount { color: var(--cyan); }
+
+.price-features {
+  list-style: none;
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 2;
+}
+
+/* ===== CARD 9: THE FUTURE ===== */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-width: 700px;
+  width: 100%;
+  position: relative;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 28px;
+  top: 20px;
+  bottom: 20px;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--cyan), var(--magenta), var(--orange));
+}
+
+.timeline-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 16px 0;
+  position: relative;
+}
+
+.timeline-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 3px;
+  margin-left: 20px;
+  z-index: 1;
+  box-shadow: 0 0 12px;
+}
+
+.timeline-item:nth-child(1) .timeline-dot { background: var(--cyan); box-shadow: 0 0 12px var(--cyan); }
+.timeline-item:nth-child(2) .timeline-dot { background: var(--green); box-shadow: 0 0 12px var(--green); }
+.timeline-item:nth-child(3) .timeline-dot { background: var(--orange); box-shadow: 0 0 12px var(--orange); }
+.timeline-item:nth-child(4) .timeline-dot { background: var(--yellow); box-shadow: 0 0 12px var(--yellow); }
+.timeline-item:nth-child(5) .timeline-dot { background: var(--magenta); box-shadow: 0 0 12px var(--magenta); }
+
+.timeline-content h3 {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.timeline-content p {
+  font-size: 13px;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+.timeline-tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-left: 8px;
+}
+
+.timeline-item:nth-child(1) .timeline-tag { background: var(--cyan-dim); color: var(--cyan); }
+.timeline-item:nth-child(2) .timeline-tag { background: rgba(0,204,102,0.15); color: var(--green); }
+
+.closing-tagline {
+  margin-top: 56px;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+.closing-tagline span { color: var(--cyan); }
+
+.team-line {
+  margin-top: 16px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+/* ===== NAVIGATION ===== */
+.nav-dots {
+  position: fixed;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 100;
+}
+
+.nav-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.3s;
+  border: none;
+}
+
+.nav-dot.active {
+  background: var(--cyan);
+  box-shadow: 0 0 8px var(--cyan);
+  transform: scale(1.3);
+}
+
+.nav-dot:hover { background: var(--cyan); }
+
+/* ===== KEYBOARD HINT ===== */
+.keyboard-hint {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-size: 11px;
+  color: var(--text-muted);
+  z-index: 100;
+  background: var(--surface);
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+
+.keyboard-hint kbd {
+  background: var(--surface-2);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: inherit;
+  border: 1px solid var(--border);
+}
+</style>
+</head>
+<body>
+
+<!-- Navigation Dots -->
+<nav class="nav-dots" id="navDots"></nav>
+<div class="keyboard-hint"><kbd>1</kbd>-<kbd>9</kbd> or <kbd>&uarr;</kbd><kbd>&darr;</kbd> to navigate</div>
+
+<!-- ===== CARD 1: THE PROBLEM ===== -->
+<section class="card" id="card1">
+  <span class="card-number">01 / 09</span>
+  <div class="card-brand">WISPY CONSOLE <span>|</span> DevStudio 2026</div>
+  <div class="section-label" style="color: var(--magenta);">THE CRISIS</div>
+  <h1 class="card-title">AI Agents Are Powerful.<br>The Interface Is Broken.</h1>
+  <div class="problem-columns">
+    <div class="problem-col">
+      <div class="problem-icon">&#128274;</div>
+      <h3>Permission Fatigue</h3>
+      <p>Developers approve the same command every 15 seconds. 30+ upvotes on GitHub demanding a fix.</p>
+      <div class="problem-stat">"The single largest flaw in Claude Code"</div>
+    </div>
+    <div class="problem-col">
+      <div class="problem-icon">&#128165;</div>
+      <h3>The YOLO Trap</h3>
+      <p>Binary choice: babysit every command, or disable all safety and pray. A developer's home directory was deleted.</p>
+      <div class="problem-stat" style="background: rgba(255,68,102,0.08); color: var(--red);">rm -rf ~/ in YOLO mode</div>
+    </div>
+    <div class="problem-col">
+      <div class="problem-icon">&#128260;</div>
+      <h3>Context Switching</h3>
+      <p>15-30 minute interruptions. One developer manages 12 simultaneous AI agents from a single terminal.</p>
+      <div class="problem-stat" style="background: rgba(255,112,0,0.08); color: var(--orange);">66% spend more time correcting AI</div>
+    </div>
+  </div>
+  <div class="problem-quote">
+    "AI tools are honestly unusable without running in yolo mode. You have to baby every single little command."
+    <span class="source">@forrestthewoods, Hacker News</span>
+  </div>
+</section>
+
+<!-- ===== CARD 2: THE SOLUTION ===== -->
+<section class="card" id="card2">
+  <span class="card-number">02 / 09</span>
+  <div class="card-brand">WISPY CONSOLE <span>|</span> DevStudio 2026</div>
+  <div class="section-label" style="color: var(--cyan);">THE SOLUTION</div>
+  <div class="solution-tagline">
+    <span class="accent-cyan">9 Buttons.</span>
+    <span class="accent-mag">1 Dial.</span>
+    <span class="accent-ora">Zero Typing.</span>
+  </div>
+  <p class="card-subtitle">The first AI plugin for Logitech MX Creative Console. Physical hardware control for autonomous AI agents.</p>
+  <div class="devices-row">
+    <div class="device-card">
+      <div class="device-icon">&#9000;</div>
+      <h3>MX Creative Console</h3>
+      <p>9 LCD buttons with individual displays. 15 pages of shortcuts. Real-time agent state on every button.</p>
+    </div>
+    <div class="device-card">
+      <div class="device-icon">&#9211;</div>
+      <h3>Precision Dial</h3>
+      <p>Wireless rotary control for AI thinking depth. Four zones from Flash to Marathon. Press to reset.</p>
+    </div>
+    <div class="device-card">
+      <div class="device-icon">&#128433;</div>
+      <h3>MX Master 4</h3>
+      <p>Actions Ring for context-aware switching. Haptic motor for state feedback. Feel the AI in your hand.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CARD 3: 9 LCD BUTTONS ===== -->
+<section class="card" id="card3">
+  <span class="card-number">03 / 09</span>
+  <div class="card-brand">WISPY CONSOLE <span>|</span> DevStudio 2026</div>
+  <div class="section-label" style="color: var(--cyan);">KEYPAD</div>
+  <h1 class="card-title" style="font-size: 40px;">9 LCD Buttons. 15 Pages.<br>Up to 135 Actions.</h1>
+  <div class="button-grid">
+    <div class="lcd-button">
+      <span class="lcd-icon">&lt;/&gt;</span>
+      <span class="lcd-label">Code</span>
+    </div>
+    <div class="lcd-button">
+      <span class="lcd-icon">&#128269;</span>
+      <span class="lcd-label">Research</span>
+    </div>
+    <div class="lcd-button">
+      <span class="lcd-icon">&#128640;</span>
+      <span class="lcd-label">Deploy</span>
+    </div>
+    <div class="lcd-button">
+      <span class="lcd-icon">&#10003;</span>
+      <span class="lcd-label">Approve</span>
+    </div>
+    <div class="lcd-button">
+      <span class="lcd-icon">&#10007;</span>
+      <span class="lcd-label">Reject</span>
+    </div>
+    <div class="lcd-button">
+      <span class="lcd-icon">&#127908;</span>
+      <span class="lcd-label">Voice</span>
+    </div>
+    <div class="lcd-button">
+      <span class="lcd-icon">&#128202;</span>
+      <span class="lcd-label">Status</span>
+    </div>
+    <div class="lcd-button">
+      <span class="lcd-icon">&#9889;</span>
+      <span class="lcd-label">Quick</span>
+    </div>
+    <div class="lcd-button">
+      <span class="lcd-icon">&#129504;</span>
+      <span class="lcd-label">Mode</span>
+    </div>
+  </div>
+  <p class="pages-note">Each button has its own LCD display. <strong>15 pages</strong> of programmable shortcuts. Agent tools auto-mapped.</p>
+</section>
+
+<!-- ===== CARD 4: THINKING DIAL ===== -->
+<section class="card" id="card4">
+  <span class="card-number">04 / 09</span>
+  <div class="card-brand">WISPY CONSOLE <span>|</span> DevStudio 2026</div>
+  <div class="section-label" style="color: var(--orange);">THINKING DEPTH</div>
+  <h1 class="card-title" style="font-size: 40px;">Control How Deeply the AI Thinks</h1>
+  <div class="dial-container">
+    <div class="dial-visual">
+      <div class="dial-inner">
+        <div class="dial-value" id="dialValue">50</div>
+        <div class="dial-mode" id="dialMode">Standard</div>
+      </div>
+    </div>
+    <div class="zones-bar">
+      <div class="zone">Flash<span class="zone-range">0-20</span></div>
+      <div class="zone">Standard<span class="zone-range">21-50</span></div>
+      <div class="zone">Deep Think<span class="zone-range">51-80</span></div>
+      <div class="zone">Marathon<span class="zone-range">81-100</span></div>
+    </div>
+    <p class="dial-quote">"The middle ground between YOLO and babysitting."</p>
+  </div>
+</section>
+
+<!-- ===== CARD 5: ACTIONS RING ===== -->
+<section class="card" id="card5">
+  <span class="card-number">05 / 09</span>
+  <div class="card-brand">WISPY CONSOLE <span>|</span> DevStudio 2026</div>
+  <div class="section-label" style="color: var(--orange);">MX MASTER 4</div>
+  <h1 class="card-title" style="font-size: 40px;">Context-Aware Agent Switching</h1>
+  <div class="ring-layout">
+    <div class="ring-visual">
+      <div class="ring-center">&#128433;</div>
+      <div class="ring-item">&#128187;</div>
+      <div class="ring-item">&#127760;</div>
+      <div class="ring-item">&#9000;</div>
+      <div class="ring-item">&#127912;</div>
+    </div>
+    <div class="contexts-list">
+      <div class="context-row">
+        <span class="context-app">VS Code</span>
+        <span class="context-arrow">&rarr;</span>
+        <span class="context-agent">Coder</span>
+        <span class="context-actions">Fix, Refactor, Test, Docs</span>
+      </div>
+      <div class="context-row">
+        <span class="context-app">Chrome</span>
+        <span class="context-arrow">&rarr;</span>
+        <span class="context-agent">Researcher</span>
+        <span class="context-actions">Summarize, Analyze, Save</span>
+      </div>
+      <div class="context-row">
+        <span class="context-app">Terminal</span>
+        <span class="context-arrow">&rarr;</span>
+        <span class="context-agent">DevOps</span>
+        <span class="context-actions">Build, Deploy, Monitor</span>
+      </div>
+      <div class="context-row">
+        <span class="context-app">Figma</span>
+        <span class="context-arrow">&rarr;</span>
+        <span class="context-agent">Analyst</span>
+        <span class="context-actions">Review, Export, Optimize</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CARD 6: ARCHITECTURE ===== -->
+<section class="card" id="card6">
+  <span class="card-number">06 / 09</span>
+  <div class="card-brand">WISPY CONSOLE <span>|</span> DevStudio 2026</div>
+  <div class="section-label" style="color: var(--cyan);">ARCHITECTURE</div>
+  <h1 class="card-title" style="font-size: 40px;">Agent-Agnostic by Design</h1>
+  <div class="arch-layers">
+    <div class="arch-layer">
+      <div class="arch-icon">&#9000;</div>
+      <div class="arch-info">
+        <h3>Hardware Layer</h3>
+        <p>MX Creative Console (9 LCD buttons, dial) + MX Master 4 (Actions Ring, haptics)</p>
+      </div>
+    </div>
+    <div class="arch-connector">&darr;</div>
+    <div class="arch-layer">
+      <div class="arch-icon">&#128268;</div>
+      <div class="arch-info">
+        <h3>Logitech Actions SDK</h3>
+        <p>Node.js / TypeScript. CommandAction (buttons) + AdjustmentAction (dial)</p>
+      </div>
+    </div>
+    <div class="arch-connector">&darr;</div>
+    <div class="arch-layer">
+      <div class="arch-icon">&#128295;</div>
+      <div class="arch-info">
+        <h3>Universal Adapter</h3>
+        <p>Normalized interface: send, approve, reject, switchAgent, setThinkingDepth, getTools</p>
+      </div>
+    </div>
+    <div class="arch-connector">&darr;</div>
+    <div class="arch-layer">
+      <div class="arch-icon">&#129302;</div>
+      <div class="arch-info">
+        <h3>AI Agents</h3>
+        <p>Any agent that implements the adapter interface gets hardware controls</p>
+        <div class="agents-row">
+          <span class="agent-badge primary">Wispy</span>
+          <span class="agent-badge ready">OpenClaw</span>
+          <span class="agent-badge planned">Claude Code</span>
+          <span class="agent-badge planned">Aider</span>
+          <span class="agent-badge planned">Any REST</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CARD 7: HAPTIC FEEDBACK ===== -->
+<section class="card" id="card7">
+  <span class="card-number">07 / 09</span>
+  <div class="card-brand">WISPY CONSOLE <span>|</span> DevStudio 2026</div>
+  <div class="section-label" style="color: var(--magenta);">HAPTIC FEEDBACK</div>
+  <h1 class="card-title" style="font-size: 40px;">Feel the Agent's State in Your Hand</h1>
+  <p class="card-subtitle" style="margin-bottom: 36px;">Physical vibrations communicate state without looking at the screen. Transformative for accessibility.</p>
+  <div class="haptic-grid">
+    <div class="haptic-card" onclick="animateHaptic(this)">
+      <div class="haptic-wave" id="hw1"></div>
+      <h4>Task Completed</h4>
+      <div class="haptic-waveform">happy_alert</div>
+      <div class="haptic-desc">Quick celebratory pulse</div>
+    </div>
+    <div class="haptic-card" onclick="animateHaptic(this)">
+      <div class="haptic-wave" id="hw2"></div>
+      <h4>Needs Approval</h4>
+      <div class="haptic-waveform">completed</div>
+      <div class="haptic-desc">Firm attention tap</div>
+    </div>
+    <div class="haptic-card" onclick="animateHaptic(this)">
+      <div class="haptic-wave" id="hw3"></div>
+      <h4>Error Occurred</h4>
+      <div class="haptic-waveform">angry_alert</div>
+      <div class="haptic-desc">Sharp buzz</div>
+    </div>
+    <div class="haptic-card" onclick="animateHaptic(this)">
+      <div class="haptic-wave" id="hw4"></div>
+      <h4>Agent Switched</h4>
+      <div class="haptic-waveform">sharp_state_change</div>
+      <div class="haptic-desc">Clean transition click</div>
+    </div>
+    <div class="haptic-card" onclick="animateHaptic(this)">
+      <div class="haptic-wave" id="hw5"></div>
+      <h4>Thinking</h4>
+      <div class="haptic-waveform">wave</div>
+      <div class="haptic-desc">Smooth ongoing rhythm</div>
+    </div>
+    <div class="haptic-card" onclick="animateHaptic(this)">
+      <div class="haptic-wave" id="hw6"></div>
+      <h4>Payment Confirmed</h4>
+      <div class="haptic-waveform">knock</div>
+      <div class="haptic-desc">Double-tap confirmation</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CARD 8: MARKET OPPORTUNITY ===== -->
+<section class="card" id="card8">
+  <span class="card-number">08 / 09</span>
+  <div class="card-brand">WISPY CONSOLE <span>|</span> DevStudio 2026</div>
+  <div class="section-label" style="color: var(--yellow);">MARKET OPPORTUNITY</div>
+  <h1 class="card-title" style="font-size: 40px;">Completely Unserved. First-Mover Advantage.</h1>
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-number">40M+</div>
+      <div class="stat-label">Logitech MX Users</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">73%</div>
+      <div class="stat-label">Developers Using AI Daily</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">0</div>
+      <div class="stat-label">AI Plugins on Logitech Marketplace</div>
+    </div>
+  </div>
+  <div class="pricing-row">
+    <div class="price-card">
+      <div class="price-tier">Free</div>
+      <div class="price-amount">$0</div>
+      <ul class="price-features">
+        <li>Core buttons (5)</li>
+        <li>1 agent connection</li>
+        <li>Basic haptics</li>
+      </ul>
+    </div>
+    <div class="price-card featured">
+      <div class="price-tier">Pro</div>
+      <div class="price-amount">$4.99<span style="font-size: 16px; color: var(--text-dim);">/mo</span></div>
+      <ul class="price-features">
+        <li>All 9 buttons + voice</li>
+        <li>Multi-agent + Marathon</li>
+        <li>Custom mappings</li>
+        <li>Wallet dashboard</li>
+      </ul>
+    </div>
+    <div class="price-card">
+      <div class="price-tier">Team</div>
+      <div class="price-amount">$9.99<span style="font-size: 16px; color: var(--text-dim);">/mo</span></div>
+      <ul class="price-features">
+        <li>Shared profiles</li>
+        <li>Team coordination</li>
+        <li>Admin controls</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CARD 9: THE FUTURE ===== -->
+<section class="card" id="card9">
+  <span class="card-number">09 / 09</span>
+  <div class="card-brand">WISPY CONSOLE <span>|</span> DevStudio 2026</div>
+  <div class="section-label" style="background: linear-gradient(90deg, var(--cyan), var(--magenta)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">ROADMAP</div>
+  <h1 class="card-title" style="font-size: 40px;">What Comes Next</h1>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <h3>Phase 1: Foundation <span class="timeline-tag">NOW</span></h3>
+        <p>Plugin architecture, universal adapter layer, interactive demo. Wispy + OpenClaw adapters.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <h3>Phase 2: Full LCD Rendering <span class="timeline-tag">POST-SDK GA</span></h3>
+        <p>Agent status icons, thinking depth gauges, and live token counters on each button's display.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <h3>Phase 3: More Agent Adapters</h3>
+        <p>Claude Code, Aider, Continue.dev, Cursor, and a generic REST adapter for any agent.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <h3>Phase 4: Team Mode</h3>
+        <p>Shared MX Creative Console profiles. Team agents coordinate across multiple consoles.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-content">
+        <h3>Phase 5: Marketplace + MX Ink</h3>
+        <p>Logitech Marketplace distribution. MX Ink integration for spatial AI interactions in VR.</p>
+      </div>
+    </div>
+  </div>
+  <div class="closing-tagline">The future of AI isn't typing. <span>It's touching.</span></div>
+  <div class="team-line">Brian Mwai &amp; Joy Lang'at &bull; Hausor Labs &bull; hausorlabs.tech</div>
+</section>
+
+<script>
+// Generate navigation dots
+const cards = document.querySelectorAll('.card');
+const navDots = document.getElementById('navDots');
+cards.forEach((_, i) => {
+  const dot = document.createElement('button');
+  dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+  dot.onclick = () => cards[i].scrollIntoView({ behavior: 'smooth' });
+  dot.title = `Card ${i + 1}`;
+  navDots.appendChild(dot);
+});
+
+// Track active card
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const idx = Array.from(cards).indexOf(entry.target);
+      document.querySelectorAll('.nav-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === idx);
+      });
+    }
+  });
+}, { threshold: 0.5 });
+cards.forEach(c => observer.observe(c));
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+  const dots = document.querySelectorAll('.nav-dot');
+  const activeIdx = Array.from(dots).findIndex(d => d.classList.contains('active'));
+  if (e.key >= '1' && e.key <= '9') {
+    const idx = parseInt(e.key) - 1;
+    if (idx < cards.length) cards[idx].scrollIntoView({ behavior: 'smooth' });
+  } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+    if (activeIdx < cards.length - 1) cards[activeIdx + 1].scrollIntoView({ behavior: 'smooth' });
+  } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+    if (activeIdx > 0) cards[activeIdx - 1].scrollIntoView({ behavior: 'smooth' });
+  }
+});
+
+// Generate haptic wave bars
+document.querySelectorAll('.haptic-wave').forEach((wave, idx) => {
+  const patterns = [
+    [8,20,30,20,8,4,16,28,16,4],
+    [6,12,28,32,28,12,6,4,4,4],
+    [32,8,32,8,32,4,28,8,28,8],
+    [4,4,32,4,4,32,4,4,4,4],
+    [8,16,24,28,24,16,8,16,24,28],
+    [4,4,28,4,4,4,28,4,4,4]
+  ];
+  const p = patterns[idx] || patterns[0];
+  p.forEach((h, i) => {
+    const bar = document.createElement('div');
+    bar.className = 'bar';
+    bar.style.height = h + 'px';
+    bar.style.animationDelay = (i * 0.12) + 's';
+    wave.appendChild(bar);
+  });
+});
+
+// Haptic animation on click
+function animateHaptic(card) {
+  card.style.transform = 'scale(0.95)';
+  setTimeout(() => { card.style.transform = 'translateY(-4px)'; }, 100);
+  setTimeout(() => { card.style.transform = ''; }, 300);
+}
+
+// Dial animation on Card 4
+let dialVal = 0;
+let dialDir = 1;
+function animateDial() {
+  dialVal += dialDir * 0.3;
+  if (dialVal >= 100) dialDir = -1;
+  if (dialVal <= 0) dialDir = 1;
+  const v = Math.round(dialVal);
+  const el = document.getElementById('dialValue');
+  const ml = document.getElementById('dialMode');
+  if (el) el.textContent = v;
+  if (ml) {
+    if (v <= 20) { ml.textContent = 'Flash'; el.style.color = 'var(--cyan)'; }
+    else if (v <= 50) { ml.textContent = 'Standard'; el.style.color = '#88ccdd'; }
+    else if (v <= 80) { ml.textContent = 'Deep Think'; el.style.color = 'var(--orange)'; }
+    else { ml.textContent = 'Marathon'; el.style.color = 'var(--magenta)'; }
+  }
+  requestAnimationFrame(animateDial);
+}
+animateDial();
+</script>
+</body>
+</html>

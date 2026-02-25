@@ -1,0 +1,1153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wispy Console -- Interactive Animations</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface-2: #1a1a28;
+    --border: #2a2a3a;
+    --text: #e8e8f0;
+    --text-dim: #8888aa;
+    --cyan: #00DDFF;
+    --magenta: #FF00E9;
+    --orange: #FF7000;
+    --yellow: #FFB800;
+    --accent: #00d4aa;
+    --blue: #4488ff;
+    --red: #ff4466;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* ─── TAB BAR ─── */
+  .tab-bar {
+    display: flex;
+    gap: 0;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 16px;
+    flex-shrink: 0;
+  }
+  .tab {
+    padding: 12px 20px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: var(--text-dim);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active {
+    color: var(--cyan);
+    border-bottom-color: var(--cyan);
+  }
+  .tab-spacer { flex: 1; }
+  .fullscreen-btn {
+    padding: 8px 14px;
+    font-size: 11px;
+    color: var(--text-dim);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    font-family: inherit;
+  }
+  .fullscreen-btn:hover { color: var(--cyan); }
+
+  /* ─── SCENE CONTAINER ─── */
+  .scene-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .scene {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: relative;
+  }
+  .scene.active { display: flex; align-items: center; justify-content: center; }
+
+  /* Grid background */
+  .grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* ─── SCENE 1: BUTTON PRESS ─── */
+  .s1-wrap { display: flex; flex-direction: column; align-items: center; gap: 40px; z-index: 1; }
+  .s1-label { font-size: 11px; letter-spacing: 3px; color: var(--text-dim); text-transform: uppercase; }
+
+  .s1-button {
+    width: 140px;
+    height: 140px;
+    border-radius: 20px;
+    background: #0c0c14;
+    border: 2px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .s1-button .icon { font-size: 40px; z-index: 1; }
+  .s1-button .label { font-size: 12px; font-weight: 600; letter-spacing: 1.5px; color: var(--text-dim); z-index: 1; text-transform: uppercase; }
+
+  /* Glow behind */
+  .s1-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, var(--cyan) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  /* Ripple */
+  .s1-button::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--cyan);
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  /* Animation states */
+  .s1-button.pressing {
+    transform: scale(0.92);
+    border-color: var(--cyan);
+    box-shadow: 0 0 30px rgba(0,221,255,0.3);
+  }
+  .s1-button.pressing::before { opacity: 0.2; }
+  .s1-button.pressing .label { color: var(--cyan); }
+
+  .s1-button.glowing {
+    border-color: var(--cyan);
+    box-shadow: 0 0 40px rgba(0,221,255,0.25), inset 0 0 20px rgba(0,221,255,0.05);
+  }
+  .s1-button.glowing::before { opacity: 0.15; }
+  .s1-button.glowing .label { color: var(--cyan); }
+
+  /* Terminal strip */
+  .s1-terminal {
+    width: 500px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 13px;
+    line-height: 1.7;
+    min-height: 100px;
+  }
+  .s1-terminal .line { opacity: 0; transform: translateY(8px); transition: all 0.3s ease; }
+  .s1-terminal .line.visible { opacity: 1; transform: translateY(0); }
+  .s1-terminal .prompt { color: var(--cyan); }
+  .s1-terminal .system { color: var(--blue); font-style: italic; }
+  .s1-terminal .success { color: var(--accent); }
+  .s1-terminal .agent { color: #aa66ff; }
+
+  /* Haptic pulse ring */
+  .s1-haptic {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 1px solid var(--cyan);
+    opacity: 0;
+    transform: scale(0.5);
+    pointer-events: none;
+  }
+
+  @keyframes s1-pulse {
+    0% { opacity: 0.5; transform: scale(0.5); }
+    100% { opacity: 0; transform: scale(2); }
+  }
+
+  /* ─── SCENE 2: DIAL ROTATION ─── */
+  .s2-wrap { display: flex; flex-direction: column; align-items: center; gap: 30px; z-index: 1; }
+
+  .s2-dial-outer {
+    position: relative;
+    width: 340px;
+    height: 340px;
+  }
+
+  .s2-dial-ring {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+  }
+
+  .s2-dial-body {
+    position: absolute;
+    inset: 30px;
+    border-radius: 50%;
+    background: #0c0c14;
+    border: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .s2-dial-value {
+    font-size: 52px;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    transition: color 0.3s;
+  }
+
+  .s2-dial-mode {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+
+  /* Arc track -- using SVG overlay */
+  .s2-arc-svg {
+    position: absolute;
+    inset: -10px;
+    width: calc(100% + 20px);
+    height: calc(100% + 20px);
+  }
+
+  /* Zone labels */
+  .s2-zones {
+    display: flex;
+    gap: 32px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 2px;
+  }
+  .s2-zones span {
+    color: var(--text-dim);
+    opacity: 0.4;
+    transition: all 0.3s;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border-radius: 4px;
+  }
+  .s2-zones span.active {
+    opacity: 1;
+    background: rgba(255,255,255,0.05);
+  }
+
+  /* Gradient bar */
+  .s2-bar {
+    width: 400px;
+    height: 6px;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--blue), var(--cyan), var(--accent), var(--orange), var(--red));
+    position: relative;
+  }
+  .s2-bar-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: white;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    transition: left 0.15s ease;
+    box-shadow: 0 0 12px rgba(255,255,255,0.3);
+  }
+
+  /* ─── SCENE 3: ACTIONS RING ─── */
+  .s3-wrap { position: relative; z-index: 1; }
+
+  .s3-ring {
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .s3-center {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2px;
+    z-index: 2;
+    transition: all 0.5s;
+  }
+  .s3-center-icon { font-size: 24px; }
+  .s3-center-label { font-size: 9px; letter-spacing: 2px; font-weight: 700; color: var(--text-dim); }
+
+  .s3-item {
+    position: absolute;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #0c0c14;
+    border: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  .s3-item.visible { opacity: 1; transform: scale(1); }
+  .s3-item.highlighted {
+    border-color: var(--cyan);
+    box-shadow: 0 0 20px rgba(0,221,255,0.25);
+    background: rgba(0,221,255,0.08);
+    transform: scale(1.15);
+  }
+
+  .s3-item-label {
+    position: absolute;
+    font-size: 9px;
+    letter-spacing: 1px;
+    font-weight: 600;
+    color: var(--text-dim);
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity 0.3s;
+    text-transform: uppercase;
+  }
+  .s3-item.highlighted .s3-item-label { opacity: 1; color: var(--cyan); }
+
+  .s3-context-label {
+    position: absolute;
+    top: -60px;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    transition: all 0.5s;
+  }
+
+  /* ─── SCENE 4: HAPTIC PULSE ─── */
+  .s4-wrap { display: flex; flex-direction: column; align-items: center; gap: 40px; z-index: 1; }
+
+  .s4-mouse {
+    position: relative;
+    width: 160px;
+    height: 240px;
+  }
+
+  .s4-mouse-body {
+    width: 100%;
+    height: 100%;
+    border-radius: 40px 40px 60px 60px;
+    background: #1a1a24;
+    border: 1.5px solid var(--border);
+    position: relative;
+    overflow: visible;
+  }
+
+  /* Mouse features */
+  .s4-mouse-wheel {
+    position: absolute;
+    top: 55px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 30px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: #0c0c14;
+  }
+
+  .s4-mouse-thumb {
+    position: absolute;
+    right: -12px;
+    top: 100px;
+    width: 24px;
+    height: 40px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: #0c0c14;
+  }
+
+  /* Ripple rings around mouse */
+  .s4-ripple {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1px solid var(--cyan);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .s4-waveform-label {
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    min-height: 28px;
+    transition: all 0.3s;
+  }
+
+  .s4-pattern-name {
+    font-size: 12px;
+    color: var(--text-dim);
+    min-height: 20px;
+  }
+
+  /* Waveform visual */
+  .s4-waveform-svg {
+    width: 400px;
+    height: 60px;
+  }
+
+  /* ─── SCENE 5: DATA FLOW ─── */
+  .s5-wrap { position: relative; z-index: 1; width: 900px; }
+
+  .s5-nodes {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .s5-node {
+    width: 120px;
+    padding: 16px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s;
+  }
+  .s5-node.active {
+    border-color: var(--cyan);
+    box-shadow: 0 0 20px rgba(0,221,255,0.15);
+  }
+  .s5-node-icon { font-size: 24px; margin-bottom: 6px; }
+  .s5-node-label { font-size: 10px; letter-spacing: 1.5px; font-weight: 600; color: var(--text-dim); text-transform: uppercase; }
+  .s5-node-sub { font-size: 8px; color: var(--text-dim); opacity: 0.5; margin-top: 2px; }
+
+  /* Connection lines */
+  .s5-line-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  /* Travelling dot */
+  .s5-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 16px var(--cyan), 0 0 32px rgba(0,221,255,0.3);
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    transition: left 0.8s ease-in-out;
+  }
+
+  /* ─── FOOTER ─── */
+  .anim-footer {
+    padding: 8px 24px;
+    background: var(--surface-2);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-dim);
+    flex-shrink: 0;
+  }
+  .anim-footer kbd {
+    padding: 1px 6px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    font-family: inherit;
+    font-size: 10px;
+    color: var(--text);
+  }
+</style>
+</head>
+<body>
+
+<!-- Tab Bar -->
+<div class="tab-bar">
+  <div class="tab active" data-scene="1" onclick="switchScene(1)">1. Button Press</div>
+  <div class="tab" data-scene="2" onclick="switchScene(2)">2. Dial Rotation</div>
+  <div class="tab" data-scene="3" onclick="switchScene(3)">3. Actions Ring</div>
+  <div class="tab" data-scene="4" onclick="switchScene(4)">4. Haptic Pulse</div>
+  <div class="tab" data-scene="5" onclick="switchScene(5)">5. Data Flow</div>
+  <div class="tab-spacer"></div>
+  <button class="fullscreen-btn" onclick="toggleFullscreen()">&#x26F6; Fullscreen</button>
+</div>
+
+<!-- Scene Container -->
+<div class="scene-container">
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SCENE 1: BUTTON PRESS                       -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="scene active" id="scene1">
+    <div class="grid-bg"></div>
+    <div class="s1-wrap">
+      <div class="s1-label">LCD Button Press Interaction</div>
+      <div style="position:relative;display:flex;align-items:center;justify-content:center;">
+        <div class="s1-button" id="s1Btn">
+          <span class="icon">&#x1F9E0;</span>
+          <span class="label">Code</span>
+        </div>
+        <div class="s1-haptic" id="s1Haptic1"></div>
+        <div class="s1-haptic" id="s1Haptic2"></div>
+      </div>
+      <div class="s1-terminal" id="s1Terminal">
+        <div class="line" id="s1L1"><span class="prompt">wispy &#x276F;</span> <span class="system">Waiting for input...</span></div>
+        <div class="line" id="s1L2"><span class="prompt">wispy &#x276F;</span> Button pressed: <span style="color:var(--cyan);">CODE</span></div>
+        <div class="line" id="s1L3"><span class="agent">&#x1F9E0; Coder Agent activated. Analyzing workspace...</span></div>
+        <div class="line" id="s1L4"><span class="success">&#x2713; Ready for code tasks. Thinking depth: Standard (35)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SCENE 2: DIAL ROTATION                      -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="scene" id="scene2">
+    <div class="grid-bg"></div>
+    <div class="s2-wrap">
+      <div class="s2-dial-outer" id="s2DialOuter">
+        <svg class="s2-arc-svg" viewBox="0 0 360 360">
+          <circle cx="180" cy="180" r="168" fill="none" stroke="#2a2a3a" stroke-width="4" opacity="0.3"/>
+          <circle cx="180" cy="180" r="168" fill="none" stroke="url(#s2grad)" stroke-width="4"
+                  stroke-dasharray="1056" stroke-dashoffset="1056" stroke-linecap="round" id="s2Arc"
+                  transform="rotate(-90 180 180)"/>
+          <defs>
+            <linearGradient id="s2grad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#4488ff"/>
+              <stop offset="30%" stop-color="#00DDFF"/>
+              <stop offset="60%" stop-color="#FF7000"/>
+              <stop offset="100%" stop-color="#ff4466"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <div class="s2-dial-ring"></div>
+        <div class="s2-dial-body">
+          <div class="s2-dial-value" id="s2Value" style="color:var(--cyan);">0</div>
+          <div class="s2-dial-mode" id="s2Mode" style="color:var(--cyan);">FLASH</div>
+        </div>
+      </div>
+
+      <div class="s2-bar">
+        <div class="s2-bar-thumb" id="s2Thumb" style="left:0%"></div>
+      </div>
+
+      <div class="s2-zones" id="s2Zones">
+        <span class="active" data-zone="flash" style="color:var(--blue);">Flash</span>
+        <span data-zone="standard" style="color:var(--cyan);">Standard</span>
+        <span data-zone="deep" style="color:var(--orange);">Deep Think</span>
+        <span data-zone="marathon" style="color:var(--red);">Marathon</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SCENE 3: ACTIONS RING                       -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="scene" id="scene3">
+    <div class="grid-bg"></div>
+    <div class="s3-wrap">
+      <div class="s3-context-label" id="s3Context">VS CODE -- CODER AGENT</div>
+      <div class="s3-ring" id="s3Ring">
+        <div class="s3-center" id="s3Center">
+          <span class="s3-center-icon">&#x1F4BB;</span>
+          <span class="s3-center-label">CODE</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SCENE 4: HAPTIC PULSE                       -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="scene" id="scene4">
+    <div class="grid-bg"></div>
+    <div class="s4-wrap">
+      <div class="s4-waveform-label" id="s4Label" style="color:var(--cyan);">HAPPY_ALERT</div>
+      <div class="s4-pattern-name" id="s4Desc">Task completed successfully</div>
+      <div class="s4-mouse" id="s4Mouse">
+        <div class="s4-mouse-body">
+          <div class="s4-mouse-wheel"></div>
+          <div class="s4-mouse-thumb"></div>
+        </div>
+        <div class="s4-ripple" id="s4R1"></div>
+        <div class="s4-ripple" id="s4R2"></div>
+        <div class="s4-ripple" id="s4R3"></div>
+      </div>
+      <svg class="s4-waveform-svg" id="s4Wave" viewBox="0 0 400 60">
+        <line x1="0" y1="30" x2="400" y2="30" stroke="#2a2a3a" stroke-width="0.5"/>
+      </svg>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SCENE 5: DATA FLOW                          -->
+  <!-- ═══════════════════════════════════════════ -->
+  <div class="scene" id="scene5">
+    <div class="grid-bg"></div>
+    <div class="s5-wrap">
+      <div style="text-align:center;margin-bottom:30px;">
+        <div style="font-size:11px;letter-spacing:3px;color:var(--text-dim);text-transform:uppercase;">Event Pipeline -- Button Press to AI Response</div>
+      </div>
+      <div class="s5-nodes" id="s5Nodes">
+        <div class="s5-node" data-idx="0">
+          <div class="s5-node-icon">&#x1F534;</div>
+          <div class="s5-node-label">Button</div>
+          <div class="s5-node-sub">LCD Press</div>
+        </div>
+        <div style="width:40px;text-align:center;color:var(--border);">&#x25B6;</div>
+        <div class="s5-node" data-idx="1">
+          <div class="s5-node-icon">&#x1F50C;</div>
+          <div class="s5-node-label">SDK</div>
+          <div class="s5-node-sub">WebSocket</div>
+        </div>
+        <div style="width:40px;text-align:center;color:var(--border);">&#x25B6;</div>
+        <div class="s5-node" data-idx="2">
+          <div class="s5-node-icon">&#x1F47B;</div>
+          <div class="s5-node-label">Plugin</div>
+          <div class="s5-node-sub">Event Router</div>
+        </div>
+        <div style="width:40px;text-align:center;color:var(--border);">&#x25B6;</div>
+        <div class="s5-node" data-idx="3">
+          <div class="s5-node-icon">&#x1F310;</div>
+          <div class="s5-node-label">Adapter</div>
+          <div class="s5-node-sub">Bridge</div>
+        </div>
+        <div style="width:40px;text-align:center;color:var(--border);">&#x25B6;</div>
+        <div class="s5-node" data-idx="4">
+          <div class="s5-node-icon">&#x1F9E0;</div>
+          <div class="s5-node-label">Agent</div>
+          <div class="s5-node-sub">AI Model</div>
+        </div>
+        <div style="width:40px;text-align:center;color:var(--border);">&#x25B6;</div>
+        <div class="s5-node" data-idx="5">
+          <div class="s5-node-icon">&#x2705;</div>
+          <div class="s5-node-label">Feedback</div>
+          <div class="s5-node-sub">LCD + Haptic</div>
+        </div>
+      </div>
+      <!-- Travelling dot -->
+      <div style="position:relative;height:20px;margin-top:20px;">
+        <div style="position:absolute;left:60px;right:60px;top:50%;height:2px;background:var(--border);border-radius:1px;"></div>
+        <div class="s5-dot" id="s5Dot" style="left:60px;"></div>
+      </div>
+      <div id="s5Status" style="text-align:center;margin-top:20px;font-size:12px;color:var(--text-dim);letter-spacing:1px;min-height:20px;">
+        Waiting for button press...
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<div class="anim-footer">
+  <div style="display:flex;gap:12px;">
+    <span><kbd>1</kbd>-<kbd>5</kbd> Switch scenes</span>
+    <span><kbd>F</kbd> Fullscreen</span>
+    <span><kbd>Space</kbd> Restart animation</span>
+  </div>
+  <div style="color:var(--cyan);font-weight:500;">Wispy Console -- Animation Scenes</div>
+</div>
+
+<script>
+// ═════════════════════════════════════════
+// SCENE MANAGEMENT
+// ═════════════════════════════════════════
+let currentScene = 1;
+let sceneIntervals = {};
+
+function switchScene(n) {
+  // Stop all intervals
+  Object.values(sceneIntervals).forEach(ids => {
+    if (Array.isArray(ids)) ids.forEach(clearInterval);
+    else clearInterval(ids);
+  });
+  sceneIntervals = {};
+
+  // Switch tabs
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelector(`.tab[data-scene="${n}"]`).classList.add('active');
+
+  // Switch scenes
+  document.querySelectorAll('.scene').forEach(s => s.classList.remove('active'));
+  document.getElementById(`scene${n}`).classList.add('active');
+
+  currentScene = n;
+
+  // Start the scene animation
+  switch(n) {
+    case 1: startScene1(); break;
+    case 2: startScene2(); break;
+    case 3: startScene3(); break;
+    case 4: startScene4(); break;
+    case 5: startScene5(); break;
+  }
+}
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+  } else {
+    document.exitFullscreen();
+  }
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown', (e) => {
+  if (e.key >= '1' && e.key <= '5') switchScene(parseInt(e.key));
+  if (e.key === 'f' || e.key === 'F') toggleFullscreen();
+  if (e.key === ' ') { e.preventDefault(); switchScene(currentScene); }
+});
+
+// ═════════════════════════════════════════
+// SCENE 1: BUTTON PRESS
+// ═════════════════════════════════════════
+function startScene1() {
+  const btn = document.getElementById('s1Btn');
+  const lines = [
+    document.getElementById('s1L1'),
+    document.getElementById('s1L2'),
+    document.getElementById('s1L3'),
+    document.getElementById('s1L4'),
+  ];
+  const h1 = document.getElementById('s1Haptic1');
+  const h2 = document.getElementById('s1Haptic2');
+
+  function resetS1() {
+    btn.classList.remove('pressing', 'glowing');
+    btn.style.transform = '';
+    lines.forEach(l => l.classList.remove('visible'));
+    h1.style.animation = 'none';
+    h2.style.animation = 'none';
+  }
+
+  function runCycle() {
+    resetS1();
+
+    // 0.5s: show waiting
+    setTimeout(() => { lines[0].classList.add('visible'); }, 300);
+
+    // 1.2s: press button
+    setTimeout(() => {
+      btn.classList.add('pressing');
+      // Fire haptic rings
+      h1.style.animation = 's1-pulse 0.6s ease-out forwards';
+      setTimeout(() => { h2.style.animation = 's1-pulse 0.6s ease-out 0.1s forwards'; }, 100);
+    }, 1200);
+
+    // 1.5s: release, glow
+    setTimeout(() => {
+      btn.classList.remove('pressing');
+      btn.classList.add('glowing');
+      lines[1].classList.add('visible');
+    }, 1500);
+
+    // 2.0s: agent response
+    setTimeout(() => { lines[2].classList.add('visible'); }, 2000);
+
+    // 2.5s: success
+    setTimeout(() => { lines[3].classList.add('visible'); }, 2500);
+
+    // 3.5s: fade glow
+    setTimeout(() => { btn.classList.remove('glowing'); }, 3500);
+  }
+
+  runCycle();
+  sceneIntervals[1] = setInterval(runCycle, 4200);
+}
+
+// ═════════════════════════════════════════
+// SCENE 2: DIAL ROTATION
+// ═════════════════════════════════════════
+function startScene2() {
+  const valueEl = document.getElementById('s2Value');
+  const modeEl = document.getElementById('s2Mode');
+  const arcEl = document.getElementById('s2Arc');
+  const thumbEl = document.getElementById('s2Thumb');
+  const zonesEl = document.getElementById('s2Zones');
+
+  const totalLen = 1056; // circumference
+  let currentVal = 0;
+  let targetVal = 0;
+  let phase = 0;
+  const targets = [15, 35, 65, 90, 35]; // Flash, Standard, Deep Think, Marathon, back to Standard
+  const pauses = [2000, 2000, 2000, 2000, 1500];
+
+  function getZone(v) {
+    if (v <= 20) return { name: 'FLASH', color: 'var(--blue)', zone: 'flash' };
+    if (v <= 50) return { name: 'STANDARD', color: 'var(--cyan)', zone: 'standard' };
+    if (v <= 80) return { name: 'DEEP THINK', color: 'var(--orange)', zone: 'deep' };
+    return { name: 'MARATHON', color: 'var(--red)', zone: 'marathon' };
+  }
+
+  function updateDisplay(v) {
+    const z = getZone(v);
+    valueEl.textContent = Math.round(v);
+    valueEl.style.color = z.color;
+    modeEl.textContent = z.name;
+    modeEl.style.color = z.color;
+    thumbEl.style.left = v + '%';
+    arcEl.setAttribute('stroke-dashoffset', totalLen - (totalLen * v / 100));
+
+    zonesEl.querySelectorAll('span').forEach(s => {
+      s.classList.toggle('active', s.dataset.zone === z.zone);
+    });
+  }
+
+  let animFrame;
+  function animate() {
+    if (Math.abs(currentVal - targetVal) > 0.5) {
+      currentVal += (targetVal - currentVal) * 0.04;
+      updateDisplay(currentVal);
+      animFrame = requestAnimationFrame(animate);
+    } else {
+      currentVal = targetVal;
+      updateDisplay(currentVal);
+      // Pause, then next target
+      setTimeout(() => {
+        phase = (phase + 1) % targets.length;
+        targetVal = targets[phase];
+        animFrame = requestAnimationFrame(animate);
+      }, pauses[phase]);
+    }
+  }
+
+  currentVal = 0;
+  phase = 0;
+  targetVal = targets[0];
+  animFrame = requestAnimationFrame(animate);
+
+  sceneIntervals[2] = [setInterval(() => {}, 999999)]; // placeholder
+  // Cleanup on switch
+  const origSwitch = switchScene;
+}
+
+// ═════════════════════════════════════════
+// SCENE 3: ACTIONS RING
+// ═════════════════════════════════════════
+function startScene3() {
+  const ring = document.getElementById('s3Ring');
+  const center = document.getElementById('s3Center');
+  const contextLabel = document.getElementById('s3Context');
+
+  const contexts = [
+    {
+      app: 'VS Code', icon: '&#x1F4BB;', label: 'CODE', context: 'VS CODE -- CODER AGENT',
+      items: ['&#x1F9E0; Code', '&#x1F527; Fix', '&#x1F504; Refactor', '&#x1F9EA; Test', '&#x1F4DD; Docs', '&#x2705; Approve']
+    },
+    {
+      app: 'Chrome', icon: '&#x1F310;', label: 'WEB', context: 'CHROME -- RESEARCHER AGENT',
+      items: ['&#x1F50D; Search', '&#x1F4CB; Summarize', '&#x1F4CA; Analyze', '&#x2705; Fact-check', '&#x1F4E5; Save', '&#x1F517; Share']
+    },
+    {
+      app: 'Terminal', icon: '&#x1F5A5;&#xFE0F;', label: 'OPS', context: 'TERMINAL -- DEVOPS AGENT',
+      items: ['&#x1F680; Deploy', '&#x1F527; Build', '&#x1F9EA; Test', '&#x1F4E6; Publish', '&#x1F50D; Debug', '&#x1F4CA; Monitor']
+    },
+    {
+      app: 'Figma', icon: '&#x1F3A8;', label: 'DESIGN', context: 'FIGMA -- ANALYST AGENT',
+      items: ['&#x1F4DD; Review', '&#x1F4E4; Export', '&#x2699;&#xFE0F; Optimize', '&#x1F4CC; Annotate', '&#x1F3A8; Theme', '&#x2705; Approve']
+    },
+  ];
+
+  let ctxIdx = 0;
+
+  function renderContext(idx) {
+    const ctx = contexts[idx];
+
+    // Remove old items
+    ring.querySelectorAll('.s3-item').forEach(el => el.remove());
+
+    // Update center
+    center.querySelector('.s3-center-icon').innerHTML = ctx.icon;
+    center.querySelector('.s3-center-label').textContent = ctx.label;
+    contextLabel.textContent = ctx.context;
+
+    // Add items with stagger
+    const r = 140;
+    ctx.items.forEach((item, i) => {
+      const angle = (i / ctx.items.length) * Math.PI * 2 - Math.PI / 2;
+      const x = 180 + r * Math.cos(angle) - 26;
+      const y = 180 + r * Math.sin(angle) - 26;
+
+      const el = document.createElement('div');
+      el.className = 's3-item';
+      el.innerHTML = item.split(' ')[0];
+      el.style.left = x + 'px';
+      el.style.top = y + 'px';
+
+      // Label below
+      const lbl = document.createElement('span');
+      lbl.className = 's3-item-label';
+      lbl.textContent = item.split(' ').slice(1).join(' ');
+      lbl.style.top = '56px';
+      lbl.style.left = '50%';
+      lbl.style.transform = 'translateX(-50%)';
+      el.appendChild(lbl);
+
+      ring.appendChild(el);
+
+      // Stagger appear
+      setTimeout(() => el.classList.add('visible'), 100 + i * 80);
+    });
+  }
+
+  function highlightSequence() {
+    const items = ring.querySelectorAll('.s3-item');
+    let idx = 0;
+
+    function nextHighlight() {
+      items.forEach(el => el.classList.remove('highlighted'));
+      if (idx < items.length) {
+        items[idx].classList.add('highlighted');
+        idx++;
+        sceneIntervals['3h'] = setTimeout(nextHighlight, 600);
+      } else {
+        // All unhighlight, wait, switch context
+        setTimeout(() => {
+          items.forEach(el => {
+            el.classList.remove('visible');
+            el.style.transform = 'scale(0.3)';
+            el.style.opacity = '0';
+          });
+          setTimeout(() => {
+            ctxIdx = (ctxIdx + 1) % contexts.length;
+            renderContext(ctxIdx);
+            setTimeout(highlightSequence, 800);
+          }, 500);
+        }, 800);
+      }
+    }
+    nextHighlight();
+  }
+
+  renderContext(0);
+  setTimeout(highlightSequence, 1000);
+
+  sceneIntervals[3] = [setInterval(() => {}, 999999)];
+}
+
+// ═════════════════════════════════════════
+// SCENE 4: HAPTIC PULSE
+// ═════════════════════════════════════════
+function startScene4() {
+  const labelEl = document.getElementById('s4Label');
+  const descEl = document.getElementById('s4Desc');
+  const waveEl = document.getElementById('s4Wave');
+  const r1 = document.getElementById('s4R1');
+  const r2 = document.getElementById('s4R2');
+  const r3 = document.getElementById('s4R3');
+
+  const patterns = [
+    {
+      name: 'HAPPY_ALERT', desc: 'Task completed successfully', color: 'var(--cyan)',
+      wave: 'M0,30 Q20,10 40,30 Q60,50 80,30 Q100,15 120,30 Q130,35 140,30 L400,30',
+      rippleSize: [200, 280, 360], delay: [0, 150, 300]
+    },
+    {
+      name: 'ANGRY_ALERT', desc: 'Error occurred -- needs attention', color: 'var(--red)',
+      wave: 'M0,30 L20,8 L40,52 L60,8 L80,52 L100,8 L120,52 L140,25 L160,35 L400,30',
+      rippleSize: [180, 240, 300], delay: [0, 50, 100]
+    },
+    {
+      name: 'SHARP_STATE_CHANGE', desc: 'Agent switched to new mode', color: 'var(--blue)',
+      wave: 'M0,30 L10,30 L12,5 L14,55 L16,30 L80,30 L82,10 L84,50 L86,30 L400,30',
+      rippleSize: [190, 250, 310], delay: [0, 200, 400]
+    },
+    {
+      name: 'SUBTLE_COLLISION', desc: 'Hover feedback on ring item', color: '#aa66ff',
+      wave: 'M0,30 Q40,25 80,30 Q120,35 160,30 Q200,27 240,30 Q280,33 320,30 Q360,28 400,30',
+      rippleSize: [160, 200, 0], delay: [0, 100, 0]
+    },
+    {
+      name: 'WAVE', desc: 'AI thinking in progress', color: 'var(--orange)',
+      wave: 'M0,30 C30,10 60,50 100,30 C130,10 160,50 200,30 C230,10 260,50 300,30 C330,15 360,45 400,30',
+      rippleSize: [190, 260, 330], delay: [0, 200, 400]
+    },
+    {
+      name: 'KNOCK', desc: 'Payment confirmed on chain', color: 'var(--yellow)',
+      wave: 'M0,30 L30,30 L32,8 L34,30 L60,30 L62,12 L64,30 L400,30',
+      rippleSize: [170, 230, 290], delay: [0, 250, 500]
+    },
+  ];
+
+  let patIdx = 0;
+
+  function fireRipple(el, size, color, delay) {
+    if (!size) return;
+    setTimeout(() => {
+      el.style.width = '20px';
+      el.style.height = '20px';
+      el.style.borderColor = color;
+      el.style.opacity = '0.6';
+      el.style.transition = 'none';
+      void el.offsetWidth;
+      el.style.transition = 'all 0.8s ease-out';
+      el.style.width = size + 'px';
+      el.style.height = size + 'px';
+      el.style.opacity = '0';
+    }, delay);
+  }
+
+  function showPattern() {
+    const p = patterns[patIdx];
+    labelEl.textContent = p.name;
+    labelEl.style.color = p.color;
+    descEl.textContent = p.desc;
+
+    // Draw waveform
+    waveEl.innerHTML = `
+      <line x1="0" y1="30" x2="400" y2="30" stroke="#2a2a3a" stroke-width="0.5"/>
+      <path d="${p.wave}" fill="none" stroke="${p.color}" stroke-width="2" opacity="0.7">
+        <animate attributeName="stroke-dashoffset" from="600" to="0" dur="1s" fill="freeze"/>
+        <animate attributeName="stroke-dasharray" from="600" to="600" dur="0.01s" fill="freeze"/>
+      </path>
+    `;
+
+    // Fire ripples
+    fireRipple(r1, p.rippleSize[0], p.color, p.delay[0]);
+    fireRipple(r2, p.rippleSize[1], p.color, p.delay[1]);
+    fireRipple(r3, p.rippleSize[2], p.color, p.delay[2]);
+
+    patIdx = (patIdx + 1) % patterns.length;
+  }
+
+  showPattern();
+  sceneIntervals[4] = setInterval(showPattern, 3000);
+}
+
+// ═════════════════════════════════════════
+// SCENE 5: DATA FLOW
+// ═════════════════════════════════════════
+function startScene5() {
+  const nodes = document.querySelectorAll('#s5Nodes .s5-node');
+  const dot = document.getElementById('s5Dot');
+  const status = document.getElementById('s5Status');
+
+  // Node positions (percentage along the track)
+  const positions = [60, 195, 330, 467, 602, 738]; // px from left
+  const labels = [
+    'User presses LCD button...',
+    'WebSocket event: onKeyDown(actionId)',
+    'Plugin routes to adapter.execute("commit")',
+    'Adapter bridges to AI agent...',
+    'AI agent processes (thinking depth: Standard)...',
+    'LCD turns green. Haptic: success wave.'
+  ];
+
+  let step = 0;
+  const nodeEls = Array.from(nodes);
+
+  function resetS5() {
+    nodeEls.forEach(n => n.classList.remove('active'));
+    dot.style.left = positions[0] + 'px';
+    status.textContent = 'Waiting for button press...';
+    step = 0;
+  }
+
+  function advanceStep() {
+    if (step > 5) {
+      // Reverse trip
+      setTimeout(() => {
+        dot.style.transition = 'left 2s ease-in-out';
+        dot.style.left = positions[0] + 'px';
+        status.textContent = 'LCD state update propagates back to hardware';
+        status.style.color = 'var(--accent)';
+        nodeEls.forEach(n => n.classList.remove('active'));
+
+        setTimeout(() => {
+          status.style.color = '';
+          resetS5();
+          setTimeout(advanceStep, 500);
+        }, 2500);
+      }, 500);
+      return;
+    }
+
+    // Move dot to current step
+    dot.style.transition = 'left 0.8s ease-in-out';
+    dot.style.left = positions[step] + 'px';
+
+    // Highlight current node
+    nodeEls.forEach(n => n.classList.remove('active'));
+    if (nodeEls[step]) nodeEls[step].classList.add('active');
+
+    status.textContent = labels[step];
+
+    step++;
+    const delay = step === 5 ? 2000 : (step === 6 ? 1500 : 1000);
+    sceneIntervals['5s'] = setTimeout(advanceStep, delay);
+  }
+
+  resetS5();
+  setTimeout(advanceStep, 800);
+  sceneIntervals[5] = [setInterval(() => {}, 999999)];
+}
+
+// ═════════════════════════════════════════
+// INIT
+// ═════════════════════════════════════════
+startScene1();
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "name": "wispy-console",
+  "version": "1.0.0",
+  "description": "AI Agent Control Console for Logitech MX Creative Console — powered by Wispy",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "dev": "npm run build && npm run link",
+    "link": "node scripts/link.js",
+    "unlink": "node scripts/unlink.js",
+    "build:pack": "node scripts/pack.js"
+  },
+  "keywords": ["logitech", "mx-creative-console", "ai", "wispy", "agent", "actions-sdk"],
+  "author": "Hausor Labs",
+  "license": "MIT"
+}
