@@ -1,0 +1,482 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" font-family="'Inter', 'SF Pro', -apple-system, sans-serif">
+  <defs>
+    <pattern id="grid-p" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-width="0.15" stroke-opacity="0.07"/>
+    </pattern>
+    <pattern id="grid-p-sm" width="8" height="8" patternUnits="userSpaceOnUse">
+      <path d="M 8 0 L 0 0 0 8" fill="none" stroke="#ffffff" stroke-width="0.1" stroke-opacity="0.035"/>
+    </pattern>
+    <linearGradient id="fd-p" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="fd-pg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#00d4aa" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#00d4aa" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="fd-pb" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4488ff" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#4488ff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="fd-pv" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#aa66ff" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#aa66ff" stop-opacity="0"/>
+    </linearGradient>
+    <marker id="arr-p" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="10" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 3 L0 6 Z" fill="#ffffff" opacity="0.35"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="1000" fill="#0e0e0e"/>
+  <rect width="1600" height="1000" fill="url(#grid-p-sm)"/>
+  <rect width="1600" height="1000" fill="url(#grid-p)"/>
+
+  <!-- Title -->
+  <g transform="translate(1140, 24)">
+    <rect width="430" height="56" fill="none" stroke="#ffffff" stroke-width="0.5" opacity="0.18"/>
+    <rect x="1" y="1" width="428" height="28" fill="url(#fd-p)"/>
+    <line x1="0" y1="29" x2="430" y2="29" stroke="#ffffff" stroke-width="0.3" opacity="0.1"/>
+    <text x="215" y="19" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700" letter-spacing="4" opacity="0.9">DYNAMIC TOOL MAPPING</text>
+    <text x="215" y="46" text-anchor="middle" fill="#ffffff" font-size="8" letter-spacing="2.5" opacity="0.35">BUTTONS ADAPT TO CONNECTED AGENT</text>
+  </g>
+  <text x="30" y="40" fill="#ffffff" font-size="9" letter-spacing="2.5" opacity="0.25">WISPY CONSOLE  //  HAUSOR LABS</text>
+  <text x="30" y="56" fill="#ffffff" font-size="7" letter-spacing="2" opacity="0.15">BLUEPRINT REV 2.1  //  FEB 2026</text>
+
+  <!-- ================================================================ -->
+  <!-- HOW IT WORKS: getTools() flow -->
+  <!-- ================================================================ -->
+  <g transform="translate(50, 90)">
+    <rect width="1500" height="60" fill="url(#fd-p)" stroke="#ffffff" stroke-width="0.4" opacity="0.15"/>
+    <rect x="1" y="1" width="1498" height="22" fill="url(#fd-p)"/>
+    <text x="20" y="16" fill="#ffffff" font-size="8" font-weight="700" letter-spacing="3" opacity="0.4">HOW IT WORKS</text>
+    <text x="180" y="16" fill="#ffffff" font-size="7" opacity="0.2" letter-spacing="1">Plugin calls adapter.getTools() on connected agent -> auto-maps returned tools to LCD buttons</text>
+    <line x1="0" y1="24" x2="1500" y2="24" stroke="#ffffff" stroke-width="0.15" opacity="0.05"/>
+    <text x="20" y="44" fill="#ffffff" font-size="7.5" font-family="'SF Mono', monospace" opacity="0.2">
+      const tools = await adapter.getTools()  //  Agent returns its available tools  ->  Plugin renders 80x80px LCD icons  ->  User presses button  ->  adapter.execute(tool.name, context)
+    </text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- AGENT 1: WISPY (Reference adapter) -->
+  <!-- ================================================================ -->
+  <g transform="translate(50, 180)">
+    <!-- Agent header -->
+    <rect width="470" height="520" fill="url(#fd-pg)" stroke="#00d4aa" stroke-width="0.6" opacity="0.3"/>
+    <rect x="1" y="1" width="468" height="32" fill="#00d4aa" fill-opacity="0.04"/>
+    <line x1="0" y1="0" x2="8" y2="0" stroke="#00d4aa" stroke-width="4" opacity="0.7"/>
+
+    <text x="20" y="22" fill="#00d4aa" font-size="11" font-weight="700" letter-spacing="2" opacity="0.7">Wispy</text>
+    <text x="90" y="22" fill="#ffffff" font-size="7" opacity="0.2" letter-spacing="1">REST :3578  //  Gemini 2.5  //  32+ tools</text>
+    <rect x="380" y="8" width="72" height="16" rx="2" fill="#00d4aa" fill-opacity="0.08" stroke="#00d4aa" stroke-width="0.4" opacity="0.35"/>
+    <text x="416" y="20" text-anchor="middle" fill="#00d4aa" font-size="6.5" font-weight="700" opacity="0.5" letter-spacing="1.5">REFERENCE</text>
+
+    <line x1="0" y1="36" x2="470" y2="36" stroke="#00d4aa" stroke-width="0.15" opacity="0.08"/>
+
+    <!-- Page label -->
+    <text x="20" y="56" fill="#ffffff" font-size="7" letter-spacing="2" opacity="0.2">PAGE 1 OF 4  //  CODE FLOW</text>
+
+    <!-- 3x3 Grid -->
+    <g transform="translate(20, 68)">
+      <!-- Row 1 -->
+      <g>
+        <rect width="138" height="78" rx="8" fill="#ffffff" fill-opacity="0.015" stroke="#ffffff" stroke-width="0.5" opacity="0.3"/>
+        <g transform="translate(69, 26)" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.5">
+          <circle r="4"/><line x1="-14" y1="0" x2="-4" y2="0"/><line x1="4" y1="0" x2="14" y2="0"/>
+        </g>
+        <text x="69" y="52" text-anchor="middle" fill="#ffffff" font-size="7.5" font-weight="600" letter-spacing="1" opacity="0.45">COMMIT</text>
+        <text x="69" y="66" text-anchor="middle" fill="#ffffff" font-size="5.5" opacity="0.15">Stage + AI msg</text>
+      </g>
+
+      <g transform="translate(146, 0)">
+        <rect width="138" height="78" rx="8" fill="#ffffff" fill-opacity="0.015" stroke="#ffffff" stroke-width="0.5" opacity="0.3"/>
+        <g transform="translate(69, 26)" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.5">
+          <line x1="0" y1="8" x2="0" y2="-8"/><polyline points="-5,-3 0,-8 5,-3"/>
+        </g>
+        <text x="69" y="52" text-anchor="middle" fill="#ffffff" font-size="7.5" font-weight="600" letter-spacing="1" opacity="0.45">PUSH</text>
+        <text x="69" y="66" text-anchor="middle" fill="#ffffff" font-size="5.5" opacity="0.15">To remote</text>
+      </g>
+
+      <g transform="translate(292, 0)">
+        <rect width="138" height="78" rx="8" fill="#ffffff" fill-opacity="0.015" stroke="#ffffff" stroke-width="0.5" opacity="0.3"/>
+        <g transform="translate(69, 26)" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.5">
+          <circle cx="-5" cy="-5" r="2.5"/><circle cx="5" cy="5" r="2.5"/><line x1="-5" y1="-2.5" x2="-5" y2="5"/>
+          <path d="M5 2.5 L5-1 C5-3 -1-3 -5-2.5"/>
+        </g>
+        <text x="69" y="52" text-anchor="middle" fill="#ffffff" font-size="7.5" font-weight="600" letter-spacing="1" opacity="0.45">PR</text>
+        <text x="69" y="66" text-anchor="middle" fill="#ffffff" font-size="5.5" opacity="0.15">AI summary</text>
+      </g>
+
+      <!-- Row 2 (universal: Approve, Reject, Dictate) -->
+      <g transform="translate(0, 86)">
+        <rect width="138" height="78" rx="8" fill="#00d4aa" fill-opacity="0.025" stroke="#00d4aa" stroke-width="0.5" opacity="0.35"/>
+        <g transform="translate(69, 26)" stroke="#00d4aa" stroke-width="1.6" stroke-linecap="round" fill="none" opacity="0.6">
+          <polyline points="-7,0 -2,5 8,-5"/>
+        </g>
+        <text x="69" y="52" text-anchor="middle" fill="#00d4aa" font-size="7.5" font-weight="600" letter-spacing="1" opacity="0.5">APPROVE</text>
+        <text x="69" y="66" text-anchor="middle" fill="#00d4aa" font-size="5.5" opacity="0.2">Accept action</text>
+      </g>
+
+      <g transform="translate(146, 86)">
+        <rect width="138" height="78" rx="8" fill="#ff4466" fill-opacity="0.02" stroke="#ff4466" stroke-width="0.5" opacity="0.3"/>
+        <g transform="translate(69, 26)" stroke="#ff4466" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.5">
+          <line x1="-5" y1="-5" x2="5" y2="5"/><line x1="5" y1="-5" x2="-5" y2="5"/>
+        </g>
+        <text x="69" y="52" text-anchor="middle" fill="#ff4466" font-size="7.5" font-weight="600" letter-spacing="1" opacity="0.45">REJECT</text>
+        <text x="69" y="66" text-anchor="middle" fill="#ff4466" font-size="5.5" opacity="0.18">Deny + retry</text>
+      </g>
+
+      <g transform="translate(292, 86)">
+        <rect width="138" height="78" rx="8" fill="#4488ff" fill-opacity="0.02" stroke="#4488ff" stroke-width="0.5" opacity="0.3"/>
+        <g transform="translate(69, 24)" stroke="#4488ff" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.5">
+          <rect x="-4" y="-8" width="8" height="11" rx="4"/>
+          <path d="M-7 3 C-7 7-3 10 0 10 C3 10 7 7 7 3"/>
+          <line x1="0" y1="10" x2="0" y2="13"/>
+        </g>
+        <text x="69" y="52" text-anchor="middle" fill="#4488ff" font-size="7.5" font-weight="600" letter-spacing="1" opacity="0.45">DICTATE</text>
+        <text x="69" y="66" text-anchor="middle" fill="#4488ff" font-size="5.5" opacity="0.18">Hold to speak</text>
+      </g>
+
+      <!-- Row 3 -->
+      <g transform="translate(0, 172)">
+        <rect width="138" height="78" rx="8" fill="#ffffff" fill-opacity="0.015" stroke="#ffffff" stroke-width="0.5" opacity="0.3"/>
+        <text x="69" y="36" text-anchor="middle" fill="#ffffff" font-size="7.5" font-weight="600" letter-spacing="1" opacity="0.4">TEST</text>
+        <text x="69" y="50" text-anchor="middle" fill="#ffffff" font-size="5.5" opacity="0.15">Run suite</text>
+      </g>
+      <g transform="translate(146, 172)">
+        <rect width="138" height="78" rx="8" fill="#ffffff" fill-opacity="0.015" stroke="#ffffff" stroke-width="0.5" opacity="0.3"/>
+        <text x="69" y="36" text-anchor="middle" fill="#ffffff" font-size="7.5" font-weight="600" letter-spacing="1" opacity="0.4">BUILD</text>
+        <text x="69" y="50" text-anchor="middle" fill="#ffffff" font-size="5.5" opacity="0.15">Compile</text>
+      </g>
+      <g transform="translate(292, 172)">
+        <rect width="138" height="78" rx="8" fill="#ff8844" fill-opacity="0.02" stroke="#ff8844" stroke-width="0.5" opacity="0.3"/>
+        <text x="69" y="36" text-anchor="middle" fill="#ff8844" font-size="7.5" font-weight="600" letter-spacing="1" opacity="0.45">DEPLOY</text>
+        <text x="69" y="50" text-anchor="middle" fill="#ff8844" font-size="5.5" opacity="0.18">Long = prod</text>
+      </g>
+    </g>
+
+    <!-- Additional pages preview -->
+    <line x1="16" y1="340" x2="454" y2="340" stroke="#ffffff" stroke-width="0.15" opacity="0.05"/>
+    <text x="235" y="358" text-anchor="middle" fill="#ffffff" font-size="7" opacity="0.15" letter-spacing="0.5">+ 3 MORE PAGES: Agent Control, DevOps, Communication</text>
+
+    <!-- Page dots -->
+    <g transform="translate(210, 372)">
+      <circle r="3" fill="#00d4aa" opacity="0.5"/>
+      <circle cx="12" r="2.5" fill="none" stroke="#ffffff" stroke-width="0.4" opacity="0.2"/>
+      <circle cx="24" r="2.5" fill="none" stroke="#ffffff" stroke-width="0.4" opacity="0.2"/>
+      <circle cx="36" r="2.5" fill="none" stroke="#ffffff" stroke-width="0.4" opacity="0.2"/>
+    </g>
+
+    <!-- Agent-specific tools list -->
+    <line x1="16" y1="390" x2="454" y2="390" stroke="#00d4aa" stroke-width="0.15" opacity="0.06"/>
+    <text x="20" y="408" fill="#00d4aa" font-size="7" font-weight="600" letter-spacing="2" opacity="0.35">getTools() RETURNS:</text>
+    <g transform="translate(20, 420)" fill="#ffffff" font-size="6.5" opacity="0.18" letter-spacing="0.3">
+      <text>file_read, file_write, bash, git_commit, git_push, git_pr,</text>
+      <text y="12">web_search, web_browse, memory_store, memory_query,</text>
+      <text y="24">browser_screenshot, browser_click, cron_schedule,</text>
+      <text y="36">wallet_pay, marathon_start, marathon_step, mcp_call...</text>
+      <text y="52" fill="#00d4aa" opacity="0.3" font-weight="600">32+ tools -> auto-mapped to 4 pages</text>
+    </g>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- AGENT 2: OPENCLAW (Browser automation) -->
+  <!-- ================================================================ -->
+  <g transform="translate(565, 180)">
+    <rect width="470" height="520" fill="url(#fd-pb)" stroke="#4488ff" stroke-width="0.6" opacity="0.3"/>
+    <rect x="1" y="1" width="468" height="32" fill="#4488ff" fill-opacity="0.03"/>
+    <line x1="0" y1="0" x2="8" y2="0" stroke="#4488ff" stroke-width="4" opacity="0.7"/>
+
+    <text x="20" y="22" fill="#4488ff" font-size="11" font-weight="700" letter-spacing="2" opacity="0.7">OpenClaw</text>
+    <text x="120" y="22" fill="#ffffff" font-size="7" opacity="0.2" letter-spacing="1">REST :4000  //  Multi-model  //  Browser agent</text>
+    <rect x="404" y="8" width="52" height="16" rx="2" fill="#4488ff" fill-opacity="0.08" stroke="#4488ff" stroke-width="0.4" opacity="0.35"/>
+    <text x="430" y="20" text-anchor="middle" fill="#4488ff" font-size="6.5" font-weight="700" opacity="0.5" letter-spacing="1.5">READY</text>
+
+    <line x1="0" y1="36" x2="470" y2="36" stroke="#4488ff" stroke-width="0.15" opacity="0.08"/>
+    <text x="20" y="56" fill="#ffffff" font-size="7" letter-spacing="2" opacity="0.2">PAGE 1 OF 3  //  BROWSER TOOLS</text>
+
+    <!-- 3x3 Grid: OpenClaw browser tools -->
+    <g transform="translate(20, 68)">
+      <!-- Row 1: Navigation -->
+      <g>
+        <rect width="138" height="78" rx="8" fill="#4488ff" fill-opacity="0.02" stroke="#4488ff" stroke-width="0.5" opacity="0.3"/>
+        <g transform="translate(69, 26)" stroke="#4488ff" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.5">
+          <circle r="7"/><line x1="5" y1="5" x2="10" y2="10"/>
+        </g>
+        <text x="69" y="52" text-anchor="middle" fill="#4488ff" font-size="7.5" font-weight="600" letter-spacing="1" opacity="0.5">BROWSE</text>
+        <text x="69" y="66" text-anchor="middle" fill="#4488ff" font-size="5.5" opacity="0.2">Navigate to URL</text>
+      </g>
+
+      <g transform="translate(146, 0)">
+        <rect width="138" height="78" rx="8" fill="#ffffff" fill-opacity="0.015" stroke="#ffffff" stroke-width="0.5" opacity="0.3"/>
+        <g transform="translate(69, 26)" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.5">
+          <rect x="-9" y="-7" width="18" height="14" rx="1.5"/><line x1="-9" y1="-3" x2="9" y2="-3"/>
+          <circle cx="-6" cy="-5" r="0.8" fill="#ffffff" opacity="0.4"/>
+          <circle cx="-3" cy="-5" r="0.8" fill="#ffffff" opacity="0.4"/>
+        </g>
+        <text x="69" y="52" text-anchor="middle" fill="#ffffff" font-size="7.5" font-weight="600" letter-spacing="1" opacity="0.45">SCREENSHOT</text>
+        <text x="69" y="66" text-anchor="middle" fill="#ffffff" font-size="5.5" opacity="0.15">Capture page</text>
+      </g>
+
+      <g transform="translate(292, 0)">
+        <rect width="138" height="78" rx="8" fill="#ffffff" fill-opacity="0.015" stroke="#ffffff" stroke-width="0.5" opacity="0.3"/>
+        <g transform="translate(69, 26)" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.5">
+          <path d="M-4-6 L-4 4 L4 4"/><polyline points="1,1 4,4 1,7"/>
+        </g>
+        <text x="69" y="52" text-anchor="middle" fill="#ffffff" font-size="7.5" font-weight="600" letter-spacing="1" opacity="0.45">CLICK</text>
+        <text x="69" y="66" text-anchor="middle" fill="#ffffff" font-size="5.5" opacity="0.15">Element select</text>
+      </g>
+
+      <!-- Row 2: Data + approval -->
+      <g transform="translate(0, 86)">
+        <rect width="138" height="78" rx="8" fill="#ffffff" fill-opacity="0.015" stroke="#ffffff" stroke-width="0.5" opacity="0.3"/>
+        <g transform="translate(69, 26)" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.5">
+          <rect x="-8" y="-6" width="16" height="12" rx="1"/><line x1="-4" y1="-2" x2="4" y2="-2"/>
+          <line x1="-4" y1="2" x2="2" y2="2"/>
+        </g>
+        <text x="69" y="52" text-anchor="middle" fill="#ffffff" font-size="7.5" font-weight="600" letter-spacing="1" opacity="0.45">EXTRACT</text>
+        <text x="69" y="66" text-anchor="middle" fill="#ffffff" font-size="5.5" opacity="0.15">Scrape data</text>
+      </g>
+
+      <g transform="translate(146, 86)">
+        <rect width="138" height="78" rx="8" fill="#00d4aa" fill-opacity="0.025" stroke="#00d4aa" stroke-width="0.5" opacity="0.35"/>
+        <g transform="translate(69, 26)" stroke="#00d4aa" stroke-width="1.6" stroke-linecap="round" fill="none" opacity="0.6">
+          <polyline points="-7,0 -2,5 8,-5"/>
+        </g>
+        <text x="69" y="52" text-anchor="middle" fill="#00d4aa" font-size="7.5" font-weight="600" letter-spacing="1" opacity="0.5">APPROVE</text>
+        <text x="69" y="66" text-anchor="middle" fill="#00d4aa" font-size="5.5" opacity="0.2">Accept step</text>
+      </g>
+
+      <g transform="translate(292, 86)">
+        <rect width="138" height="78" rx="8" fill="#ff4466" fill-opacity="0.02" stroke="#ff4466" stroke-width="0.5" opacity="0.3"/>
+        <g transform="translate(69, 26)" stroke="#ff4466" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.5">
+          <line x1="-5" y1="-5" x2="5" y2="5"/><line x1="5" y1="-5" x2="-5" y2="5"/>
+        </g>
+        <text x="69" y="52" text-anchor="middle" fill="#ff4466" font-size="7.5" font-weight="600" letter-spacing="1" opacity="0.45">REJECT</text>
+        <text x="69" y="66" text-anchor="middle" fill="#ff4466" font-size="5.5" opacity="0.18">Stop + retry</text>
+      </g>
+
+      <!-- Row 3: Actions -->
+      <g transform="translate(0, 172)">
+        <rect width="138" height="78" rx="8" fill="#ffffff" fill-opacity="0.015" stroke="#ffffff" stroke-width="0.5" opacity="0.3"/>
+        <g transform="translate(69, 26)" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.5">
+          <rect x="-8" y="-6" width="16" height="12" rx="1"/>
+          <line x1="-4" y1="-1" x2="4" y2="-1"/><line x1="-4" y1="3" x2="1" y2="3"/>
+        </g>
+        <text x="69" y="52" text-anchor="middle" fill="#ffffff" font-size="7.5" font-weight="600" letter-spacing="1" opacity="0.4">FILL FORM</text>
+        <text x="69" y="66" text-anchor="middle" fill="#ffffff" font-size="5.5" opacity="0.15">Auto-complete</text>
+      </g>
+      <g transform="translate(146, 172)">
+        <rect width="138" height="78" rx="8" fill="#ffffff" fill-opacity="0.015" stroke="#ffffff" stroke-width="0.5" opacity="0.3"/>
+        <g transform="translate(69, 26)" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.5">
+          <rect x="-6" y="-7" width="12" height="9" rx="1"/><rect x="-8" y="4" width="16" height="3" rx="0.5"/>
+        </g>
+        <text x="69" y="52" text-anchor="middle" fill="#ffffff" font-size="7.5" font-weight="600" letter-spacing="1" opacity="0.4">TAB</text>
+        <text x="69" y="66" text-anchor="middle" fill="#ffffff" font-size="5.5" opacity="0.15">Switch tab</text>
+      </g>
+      <g transform="translate(292, 172)">
+        <rect width="138" height="78" rx="8" fill="#ff8844" fill-opacity="0.02" stroke="#ff8844" stroke-width="0.5" opacity="0.3"/>
+        <g transform="translate(69, 26)" stroke="#ff8844" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.5">
+          <circle r="6"/><polyline points="-3,-3 3,0 -3,3"/>
+        </g>
+        <text x="69" y="52" text-anchor="middle" fill="#ff8844" font-size="7.5" font-weight="600" letter-spacing="1" opacity="0.45">AUTOMATE</text>
+        <text x="69" y="66" text-anchor="middle" fill="#ff8844" font-size="5.5" opacity="0.18">Run workflow</text>
+      </g>
+    </g>
+
+    <!-- More pages -->
+    <line x1="16" y1="340" x2="454" y2="340" stroke="#ffffff" stroke-width="0.15" opacity="0.05"/>
+    <text x="235" y="358" text-anchor="middle" fill="#ffffff" font-size="7" opacity="0.15" letter-spacing="0.5">+ 2 MORE PAGES: Data Extraction, Task Automation</text>
+
+    <g transform="translate(217, 372)">
+      <circle r="3" fill="#4488ff" opacity="0.5"/>
+      <circle cx="12" r="2.5" fill="none" stroke="#ffffff" stroke-width="0.4" opacity="0.2"/>
+      <circle cx="24" r="2.5" fill="none" stroke="#ffffff" stroke-width="0.4" opacity="0.2"/>
+    </g>
+
+    <!-- Agent tools -->
+    <line x1="16" y1="390" x2="454" y2="390" stroke="#4488ff" stroke-width="0.15" opacity="0.06"/>
+    <text x="20" y="408" fill="#4488ff" font-size="7" font-weight="600" letter-spacing="2" opacity="0.35">getTools() RETURNS:</text>
+    <g transform="translate(20, 420)" fill="#ffffff" font-size="6.5" opacity="0.18" letter-spacing="0.3">
+      <text>browse, screenshot, click, type, scroll, extract,</text>
+      <text y="12">fill_form, select_option, wait_for, navigate_back,</text>
+      <text y="24">tab_switch, tab_close, download, cookie_get,</text>
+      <text y="36">multi_step_workflow, task_tree, progress_track...</text>
+      <text y="52" fill="#4488ff" opacity="0.3" font-weight="600">18+ tools -> auto-mapped to 3 pages</text>
+    </g>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- AGENT 3: CLAUDE CODE -->
+  <!-- ================================================================ -->
+  <g transform="translate(1080, 180)">
+    <rect width="470" height="520" fill="url(#fd-pv)" stroke="#aa66ff" stroke-width="0.6" opacity="0.3"/>
+    <rect x="1" y="1" width="468" height="32" fill="#aa66ff" fill-opacity="0.03"/>
+    <line x1="0" y1="0" x2="8" y2="0" stroke="#aa66ff" stroke-width="4" opacity="0.7"/>
+
+    <text x="20" y="22" fill="#aa66ff" font-size="11" font-weight="700" letter-spacing="2" opacity="0.7">Claude Code</text>
+    <text x="140" y="22" fill="#ffffff" font-size="7" opacity="0.2" letter-spacing="1">CLI stdio  //  Anthropic  //  Code agent</text>
+    <rect x="396" y="8" width="60" height="16" rx="2" fill="#aa66ff" fill-opacity="0.08" stroke="#aa66ff" stroke-width="0.4" opacity="0.35"/>
+    <text x="426" y="20" text-anchor="middle" fill="#aa66ff" font-size="6.5" font-weight="700" opacity="0.5" letter-spacing="1.5">PLANNED</text>
+
+    <line x1="0" y1="36" x2="470" y2="36" stroke="#aa66ff" stroke-width="0.15" opacity="0.08"/>
+    <text x="20" y="56" fill="#ffffff" font-size="7" letter-spacing="2" opacity="0.2">PAGE 1 OF 3  //  CODE EDITING</text>
+
+    <!-- 3x3 Grid: Claude Code tools -->
+    <g transform="translate(20, 68)">
+      <!-- Row 1 -->
+      <g>
+        <rect width="138" height="78" rx="8" fill="#aa66ff" fill-opacity="0.02" stroke="#aa66ff" stroke-width="0.5" opacity="0.3"/>
+        <g transform="translate(69, 26)" stroke="#aa66ff" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.5">
+          <rect x="-8" y="-6" width="16" height="12" rx="1"/><line x1="-4" y1="-2" x2="4" y2="-2"/>
+          <line x1="-4" y1="2" x2="2" y2="2"/>
+        </g>
+        <text x="69" y="52" text-anchor="middle" fill="#aa66ff" font-size="7.5" font-weight="600" letter-spacing="1" opacity="0.5">EDIT</text>
+        <text x="69" y="66" text-anchor="middle" fill="#aa66ff" font-size="5.5" opacity="0.2">Modify file</text>
+      </g>
+
+      <g transform="translate(146, 0)">
+        <rect width="138" height="78" rx="8" fill="#ffffff" fill-opacity="0.015" stroke="#ffffff" stroke-width="0.5" opacity="0.3"/>
+        <g transform="translate(69, 26)" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.5">
+          <circle r="7"/><line x1="5" y1="5" x2="10" y2="10"/>
+        </g>
+        <text x="69" y="52" text-anchor="middle" fill="#ffffff" font-size="7.5" font-weight="600" letter-spacing="1" opacity="0.45">SEARCH</text>
+        <text x="69" y="66" text-anchor="middle" fill="#ffffff" font-size="5.5" opacity="0.15">Grep codebase</text>
+      </g>
+
+      <g transform="translate(292, 0)">
+        <rect width="138" height="78" rx="8" fill="#ffffff" fill-opacity="0.015" stroke="#ffffff" stroke-width="0.5" opacity="0.3"/>
+        <g transform="translate(69, 26)" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.5">
+          <rect x="-7" y="-7" width="14" height="14" rx="1"/><line x1="-3" y1="-3" x2="3" y2="3"/>
+          <line x1="3" y1="-3" x2="-3" y2="3"/>
+        </g>
+        <text x="69" y="52" text-anchor="middle" fill="#ffffff" font-size="7.5" font-weight="600" letter-spacing="1" opacity="0.45">EXPLAIN</text>
+        <text x="69" y="66" text-anchor="middle" fill="#ffffff" font-size="5.5" opacity="0.15">What this does</text>
+      </g>
+
+      <!-- Row 2 -->
+      <g transform="translate(0, 86)">
+        <rect width="138" height="78" rx="8" fill="#00d4aa" fill-opacity="0.025" stroke="#00d4aa" stroke-width="0.5" opacity="0.35"/>
+        <g transform="translate(69, 26)" stroke="#00d4aa" stroke-width="1.6" stroke-linecap="round" fill="none" opacity="0.6">
+          <polyline points="-7,0 -2,5 8,-5"/>
+        </g>
+        <text x="69" y="52" text-anchor="middle" fill="#00d4aa" font-size="7.5" font-weight="600" letter-spacing="1" opacity="0.5">APPROVE</text>
+        <text x="69" y="66" text-anchor="middle" fill="#00d4aa" font-size="5.5" opacity="0.2">Accept change</text>
+      </g>
+
+      <g transform="translate(146, 86)">
+        <rect width="138" height="78" rx="8" fill="#ff4466" fill-opacity="0.02" stroke="#ff4466" stroke-width="0.5" opacity="0.3"/>
+        <g transform="translate(69, 26)" stroke="#ff4466" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.5">
+          <line x1="-5" y1="-5" x2="5" y2="5"/><line x1="5" y1="-5" x2="-5" y2="5"/>
+        </g>
+        <text x="69" y="52" text-anchor="middle" fill="#ff4466" font-size="7.5" font-weight="600" letter-spacing="1" opacity="0.45">REJECT</text>
+        <text x="69" y="66" text-anchor="middle" fill="#ff4466" font-size="5.5" opacity="0.18">Undo change</text>
+      </g>
+
+      <g transform="translate(292, 86)">
+        <rect width="138" height="78" rx="8" fill="#ffffff" fill-opacity="0.015" stroke="#ffffff" stroke-width="0.5" opacity="0.3"/>
+        <g transform="translate(69, 26)" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.5">
+          <path d="M-6-4 L0-8 L6-4"/><path d="M-6 0 L0-4 L6 0"/><path d="M-6 4 L0 0 L6 4"/>
+        </g>
+        <text x="69" y="52" text-anchor="middle" fill="#ffffff" font-size="7.5" font-weight="600" letter-spacing="1" opacity="0.45">REFACTOR</text>
+        <text x="69" y="66" text-anchor="middle" fill="#ffffff" font-size="5.5" opacity="0.15">Restructure</text>
+      </g>
+
+      <!-- Row 3 -->
+      <g transform="translate(0, 172)">
+        <rect width="138" height="78" rx="8" fill="#ffffff" fill-opacity="0.015" stroke="#ffffff" stroke-width="0.5" opacity="0.3"/>
+        <text x="69" y="36" text-anchor="middle" fill="#ffffff" font-size="7.5" font-weight="600" letter-spacing="1" opacity="0.4">COMMIT</text>
+        <text x="69" y="50" text-anchor="middle" fill="#ffffff" font-size="5.5" opacity="0.15">Stage + msg</text>
+      </g>
+      <g transform="translate(146, 172)">
+        <rect width="138" height="78" rx="8" fill="#ffffff" fill-opacity="0.015" stroke="#ffffff" stroke-width="0.5" opacity="0.3"/>
+        <text x="69" y="36" text-anchor="middle" fill="#ffffff" font-size="7.5" font-weight="600" letter-spacing="1" opacity="0.4">BASH</text>
+        <text x="69" y="50" text-anchor="middle" fill="#ffffff" font-size="5.5" opacity="0.15">Run command</text>
+      </g>
+      <g transform="translate(292, 172)">
+        <rect width="138" height="78" rx="8" fill="#ffffff" fill-opacity="0.015" stroke="#ffffff" stroke-width="0.5" opacity="0.3"/>
+        <text x="69" y="36" text-anchor="middle" fill="#ffffff" font-size="7.5" font-weight="600" letter-spacing="1" opacity="0.4">GLOB</text>
+        <text x="69" y="50" text-anchor="middle" fill="#ffffff" font-size="5.5" opacity="0.15">Find files</text>
+      </g>
+    </g>
+
+    <!-- More pages -->
+    <line x1="16" y1="340" x2="454" y2="340" stroke="#ffffff" stroke-width="0.15" opacity="0.05"/>
+    <text x="235" y="358" text-anchor="middle" fill="#ffffff" font-size="7" opacity="0.15" letter-spacing="0.5">+ 2 MORE PAGES: Git Operations, Analysis</text>
+
+    <g transform="translate(217, 372)">
+      <circle r="3" fill="#aa66ff" opacity="0.5"/>
+      <circle cx="12" r="2.5" fill="none" stroke="#ffffff" stroke-width="0.4" opacity="0.2"/>
+      <circle cx="24" r="2.5" fill="none" stroke="#ffffff" stroke-width="0.4" opacity="0.2"/>
+    </g>
+
+    <!-- Agent tools -->
+    <line x1="16" y1="390" x2="454" y2="390" stroke="#aa66ff" stroke-width="0.15" opacity="0.06"/>
+    <text x="20" y="408" fill="#aa66ff" font-size="7" font-weight="600" letter-spacing="2" opacity="0.35">getTools() RETURNS:</text>
+    <g transform="translate(20, 420)" fill="#ffffff" font-size="6.5" opacity="0.18" letter-spacing="0.3">
+      <text>read, edit, write, bash, glob, grep, git_commit,</text>
+      <text y="12">git_push, git_pr, search, explain, refactor,</text>
+      <text y="24">review, approve, reject, create_file,</text>
+      <text y="36">notebook_edit, web_search, web_fetch...</text>
+      <text y="52" fill="#aa66ff" opacity="0.3" font-weight="600">20+ tools -> auto-mapped to 3 pages</text>
+    </g>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- UNIVERSAL BUTTONS CALLOUT -->
+  <!-- ================================================================ -->
+  <g transform="translate(50, 730)">
+    <rect width="730" height="90" fill="url(#fd-p)" stroke="#ffffff" stroke-width="0.4" opacity="0.15"/>
+    <rect x="1" y="1" width="728" height="22" fill="url(#fd-p)"/>
+    <text x="20" y="16" fill="#ffffff" font-size="8" font-weight="700" letter-spacing="3" opacity="0.35">UNIVERSAL BUTTONS</text>
+    <text x="210" y="16" fill="#ffffff" font-size="7" opacity="0.18" letter-spacing="1">Present on EVERY agent, always in the same position</text>
+    <line x1="0" y1="24" x2="730" y2="24" stroke="#ffffff" stroke-width="0.15" opacity="0.05"/>
+
+    <g transform="translate(20, 38)">
+      <rect width="100" height="34" rx="4" fill="#00d4aa" fill-opacity="0.03" stroke="#00d4aa" stroke-width="0.4" opacity="0.3"/>
+      <text x="50" y="22" text-anchor="middle" fill="#00d4aa" font-size="8" font-weight="600" opacity="0.5">APPROVE</text>
+    </g>
+    <g transform="translate(130, 38)">
+      <rect width="100" height="34" rx="4" fill="#ff4466" fill-opacity="0.02" stroke="#ff4466" stroke-width="0.4" opacity="0.25"/>
+      <text x="50" y="22" text-anchor="middle" fill="#ff4466" font-size="8" font-weight="600" opacity="0.45">REJECT</text>
+    </g>
+    <g transform="translate(240, 38)">
+      <rect width="100" height="34" rx="4" fill="#4488ff" fill-opacity="0.02" stroke="#4488ff" stroke-width="0.4" opacity="0.25"/>
+      <text x="50" y="22" text-anchor="middle" fill="#4488ff" font-size="8" font-weight="600" opacity="0.45">DICTATE</text>
+    </g>
+
+    <text x="370" y="52" fill="#ffffff" font-size="7.5" opacity="0.2">These 3 buttons are always Row 2, same position.</text>
+    <text x="370" y="66" fill="#ffffff" font-size="7.5" opacity="0.2">Muscle memory carries across every agent you use.</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- EXTENSIBILITY: "YOUR AGENT" -->
+  <!-- ================================================================ -->
+  <g transform="translate(810, 730)">
+    <rect width="740" height="90" fill="url(#fd-p)" stroke="#ffffff" stroke-width="0.4" stroke-dasharray="4 3" opacity="0.12"/>
+    <rect x="1" y="1" width="738" height="22" fill="url(#fd-p)"/>
+    <text x="20" y="16" fill="#ffffff" font-size="8" font-weight="700" letter-spacing="3" opacity="0.3">OPEN PLATFORM</text>
+    <text x="175" y="16" fill="#ffffff" font-size="7" opacity="0.15" letter-spacing="1">Any AI agent can plug in -- Cursor, Windsurf, Aider, Cline, Continue, Devin, v0, Bolt, Copilot...</text>
+    <line x1="0" y1="24" x2="740" y2="24" stroke="#ffffff" stroke-width="0.15" opacity="0.04"/>
+
+    <g transform="translate(20, 36)" fill="#ffffff" font-size="7.5" opacity="0.18">
+      <text>1. Implement AgentAdapter interface  ->  2. Return your tools from getTools()  ->  3. Plugin auto-maps tools to LCD pages</text>
+      <text y="18">4. User gets physical buttons for YOUR agent's actions  ->  5. Haptics, dial, voice, approve/reject all work automatically</text>
+      <text y="40" font-weight="600" opacity="0.25">Same hardware. Any agent. Buttons adapt.</text>
+    </g>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- KEY INSIGHT CALLOUT -->
+  <!-- ================================================================ -->
+  <g transform="translate(50, 850)">
+    <rect width="1500" height="60" fill="url(#fd-pg)" stroke="#00d4aa" stroke-width="0.5" opacity="0.2"/>
+    <text x="750" y="24" text-anchor="middle" fill="#00d4aa" font-size="10" font-weight="700" letter-spacing="4" opacity="0.5">ONE HARDWARE SURFACE. ANY AI AGENT. BUTTONS ADAPT.</text>
+    <text x="750" y="44" text-anchor="middle" fill="#ffffff" font-size="7.5" letter-spacing="1" opacity="0.2">The plugin discovers each agent's tools via getTools() and auto-generates LCD button layouts. Universal buttons (Approve, Reject, Dictate) stay in fixed positions for muscle memory.</text>
+  </g>
+
+  <!-- Footer -->
+  <line x1="30" y1="940" x2="1570" y2="940" stroke="#ffffff" stroke-width="0.3" opacity="0.05"/>
+  <text x="30" y="960" fill="#ffffff" font-size="7" opacity="0.12" letter-spacing="1">DWG-005  //  DYNAMIC TOOL MAPPING  //  SHEET 5 OF 8</text>
+  <text x="800" y="960" text-anchor="middle" fill="#ffffff" font-size="7.5" letter-spacing="3.5" opacity="0.15">WISPY CONSOLE  //  UNIVERSAL AI AGENT CONTROL SURFACE  //  LOGITECH ACTIONS SDK  //  HAUSOR LABS 2026</text>
+  <text x="1570" y="960" text-anchor="end" fill="#ffffff" font-size="7" opacity="0.12" letter-spacing="1">REV 2.1  //  2026-02-17</text>
+</svg>

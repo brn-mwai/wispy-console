@@ -1,0 +1,391 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1100" font-family="'Inter', 'SF Pro', -apple-system, sans-serif">
+  <defs>
+    <pattern id="grid-f" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-width="0.15" stroke-opacity="0.07"/>
+    </pattern>
+    <pattern id="grid-f-sm" width="8" height="8" patternUnits="userSpaceOnUse">
+      <path d="M 8 0 L 0 0 0 8" fill="none" stroke="#ffffff" stroke-width="0.1" stroke-opacity="0.035"/>
+    </pattern>
+    <linearGradient id="fd-f" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <marker id="arr-f" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="10" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 3 L0 6 Z" fill="#ffffff" opacity="0.4"/>
+    </marker>
+    <marker id="arr-fg" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="10" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 3 L0 6 Z" fill="#00d4aa" opacity="0.5"/>
+    </marker>
+    <marker id="arr-fb" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="10" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 3 L0 6 Z" fill="#4488ff" opacity="0.5"/>
+    </marker>
+    <filter id="glow-f">
+      <feGaussianBlur stdDeviation="2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="1000" fill="#0e0e0e"/>
+  <rect width="1600" height="1000" fill="url(#grid-f-sm)"/>
+  <rect width="1600" height="1000" fill="url(#grid-f)"/>
+
+  <!-- Title -->
+  <g transform="translate(1180, 24)">
+    <rect width="390" height="56" fill="none" stroke="#ffffff" stroke-width="0.5" opacity="0.18"/>
+    <rect x="1" y="1" width="388" height="28" fill="url(#fd-f)"/>
+    <line x1="0" y1="29" x2="390" y2="29" stroke="#ffffff" stroke-width="0.3" opacity="0.1"/>
+    <text x="195" y="19" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700" letter-spacing="4" opacity="0.9">EVENT PIPELINE</text>
+    <text x="195" y="46" text-anchor="middle" fill="#ffffff" font-size="8" letter-spacing="2.5" opacity="0.35">BUTTON PRESS TO AI RESPONSE  //  4 FLOWS</text>
+  </g>
+  <text x="30" y="40" fill="#ffffff" font-size="9" letter-spacing="2.5" opacity="0.25">WISPY CONSOLE  //  HAUSOR LABS</text>
+  <text x="30" y="56" fill="#ffffff" font-size="7" letter-spacing="2" opacity="0.15">BLUEPRINT REV 2.0  //  FEB 2026</text>
+
+  <!-- ================================================================ -->
+  <!-- FLOW 1: BUTTON PRESS (main flow) -->
+  <!-- ================================================================ -->
+  <g transform="translate(50, 110)">
+    <text x="0" y="0" fill="#ffffff" font-size="9" font-weight="700" letter-spacing="3" opacity="0.4">FLOW 1  //  BUTTON PRESS</text>
+    <text x="350" y="0" fill="#ffffff" font-size="7" opacity="0.18">Latency target: &lt;200ms end-to-end</text>
+
+    <!-- Step boxes connected by arrows -->
+    <!-- Step 1: Press LCD -->
+    <g transform="translate(0, 20)">
+      <rect width="180" height="80" rx="5" fill="url(#fd-f)" stroke="#ffffff" stroke-width="0.5" opacity="0.25"/>
+      <text x="14" y="20" fill="#ffffff" font-size="7" font-weight="700" letter-spacing="2" opacity="0.4">01</text>
+      <text x="32" y="20" fill="#ffffff" font-size="8" font-weight="600" opacity="0.45">PRESS LCD BUTTON</text>
+      <line x1="10" y1="28" x2="170" y2="28" stroke="#ffffff" stroke-width="0.15" opacity="0.05"/>
+      <text x="14" y="44" fill="#ffffff" font-size="7" opacity="0.2">User presses COMMIT</text>
+      <text x="14" y="58" fill="#ffffff" font-size="7" opacity="0.2">on the 3x3 keypad</text>
+      <text x="14" y="72" fill="#ffffff" font-size="6.5" opacity="0.12" letter-spacing="1">HARDWARE</text>
+    </g>
+
+    <!-- Arrow -->
+    <line x1="185" y1="60" x2="215" y2="60" stroke="#ffffff" stroke-width="0.6" opacity="0.2" marker-end="url(#arr-f)"/>
+
+    <!-- Step 2: Logi Plugin Service -->
+    <g transform="translate(220, 20)">
+      <rect width="180" height="80" rx="5" fill="url(#fd-f)" stroke="#ffffff" stroke-width="0.5" opacity="0.25"/>
+      <text x="14" y="20" fill="#ffffff" font-size="7" font-weight="700" letter-spacing="2" opacity="0.4">02</text>
+      <text x="32" y="20" fill="#ffffff" font-size="8" font-weight="600" opacity="0.45">PLUGIN SERVICE</text>
+      <line x1="10" y1="28" x2="170" y2="28" stroke="#ffffff" stroke-width="0.15" opacity="0.05"/>
+      <text x="14" y="44" fill="#ffffff" font-size="7" opacity="0.2">WebSocket event:</text>
+      <text x="14" y="58" fill="#ffffff" font-size="7" opacity="0.2" font-family="'SF Mono', monospace">onKeyDown(actionId)</text>
+      <text x="14" y="72" fill="#ffffff" font-size="6.5" opacity="0.12" letter-spacing="1">LOGI SDK</text>
+    </g>
+
+    <line x1="405" y1="60" x2="435" y2="60" stroke="#ffffff" stroke-width="0.6" opacity="0.2" marker-end="url(#arr-f)"/>
+
+    <!-- Step 3: Plugin Event Router -->
+    <g transform="translate(440, 20)">
+      <rect width="180" height="80" rx="5" fill="#00d4aa" fill-opacity="0.02" stroke="#00d4aa" stroke-width="0.5" opacity="0.3"/>
+      <text x="14" y="20" fill="#00d4aa" font-size="7" font-weight="700" letter-spacing="2" opacity="0.5">03</text>
+      <text x="32" y="20" fill="#00d4aa" font-size="8" font-weight="600" opacity="0.5">EVENT ROUTER</text>
+      <line x1="10" y1="28" x2="170" y2="28" stroke="#ffffff" stroke-width="0.15" opacity="0.04"/>
+      <text x="14" y="44" fill="#ffffff" font-size="7" opacity="0.2">Maps actionId to</text>
+      <text x="14" y="58" fill="#ffffff" font-size="7" opacity="0.2">adapter.execute("commit")</text>
+      <text x="14" y="72" fill="#00d4aa" font-size="6.5" opacity="0.2" letter-spacing="1">OUR PLUGIN</text>
+    </g>
+
+    <line x1="625" y1="60" x2="655" y2="60" stroke="#00d4aa" stroke-width="0.6" opacity="0.25" marker-end="url(#arr-fg)"/>
+
+    <!-- Step 4: Agent Adapter -->
+    <g transform="translate(660, 20)">
+      <rect width="180" height="80" rx="5" fill="#4488ff" fill-opacity="0.02" stroke="#4488ff" stroke-width="0.5" opacity="0.3"/>
+      <text x="14" y="20" fill="#4488ff" font-size="7" font-weight="700" letter-spacing="2" opacity="0.5">04</text>
+      <text x="32" y="20" fill="#4488ff" font-size="8" font-weight="600" opacity="0.45">AGENT ADAPTER</text>
+      <line x1="10" y1="28" x2="170" y2="28" stroke="#ffffff" stroke-width="0.15" opacity="0.04"/>
+      <text x="14" y="44" fill="#ffffff" font-size="7" opacity="0.2">Wispy: POST /api/commit</text>
+      <text x="14" y="58" fill="#ffffff" font-size="7" opacity="0.2">Claude: stdin command</text>
+      <text x="14" y="72" fill="#4488ff" font-size="6.5" opacity="0.2" letter-spacing="1">BRIDGE</text>
+    </g>
+
+    <line x1="845" y1="60" x2="875" y2="60" stroke="#ffffff" stroke-width="0.6" opacity="0.2" marker-end="url(#arr-f)"/>
+
+    <!-- Step 5: AI Agent -->
+    <g transform="translate(880, 20)">
+      <rect width="180" height="80" rx="5" fill="url(#fd-f)" stroke="#ffffff" stroke-width="0.5" opacity="0.25"/>
+      <text x="14" y="20" fill="#ffffff" font-size="7" font-weight="700" letter-spacing="2" opacity="0.4">05</text>
+      <text x="32" y="20" fill="#ffffff" font-size="8" font-weight="600" opacity="0.45">AI AGENT</text>
+      <line x1="10" y1="28" x2="170" y2="28" stroke="#ffffff" stroke-width="0.15" opacity="0.05"/>
+      <text x="14" y="44" fill="#ffffff" font-size="7" opacity="0.2">Stages files, generates</text>
+      <text x="14" y="58" fill="#ffffff" font-size="7" opacity="0.2">commit message, executes</text>
+      <text x="14" y="72" fill="#ffffff" font-size="6.5" opacity="0.12" letter-spacing="1">GEMINI / CLAUDE / ANY</text>
+    </g>
+
+    <line x1="1065" y1="60" x2="1095" y2="60" stroke="#ffffff" stroke-width="0.6" opacity="0.2" marker-end="url(#arr-f)"/>
+
+    <!-- Step 6: Response -->
+    <g transform="translate(1100, 20)">
+      <rect width="180" height="80" rx="5" fill="url(#fd-f)" stroke="#ffffff" stroke-width="0.5" opacity="0.25"/>
+      <text x="14" y="20" fill="#ffffff" font-size="7" font-weight="700" letter-spacing="2" opacity="0.4">06</text>
+      <text x="32" y="20" fill="#ffffff" font-size="8" font-weight="600" opacity="0.45">FEEDBACK</text>
+      <line x1="10" y1="28" x2="170" y2="28" stroke="#ffffff" stroke-width="0.15" opacity="0.05"/>
+      <text x="14" y="44" fill="#ffffff" font-size="7" opacity="0.2">LCD turns green (success)</text>
+      <text x="14" y="58" fill="#ffffff" font-size="7" opacity="0.2">Haptic: success wave</text>
+      <text x="14" y="72" fill="#ffffff" font-size="6.5" opacity="0.12" letter-spacing="1">LCD + HAPTIC</text>
+    </g>
+
+    <!-- Return arrow (dotted, below) -->
+    <g stroke="#ffffff" stroke-width="0.4" opacity="0.08" stroke-dasharray="4 4">
+      <line x1="1280" y1="108" x2="1280" y2="128"/>
+      <line x1="1280" y1="128" x2="0" y2="128"/>
+      <line x1="0" y1="128" x2="0" y2="108"/>
+    </g>
+    <text x="640" y="140" text-anchor="middle" fill="#ffffff" font-size="6.5" opacity="0.12" letter-spacing="1">LCD STATE UPDATE PROPAGATES BACK TO HARDWARE</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- FLOW 2: DIAL ROTATION -->
+  <!-- ================================================================ -->
+  <g transform="translate(50, 330)">
+    <text x="0" y="0" fill="#ffffff" font-size="9" font-weight="700" letter-spacing="3" opacity="0.4">FLOW 2  //  DIAL ROTATION</text>
+    <text x="350" y="0" fill="#ffffff" font-size="7" opacity="0.18">Real-time, continuous control</text>
+
+    <g transform="translate(0, 20)">
+      <rect width="180" height="80" rx="5" fill="url(#fd-f)" stroke="#ffffff" stroke-width="0.5" opacity="0.25"/>
+      <text x="14" y="20" fill="#ffffff" font-size="7" font-weight="700" letter-spacing="2" opacity="0.4">01</text>
+      <text x="32" y="20" fill="#ffffff" font-size="8" font-weight="600" opacity="0.45">ROTATE DIAL</text>
+      <line x1="10" y1="28" x2="170" y2="28" stroke="#ffffff" stroke-width="0.15" opacity="0.05"/>
+      <text x="14" y="44" fill="#ffffff" font-size="7" opacity="0.2">User turns dial clockwise</text>
+      <text x="14" y="58" fill="#ffffff" font-size="7" opacity="0.2">from 35 to 65</text>
+      <text x="14" y="72" fill="#ffffff" font-size="6.5" opacity="0.12" letter-spacing="1">HARDWARE</text>
+    </g>
+
+    <line x1="185" y1="60" x2="215" y2="60" stroke="#ffffff" stroke-width="0.6" opacity="0.2" marker-end="url(#arr-f)"/>
+
+    <g transform="translate(220, 20)">
+      <rect width="180" height="80" rx="5" fill="url(#fd-f)" stroke="#ffffff" stroke-width="0.5" opacity="0.25"/>
+      <text x="14" y="20" fill="#ffffff" font-size="7" font-weight="700" letter-spacing="2" opacity="0.4">02</text>
+      <text x="32" y="20" fill="#ffffff" font-size="8" font-weight="600" opacity="0.45">ADJUSTMENT</text>
+      <line x1="10" y1="28" x2="170" y2="28" stroke="#ffffff" stroke-width="0.15" opacity="0.05"/>
+      <text x="14" y="44" fill="#ffffff" font-size="7" opacity="0.2">AdjustmentAction</text>
+      <text x="14" y="58" fill="#ffffff" font-size="7" opacity="0.2" font-family="'SF Mono', monospace">execute(event.tick)</text>
+      <text x="14" y="72" fill="#ffffff" font-size="6.5" opacity="0.12" letter-spacing="1">LOGI SDK</text>
+    </g>
+
+    <line x1="405" y1="60" x2="435" y2="60" stroke="#ffffff" stroke-width="0.6" opacity="0.2" marker-end="url(#arr-f)"/>
+
+    <g transform="translate(440, 20)">
+      <rect width="180" height="80" rx="5" fill="#00d4aa" fill-opacity="0.02" stroke="#00d4aa" stroke-width="0.5" opacity="0.3"/>
+      <text x="14" y="20" fill="#00d4aa" font-size="7" font-weight="700" letter-spacing="2" opacity="0.5">03</text>
+      <text x="32" y="20" fill="#00d4aa" font-size="8" font-weight="600" opacity="0.5">DIAL MAP</text>
+      <line x1="10" y1="28" x2="170" y2="28" stroke="#ffffff" stroke-width="0.15" opacity="0.04"/>
+      <text x="14" y="44" fill="#ffffff" font-size="7" opacity="0.2">Maps tick to 0-100 range</text>
+      <text x="14" y="58" fill="#ffffff" font-size="7" opacity="0.2">65 = Deep Think zone</text>
+      <text x="14" y="72" fill="#00d4aa" font-size="6.5" opacity="0.2" letter-spacing="1">OUR PLUGIN</text>
+    </g>
+
+    <line x1="625" y1="60" x2="655" y2="60" stroke="#00d4aa" stroke-width="0.6" opacity="0.25" marker-end="url(#arr-fg)"/>
+
+    <g transform="translate(660, 20)">
+      <rect width="220" height="80" rx="5" fill="#4488ff" fill-opacity="0.02" stroke="#4488ff" stroke-width="0.5" opacity="0.3"/>
+      <text x="14" y="20" fill="#4488ff" font-size="7" font-weight="700" letter-spacing="2" opacity="0.5">04</text>
+      <text x="32" y="20" fill="#4488ff" font-size="8" font-weight="600" opacity="0.45">SET THINKING DEPTH</text>
+      <line x1="10" y1="28" x2="210" y2="28" stroke="#ffffff" stroke-width="0.15" opacity="0.04"/>
+      <text x="14" y="44" fill="#ffffff" font-size="7" opacity="0.2" font-family="'SF Mono', monospace">adapter.setThinkingDepth(65)</text>
+      <text x="14" y="58" fill="#ffffff" font-size="7" opacity="0.2">Agent switches to deeper reasoning</text>
+      <text x="14" y="72" fill="#4488ff" font-size="6.5" opacity="0.2" letter-spacing="1">BRIDGE -> AGENT</text>
+    </g>
+
+    <line x1="885" y1="60" x2="915" y2="60" stroke="#ffffff" stroke-width="0.6" opacity="0.2" marker-end="url(#arr-f)"/>
+
+    <g transform="translate(920, 20)">
+      <rect width="180" height="80" rx="5" fill="url(#fd-f)" stroke="#ffffff" stroke-width="0.5" opacity="0.25"/>
+      <text x="14" y="20" fill="#ffffff" font-size="7" font-weight="700" letter-spacing="2" opacity="0.4">05</text>
+      <text x="32" y="20" fill="#ffffff" font-size="8" font-weight="600" opacity="0.45">LED UPDATE</text>
+      <line x1="10" y1="28" x2="170" y2="28" stroke="#ffffff" stroke-width="0.15" opacity="0.05"/>
+      <text x="14" y="44" fill="#ffffff" font-size="7" opacity="0.2">LED changes amber</text>
+      <text x="14" y="58" fill="#ffffff" font-size="7" opacity="0.2">Haptic: zone-change tap</text>
+      <text x="14" y="72" fill="#ffffff" font-size="6.5" opacity="0.12" letter-spacing="1">LED + HAPTIC</text>
+    </g>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- FLOW 3: VOICE DICTATION -->
+  <!-- ================================================================ -->
+  <g transform="translate(50, 550)">
+    <text x="0" y="0" fill="#4488ff" font-size="9" font-weight="700" letter-spacing="3" opacity="0.45">FLOW 3  //  VOICE DICTATION</text>
+    <text x="350" y="0" fill="#ffffff" font-size="7" opacity="0.18">Hold DICTATE button to speak</text>
+
+    <g transform="translate(0, 20)">
+      <rect width="160" height="80" rx="5" fill="#4488ff" fill-opacity="0.02" stroke="#4488ff" stroke-width="0.5" opacity="0.3"/>
+      <text x="14" y="20" fill="#4488ff" font-size="7" font-weight="700" letter-spacing="2" opacity="0.5">01</text>
+      <text x="32" y="20" fill="#4488ff" font-size="8" font-weight="600" opacity="0.45">HOLD DICTATE</text>
+      <line x1="10" y1="28" x2="150" y2="28" stroke="#ffffff" stroke-width="0.15" opacity="0.04"/>
+      <text x="14" y="44" fill="#ffffff" font-size="7" opacity="0.2">Mic recording starts</text>
+      <text x="14" y="58" fill="#ffffff" font-size="7" opacity="0.2">LCD pulses blue</text>
+      <text x="14" y="72" fill="#4488ff" font-size="6.5" opacity="0.2" letter-spacing="1">HARDWARE</text>
+    </g>
+
+    <line x1="165" y1="60" x2="195" y2="60" stroke="#4488ff" stroke-width="0.6" opacity="0.25" marker-end="url(#arr-fb)"/>
+
+    <g transform="translate(200, 20)">
+      <rect width="180" height="80" rx="5" fill="url(#fd-f)" stroke="#ffffff" stroke-width="0.5" opacity="0.25"/>
+      <text x="14" y="20" fill="#ffffff" font-size="7" font-weight="700" letter-spacing="2" opacity="0.4">02</text>
+      <text x="32" y="20" fill="#ffffff" font-size="8" font-weight="600" opacity="0.45">SPEECH-TO-TEXT</text>
+      <line x1="10" y1="28" x2="170" y2="28" stroke="#ffffff" stroke-width="0.15" opacity="0.05"/>
+      <text x="14" y="44" fill="#ffffff" font-size="7" opacity="0.2">Whisper.cpp (local)</text>
+      <text x="14" y="58" fill="#ffffff" font-size="7" opacity="0.2">or Gemini audio input</text>
+      <text x="14" y="72" fill="#ffffff" font-size="6.5" opacity="0.12" letter-spacing="1">VOICE MODULE</text>
+    </g>
+
+    <line x1="385" y1="60" x2="415" y2="60" stroke="#ffffff" stroke-width="0.6" opacity="0.2" marker-end="url(#arr-f)"/>
+
+    <g transform="translate(420, 20)">
+      <rect width="240" height="80" rx="5" fill="#00d4aa" fill-opacity="0.02" stroke="#00d4aa" stroke-width="0.5" opacity="0.3"/>
+      <text x="14" y="20" fill="#00d4aa" font-size="7" font-weight="700" letter-spacing="2" opacity="0.5">03</text>
+      <text x="32" y="20" fill="#00d4aa" font-size="8" font-weight="600" opacity="0.5">SEND PROMPT</text>
+      <line x1="10" y1="28" x2="230" y2="28" stroke="#ffffff" stroke-width="0.15" opacity="0.04"/>
+      <text x="14" y="44" fill="#ffffff" font-size="7" font-style="italic" opacity="0.2">"Refactor auth to use JWT,</text>
+      <text x="14" y="58" fill="#ffffff" font-size="7" font-style="italic" opacity="0.2">update tests, make a PR"</text>
+      <text x="14" y="72" fill="#00d4aa" font-size="6.5" opacity="0.2" letter-spacing="1">adapter.sendPrompt(text)</text>
+    </g>
+
+    <line x1="665" y1="60" x2="695" y2="60" stroke="#00d4aa" stroke-width="0.6" opacity="0.25" marker-end="url(#arr-fg)"/>
+
+    <g transform="translate(700, 20)">
+      <rect width="200" height="80" rx="5" fill="url(#fd-f)" stroke="#ffffff" stroke-width="0.5" opacity="0.25"/>
+      <text x="14" y="20" fill="#ffffff" font-size="7" font-weight="700" letter-spacing="2" opacity="0.4">04</text>
+      <text x="32" y="20" fill="#ffffff" font-size="8" font-weight="600" opacity="0.45">AGENT PLANS</text>
+      <line x1="10" y1="28" x2="190" y2="28" stroke="#ffffff" stroke-width="0.15" opacity="0.05"/>
+      <text x="14" y="44" fill="#ffffff" font-size="7" opacity="0.2">Agent creates 3-step plan</text>
+      <text x="14" y="58" fill="#ffffff" font-size="7" opacity="0.2">Each step needs approval</text>
+      <text x="14" y="72" fill="#ffffff" font-size="6.5" opacity="0.12" letter-spacing="1">AI REASONING</text>
+    </g>
+
+    <line x1="905" y1="60" x2="935" y2="60" stroke="#ffffff" stroke-width="0.6" opacity="0.2" marker-end="url(#arr-f)"/>
+
+    <g transform="translate(940, 20)">
+      <rect width="220" height="80" rx="5" fill="url(#fd-f)" stroke="#ffffff" stroke-width="0.5" opacity="0.25"/>
+      <text x="14" y="20" fill="#ffffff" font-size="7" font-weight="700" letter-spacing="2" opacity="0.4">05</text>
+      <text x="32" y="20" fill="#ffffff" font-size="8" font-weight="600" opacity="0.45">LCD SHOWS STEPS</text>
+      <line x1="10" y1="28" x2="210" y2="28" stroke="#ffffff" stroke-width="0.15" opacity="0.05"/>
+      <text x="14" y="44" fill="#ffffff" font-size="7" opacity="0.2">Button 1: "Refactor auth" [APPROVE]</text>
+      <text x="14" y="58" fill="#ffffff" font-size="7" opacity="0.2">Button 2: "Update tests" [PENDING]</text>
+      <text x="14" y="72" fill="#ffffff" font-size="6.5" opacity="0.12" letter-spacing="1">DYNAMIC LCD UPDATES</text>
+    </g>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- FLOW 4: WEBMCP (Google, W3C Standard) -->
+  <!-- ================================================================ -->
+  <g transform="translate(50, 730)">
+    <text x="0" y="0" fill="#ff8844" font-size="9" font-weight="700" letter-spacing="3" opacity="0.5">FLOW 4  //  WEBMCP TOOL CALL</text>
+    <text x="380" y="0" fill="#ffffff" font-size="7" opacity="0.18">Google W3C Standard -- navigator.modelContext  //  Chrome 146+</text>
+
+    <g transform="translate(0, 18)">
+      <rect width="160" height="68" rx="5" fill="url(#fd-f)" stroke="#ffffff" stroke-width="0.5" opacity="0.25"/>
+      <text x="14" y="18" fill="#ffffff" font-size="7" font-weight="700" letter-spacing="2" opacity="0.4">01</text>
+      <text x="32" y="18" fill="#ffffff" font-size="8" font-weight="600" opacity="0.45">CHROME CONTEXT</text>
+      <line x1="10" y1="26" x2="150" y2="26" stroke="#ffffff" stroke-width="0.15" opacity="0.05"/>
+      <text x="14" y="40" fill="#ffffff" font-size="7" opacity="0.2">User presses SEARCH</text>
+      <text x="14" y="52" fill="#ffffff" font-size="7" opacity="0.2">on Actions Ring (Chrome)</text>
+      <text x="14" y="64" fill="#ffffff" font-size="6.5" opacity="0.12" letter-spacing="1">HARDWARE</text>
+    </g>
+
+    <line x1="165" y1="52" x2="195" y2="52" stroke="#ff8844" stroke-width="0.6" opacity="0.3" marker-end="url(#arr-f)"/>
+
+    <g transform="translate(200, 18)">
+      <rect width="190" height="68" rx="5" fill="#ff8844" fill-opacity="0.02" stroke="#ff8844" stroke-width="0.5" opacity="0.3"/>
+      <text x="14" y="18" fill="#ff8844" font-size="7" font-weight="700" letter-spacing="2" opacity="0.5">02</text>
+      <text x="32" y="18" fill="#ff8844" font-size="8" font-weight="600" opacity="0.5">DISCOVER TOOLS</text>
+      <line x1="10" y1="26" x2="180" y2="26" stroke="#ffffff" stroke-width="0.15" opacity="0.04"/>
+      <text x="14" y="40" fill="#ffffff" font-size="6.5" font-family="'SF Mono', monospace" opacity="0.2">navigator.modelContext</text>
+      <text x="14" y="52" fill="#ffffff" font-size="7" opacity="0.2">Site exposes tool schema</text>
+      <text x="14" y="64" fill="#ff8844" font-size="6.5" opacity="0.25" letter-spacing="1">WebMCP API</text>
+    </g>
+
+    <line x1="395" y1="52" x2="425" y2="52" stroke="#ff8844" stroke-width="0.6" opacity="0.25" marker-end="url(#arr-f)"/>
+
+    <g transform="translate(430, 18)">
+      <rect width="200" height="68" rx="5" fill="#00d4aa" fill-opacity="0.02" stroke="#00d4aa" stroke-width="0.5" opacity="0.3"/>
+      <text x="14" y="18" fill="#00d4aa" font-size="7" font-weight="700" letter-spacing="2" opacity="0.5">03</text>
+      <text x="32" y="18" fill="#00d4aa" font-size="8" font-weight="600" opacity="0.5">AGENT INVOKES</text>
+      <line x1="10" y1="26" x2="190" y2="26" stroke="#ffffff" stroke-width="0.15" opacity="0.04"/>
+      <text x="14" y="40" fill="#ffffff" font-size="6.5" font-family="'SF Mono', monospace" opacity="0.2">tool.execute({query})</text>
+      <text x="14" y="52" fill="#ffffff" font-size="7" opacity="0.2">Structured JSON, no scraping</text>
+      <text x="14" y="64" fill="#00d4aa" font-size="6.5" opacity="0.2" letter-spacing="1">OUR PLUGIN -> CHROME</text>
+    </g>
+
+    <line x1="635" y1="52" x2="665" y2="52" stroke="#00d4aa" stroke-width="0.6" opacity="0.25" marker-end="url(#arr-fg)"/>
+
+    <g transform="translate(670, 18)">
+      <rect width="200" height="68" rx="5" fill="url(#fd-f)" stroke="#ffffff" stroke-width="0.5" opacity="0.25"/>
+      <text x="14" y="18" fill="#ffffff" font-size="7" font-weight="700" letter-spacing="2" opacity="0.4">04</text>
+      <text x="32" y="18" fill="#ffffff" font-size="8" font-weight="600" opacity="0.45">SITE EXECUTES</text>
+      <line x1="10" y1="26" x2="190" y2="26" stroke="#ffffff" stroke-width="0.15" opacity="0.05"/>
+      <text x="14" y="40" fill="#ffffff" font-size="7" opacity="0.2">Website runs JS function</text>
+      <text x="14" y="52" fill="#ffffff" font-size="7" opacity="0.2">Returns structured result</text>
+      <text x="14" y="64" fill="#ffffff" font-size="6.5" opacity="0.12" letter-spacing="1">WEBSITE (CLIENT-SIDE)</text>
+    </g>
+
+    <line x1="875" y1="52" x2="905" y2="52" stroke="#ffffff" stroke-width="0.6" opacity="0.2" marker-end="url(#arr-f)"/>
+
+    <g transform="translate(910, 18)">
+      <rect width="200" height="68" rx="5" fill="url(#fd-f)" stroke="#ffffff" stroke-width="0.5" opacity="0.25"/>
+      <text x="14" y="18" fill="#ffffff" font-size="7" font-weight="700" letter-spacing="2" opacity="0.4">05</text>
+      <text x="32" y="18" fill="#ffffff" font-size="8" font-weight="600" opacity="0.45">LCD CONFIRMS</text>
+      <line x1="10" y1="26" x2="190" y2="26" stroke="#ffffff" stroke-width="0.15" opacity="0.05"/>
+      <text x="14" y="40" fill="#ffffff" font-size="7" opacity="0.2">Result displayed on LCD</text>
+      <text x="14" y="52" fill="#ffffff" font-size="7" opacity="0.2">Haptic: success wave</text>
+      <text x="14" y="64" fill="#ffffff" font-size="6.5" opacity="0.12" letter-spacing="1">LCD + HAPTIC</text>
+    </g>
+
+    <!-- Advantage callout -->
+    <g transform="translate(1140, 18)">
+      <rect width="160" height="68" rx="5" fill="#ff8844" fill-opacity="0.02" stroke="#ff8844" stroke-width="0.4" stroke-dasharray="3 2" opacity="0.2"/>
+      <text x="14" y="18" fill="#ff8844" font-size="7" font-weight="700" letter-spacing="1" opacity="0.4">VS SCREEN SCRAPING</text>
+      <text x="14" y="36" fill="#ffffff" font-size="7" opacity="0.2">No vision model needed</text>
+      <text x="14" y="48" fill="#ffffff" font-size="7" opacity="0.2">Near-zero error rate</text>
+      <text x="14" y="60" fill="#ffffff" font-size="7" opacity="0.2">~10x cheaper per call</text>
+    </g>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- TIMING DIAGRAM -->
+  <!-- ================================================================ -->
+  <g transform="translate(50, 850)">
+    <rect width="1500" height="120" fill="url(#fd-f)" stroke="#ffffff" stroke-width="0.4" opacity="0.12"/>
+    <rect x="1" y="1" width="1498" height="24" fill="url(#fd-f)"/>
+    <text x="20" y="17" fill="#ffffff" font-size="8" font-weight="700" letter-spacing="3" opacity="0.35">TIMING  //  END-TO-END LATENCY</text>
+    <line x1="0" y1="26" x2="1500" y2="26" stroke="#ffffff" stroke-width="0.15" opacity="0.05"/>
+
+    <!-- Timeline -->
+    <g transform="translate(20, 50)">
+      <line x1="0" y1="0" x2="1460" y2="0" stroke="#ffffff" stroke-width="0.4" opacity="0.12"/>
+
+      <!-- Segments -->
+      <rect x="0" y="-8" width="50" height="16" rx="2" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-width="0.3" opacity="0.15"/>
+      <text x="25" y="4" text-anchor="middle" fill="#ffffff" font-size="6" opacity="0.3">~5ms</text>
+      <text x="25" y="20" text-anchor="middle" fill="#ffffff" font-size="6" opacity="0.15">HW</text>
+
+      <rect x="60" y="-8" width="100" height="16" rx="2" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-width="0.3" opacity="0.15"/>
+      <text x="110" y="4" text-anchor="middle" fill="#ffffff" font-size="6" opacity="0.3">~10ms</text>
+      <text x="110" y="20" text-anchor="middle" fill="#ffffff" font-size="6" opacity="0.15">WebSocket</text>
+
+      <rect x="170" y="-8" width="100" height="16" rx="2" fill="#00d4aa" fill-opacity="0.03" stroke="#00d4aa" stroke-width="0.3" opacity="0.2"/>
+      <text x="220" y="4" text-anchor="middle" fill="#00d4aa" font-size="6" opacity="0.35">~5ms</text>
+      <text x="220" y="20" text-anchor="middle" fill="#00d4aa" font-size="6" opacity="0.2">Router</text>
+
+      <rect x="280" y="-8" width="100" height="16" rx="2" fill="#4488ff" fill-opacity="0.03" stroke="#4488ff" stroke-width="0.3" opacity="0.2"/>
+      <text x="330" y="4" text-anchor="middle" fill="#4488ff" font-size="6" opacity="0.35">~10ms</text>
+      <text x="330" y="20" text-anchor="middle" fill="#4488ff" font-size="6" opacity="0.2">Adapter</text>
+
+      <rect x="390" y="-8" width="800" height="16" rx="2" fill="#ffffff" fill-opacity="0.02" stroke="#ffffff" stroke-width="0.3" opacity="0.1"/>
+      <text x="790" y="4" text-anchor="middle" fill="#ffffff" font-size="6" opacity="0.25">~100-5000ms (depends on AI model + thinking depth)</text>
+      <text x="790" y="20" text-anchor="middle" fill="#ffffff" font-size="6" opacity="0.12">AI Processing</text>
+
+      <rect x="1200" y="-8" width="100" height="16" rx="2" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-width="0.3" opacity="0.15"/>
+      <text x="1250" y="4" text-anchor="middle" fill="#ffffff" font-size="6" opacity="0.3">~15ms</text>
+      <text x="1250" y="20" text-anchor="middle" fill="#ffffff" font-size="6" opacity="0.15">LCD + Haptic</text>
+    </g>
+
+    <text x="20" y="100" fill="#ffffff" font-size="7" opacity="0.15">Hardware overhead: ~45ms total. The bottleneck is always AI processing time, which the dial controls via thinking depth.</text>
+  </g>
+
+  <!-- Footer -->
+  <line x1="30" y1="1020" x2="1570" y2="1020" stroke="#ffffff" stroke-width="0.3" opacity="0.05"/>
+  <text x="30" y="1040" fill="#ffffff" font-size="7" opacity="0.12" letter-spacing="1">DWG-006  //  EVENT PIPELINE  //  SHEET 6 OF 8</text>
+  <text x="800" y="1040" text-anchor="middle" fill="#ffffff" font-size="7.5" letter-spacing="3.5" opacity="0.15">WISPY CONSOLE  //  UNIVERSAL AI AGENT CONTROL SURFACE  //  LOGITECH ACTIONS SDK  //  HAUSOR LABS 2026</text>
+  <text x="1570" y="1040" text-anchor="end" fill="#ffffff" font-size="7" opacity="0.12" letter-spacing="1">REV 2.1  //  2026-02-17</text>
+</svg>

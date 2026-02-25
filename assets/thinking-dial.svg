@@ -1,0 +1,339 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" font-family="'Inter', 'SF Pro', -apple-system, sans-serif">
+  <defs>
+    <pattern id="grid-d" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-width="0.15" stroke-opacity="0.07"/>
+    </pattern>
+    <pattern id="grid-d-sm" width="8" height="8" patternUnits="userSpaceOnUse">
+      <path d="M 8 0 L 0 0 0 8" fill="none" stroke="#ffffff" stroke-width="0.1" stroke-opacity="0.035"/>
+    </pattern>
+    <linearGradient id="fd-d" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="glow-d">
+      <feGaussianBlur stdDeviation="3" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="glow-sm">
+      <feGaussianBlur stdDeviation="1.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- Zone gradient fills -->
+    <radialGradient id="zone-flash" cx="0.3" cy="0.8" r="0.6">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.04"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="zone-std" cx="0.2" cy="0.5" r="0.6">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.07"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1600" height="1000" fill="#0e0e0e"/>
+  <rect width="1600" height="1000" fill="url(#grid-d-sm)"/>
+  <rect width="1600" height="1000" fill="url(#grid-d)"/>
+
+  <!-- Title -->
+  <g transform="translate(1180, 24)">
+    <rect width="390" height="56" fill="none" stroke="#ffffff" stroke-width="0.5" opacity="0.18"/>
+    <rect x="1" y="1" width="388" height="28" fill="url(#fd-d)"/>
+    <line x1="0" y1="29" x2="390" y2="29" stroke="#ffffff" stroke-width="0.3" opacity="0.1"/>
+    <text x="195" y="19" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700" letter-spacing="4" opacity="0.9">THINKING DEPTH CONTROL</text>
+    <text x="195" y="46" text-anchor="middle" fill="#ffffff" font-size="8" letter-spacing="2.5" opacity="0.35">WIRELESS PRECISION DIAL  //  0-100 RANGE</text>
+  </g>
+  <text x="30" y="40" fill="#ffffff" font-size="9" letter-spacing="2.5" opacity="0.25">WISPY CONSOLE  //  HAUSOR LABS</text>
+  <text x="30" y="56" fill="#ffffff" font-size="7" letter-spacing="2" opacity="0.15">BLUEPRINT REV 2.0  //  FEB 2026</text>
+
+  <!-- ================================================================ -->
+  <!-- MAIN DIAL (center-left) -->
+  <!-- ================================================================ -->
+  <g transform="translate(460, 470)">
+    <!-- Outer reference circle -->
+    <circle r="260" fill="none" stroke="#ffffff" stroke-width="0.2" opacity="0.04"/>
+
+    <!-- Zone arcs (270 degree sweep: from 135 to 45 clockwise) -->
+    <!-- Flash zone: 135 to ~200 deg -->
+    <path d="M-170 170 A 240 240 0 0 1 -240 0" fill="none" stroke="#ffffff" stroke-width="20" opacity="0.04"/>
+    <!-- Standard zone: 200 to 270 deg -->
+    <path d="M-240 0 A 240 240 0 0 1 -170 -170" fill="none" stroke="#ffffff" stroke-width="20" opacity="0.08"/>
+    <!-- Deep Think zone: 270 to 340 deg -->
+    <path d="M-170 -170 A 240 240 0 0 1 0 -240" fill="none" stroke="#ffffff" stroke-width="20" opacity="0.05"/>
+    <!-- Marathon zone: 340 to 45 deg -->
+    <path d="M0 -240 A 240 240 0 0 1 170 -170" fill="none" stroke="#ffffff" stroke-width="20" opacity="0.03"/>
+
+    <!-- Active fill (0 to current position at ~35%) -->
+    <path d="M-170 170 A 240 240 0 0 1 -200 -135" fill="none" stroke="#ffffff" stroke-width="20" opacity="0.18"/>
+
+    <!-- Tick marks -->
+    <g stroke="#ffffff" stroke-width="0.5" opacity="0.12">
+      <!-- Major ticks (every 20 units) -->
+      <line x1="-176" y1="176" x2="-186" y2="186" stroke-width="1" opacity="0.2"/><!-- 0 -->
+      <line x1="-225" y1="60" x2="-240" y2="64" stroke-width="1" opacity="0.2"/><!-- 20 -->
+      <line x1="-186" y1="-140" x2="-196" y2="-148" stroke-width="1" opacity="0.2"/><!-- 50 -->
+      <line x1="-36" y1="-246" x2="-38" y2="-262" stroke-width="1" opacity="0.2"/><!-- 80 -->
+      <line x1="176" y1="-176" x2="186" y2="-186" stroke-width="1" opacity="0.2"/><!-- 100 -->
+    </g>
+    <g stroke="#ffffff" stroke-width="0.4" opacity="0.06">
+      <!-- Minor ticks (every 10 units) -->
+      <line x1="-212" y1="122" x2="-222" y2="128"/><!-- 10 -->
+      <line x1="-224" y1="-10" x2="-240" y2="-10"/><!-- 30 -->
+      <line x1="-212" y1="-78" x2="-222" y2="-82"/><!-- 40 -->
+      <line x1="-148" y1="-190" x2="-156" y2="-200"/><!-- 60 -->
+      <line x1="-96" y1="-228" x2="-101" y2="-242"/><!-- 70 -->
+      <line x1="28" y1="-246" x2="30" y2="-262"/><!-- 90 -->
+    </g>
+
+    <!-- Tick labels (numbers) -->
+    <text x="-198" y="204" text-anchor="middle" fill="#ffffff" font-size="8" opacity="0.15">0</text>
+    <text x="-258" y="72" text-anchor="middle" fill="#ffffff" font-size="8" opacity="0.15">20</text>
+    <text x="-212" y="-158" text-anchor="middle" fill="#ffffff" font-size="8" opacity="0.15">50</text>
+    <text x="-44" y="-274" text-anchor="middle" fill="#ffffff" font-size="8" opacity="0.15">80</text>
+    <text x="200" y="-196" text-anchor="middle" fill="#ffffff" font-size="8" opacity="0.15">100</text>
+
+    <!-- Dial body -->
+    <circle r="160" fill="#ffffff" fill-opacity="0.012" stroke="#ffffff" stroke-width="1.2" opacity="0.35"/>
+    <circle r="155" fill="none" stroke="#ffffff" stroke-width="0.3" opacity="0.1"/>
+    <circle r="135" fill="none" stroke="#ffffff" stroke-width="0.2" opacity="0.06"/>
+    <circle r="115" fill="none" stroke="#ffffff" stroke-width="0.15" opacity="0.04"/>
+
+    <!-- Dial grip marks (24 notches) -->
+    <g stroke="#ffffff" stroke-width="0.4" opacity="0.05">
+      <line x1="0" y1="-155" x2="0" y2="-142" transform="rotate(0)"/>
+      <line x1="0" y1="-155" x2="0" y2="-142" transform="rotate(15)"/>
+      <line x1="0" y1="-155" x2="0" y2="-142" transform="rotate(30)"/>
+      <line x1="0" y1="-155" x2="0" y2="-142" transform="rotate(45)"/>
+      <line x1="0" y1="-155" x2="0" y2="-142" transform="rotate(60)"/>
+      <line x1="0" y1="-155" x2="0" y2="-142" transform="rotate(75)"/>
+      <line x1="0" y1="-155" x2="0" y2="-142" transform="rotate(90)"/>
+      <line x1="0" y1="-155" x2="0" y2="-142" transform="rotate(105)"/>
+      <line x1="0" y1="-155" x2="0" y2="-142" transform="rotate(120)"/>
+      <line x1="0" y1="-155" x2="0" y2="-142" transform="rotate(135)"/>
+      <line x1="0" y1="-155" x2="0" y2="-142" transform="rotate(150)"/>
+      <line x1="0" y1="-155" x2="0" y2="-142" transform="rotate(165)"/>
+      <line x1="0" y1="-155" x2="0" y2="-142" transform="rotate(180)"/>
+      <line x1="0" y1="-155" x2="0" y2="-142" transform="rotate(195)"/>
+      <line x1="0" y1="-155" x2="0" y2="-142" transform="rotate(210)"/>
+      <line x1="0" y1="-155" x2="0" y2="-142" transform="rotate(225)"/>
+      <line x1="0" y1="-155" x2="0" y2="-142" transform="rotate(240)"/>
+      <line x1="0" y1="-155" x2="0" y2="-142" transform="rotate(255)"/>
+      <line x1="0" y1="-155" x2="0" y2="-142" transform="rotate(270)"/>
+      <line x1="0" y1="-155" x2="0" y2="-142" transform="rotate(285)"/>
+      <line x1="0" y1="-155" x2="0" y2="-142" transform="rotate(300)"/>
+      <line x1="0" y1="-155" x2="0" y2="-142" transform="rotate(315)"/>
+      <line x1="0" y1="-155" x2="0" y2="-142" transform="rotate(330)"/>
+      <line x1="0" y1="-155" x2="0" y2="-142" transform="rotate(345)"/>
+    </g>
+
+    <!-- Center crosshair -->
+    <line x1="-12" y1="0" x2="12" y2="0" stroke="#ffffff" stroke-width="0.4" opacity="0.1"/>
+    <line x1="0" y1="-12" x2="0" y2="12" stroke="#ffffff" stroke-width="0.4" opacity="0.1"/>
+    <circle r="4" fill="#ffffff" opacity="0.06"/>
+
+    <!-- Position indicator (at ~35/100 = Standard mode) -->
+    <circle cx="-200" cy="-135" r="7" fill="#ffffff" opacity="0.7" filter="url(#glow-d)"/>
+    <circle cx="-200" cy="-135" r="11" fill="none" stroke="#ffffff" stroke-width="0.5" opacity="0.3"/>
+    <circle cx="-200" cy="-135" r="15" fill="none" stroke="#ffffff" stroke-width="0.25" opacity="0.1"/>
+
+    <!-- Zone labels with callout lines -->
+    <!-- FLASH -->
+    <g>
+      <line x1="-210" y1="140" x2="-310" y2="200" stroke="#ffffff" stroke-width="0.3" opacity="0.1"/>
+      <circle cx="-210" cy="140" r="2" fill="#ffffff" opacity="0.15"/>
+      <text x="-315" y="196" text-anchor="end" fill="#ffffff" font-size="14" font-weight="700" letter-spacing="3" opacity="0.4">FLASH</text>
+      <text x="-315" y="214" text-anchor="end" fill="#ffffff" font-size="8" opacity="0.18" letter-spacing="1.5">0 - 20</text>
+      <text x="-315" y="228" text-anchor="end" fill="#ffffff" font-size="7.5" opacity="0.12">Instant, lightweight responses</text>
+      <text x="-315" y="242" text-anchor="end" fill="#ffffff" font-size="7.5" opacity="0.12">Quick lookups, simple edits</text>
+    </g>
+
+    <!-- STANDARD -->
+    <g>
+      <line x1="-240" y1="-40" x2="-320" y2="-40" stroke="#ffffff" stroke-width="0.3" opacity="0.15"/>
+      <circle cx="-240" cy="-40" r="2" fill="#ffffff" opacity="0.2"/>
+      <text x="-330" y="-42" text-anchor="end" fill="#ffffff" font-size="14" font-weight="700" letter-spacing="3" opacity="0.6">STANDARD</text>
+      <text x="-330" y="-24" text-anchor="end" fill="#ffffff" font-size="8" opacity="0.25" letter-spacing="1.5">21 - 50</text>
+      <text x="-330" y="-10" text-anchor="end" fill="#ffffff" font-size="7.5" opacity="0.15">Balanced reasoning mode</text>
+      <text x="-330" y="4" text-anchor="end" fill="#ffffff" font-size="7.5" opacity="0.15">Code generation, analysis</text>
+      <!-- Current indicator -->
+      <rect x="-328" y="12" width="52" height="14" rx="2" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-width="0.4" opacity="0.3"/>
+      <text x="-302" y="22" text-anchor="middle" fill="#ffffff" font-size="6.5" font-weight="600" opacity="0.4" letter-spacing="1">ACTIVE</text>
+    </g>
+
+    <!-- DEEP THINK -->
+    <g>
+      <line x1="-110" y1="-230" x2="-110" y2="-300" stroke="#ffffff" stroke-width="0.3" opacity="0.1"/>
+      <circle cx="-110" cy="-230" r="2" fill="#ffffff" opacity="0.15"/>
+      <text x="-110" y="-312" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="700" letter-spacing="3" opacity="0.4">DEEP THINK</text>
+      <text x="-110" y="-294" text-anchor="middle" fill="#ffffff" font-size="8" opacity="0.18" letter-spacing="1.5">51 - 80</text>
+      <text x="-110" y="-280" text-anchor="middle" fill="#ffffff" font-size="7.5" opacity="0.12">Extended chain-of-thought</text>
+      <text x="-110" y="-266" text-anchor="middle" fill="#ffffff" font-size="7.5" opacity="0.12">Architecture, debugging</text>
+    </g>
+
+    <!-- MARATHON -->
+    <g>
+      <line x1="100" y1="-230" x2="100" y2="-300" stroke="#ffffff" stroke-width="0.3" opacity="0.08"/>
+      <circle cx="100" cy="-230" r="2" fill="#ffffff" opacity="0.1"/>
+      <text x="100" y="-312" text-anchor="middle" fill="#ffffff" font-size="14" font-weight="700" letter-spacing="3" opacity="0.3">MARATHON</text>
+      <text x="100" y="-294" text-anchor="middle" fill="#ffffff" font-size="8" opacity="0.12" letter-spacing="1.5">81 - 100</text>
+      <text x="100" y="-280" text-anchor="middle" fill="#ffffff" font-size="7.5" opacity="0.08">Multi-step autonomous work</text>
+      <text x="100" y="-266" text-anchor="middle" fill="#ffffff" font-size="7.5" opacity="0.08">Hours to days, self-planning</text>
+    </g>
+
+    <!-- Dead zone arc (bottom) -->
+    <path d="M170 170 A 240 240 0 0 1 -170 170" fill="none" stroke="#ffffff" stroke-width="0.4" opacity="0.03" stroke-dasharray="3 6"/>
+
+    <!-- Press to reset -->
+    <text x="0" y="200" text-anchor="middle" fill="#ffffff" font-size="8" letter-spacing="2" opacity="0.15">PRESS TO RESET  //  AUTO MODE</text>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- RIGHT PANELS -->
+  <!-- ================================================================ -->
+
+  <!-- THE PROBLEM -->
+  <g transform="translate(930, 100)">
+    <rect width="620" height="220" fill="url(#fd-d)" stroke="#ffffff" stroke-width="0.5" opacity="0.15"/>
+    <rect x="1" y="1" width="618" height="26" fill="#ff4466" fill-opacity="0.03"/>
+    <text x="20" y="18" fill="#ffffff" font-size="9" font-weight="700" letter-spacing="3" opacity="0.45">THE PROBLEM</text>
+    <line x1="0" y1="28" x2="620" y2="28" stroke="#ffffff" stroke-width="0.2" opacity="0.06"/>
+
+    <text x="20" y="50" fill="#ffffff" font-size="9" opacity="0.3">Today, developers face a binary choice for AI agent control:</text>
+
+    <!-- Option A: Babysit -->
+    <g transform="translate(20, 64)">
+      <rect width="580" height="40" rx="3" fill="#ff4466" fill-opacity="0.02" stroke="#ff4466" stroke-width="0.35" opacity="0.2"/>
+      <!-- Tabler: shield-x -->
+      <g transform="translate(18, 20)" stroke="#ff4466" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.5">
+        <path d="M0-8 C6-6 10-2 10 4 C10 8 6 12 0 14 C-6 12-10 8-10 4 C-10-2-6-6 0-8Z"/>
+        <line x1="-3" y1="-1" x2="3" y2="5"/><line x1="3" y1="-1" x2="-3" y2="5"/>
+      </g>
+      <text x="36" y="16" fill="#ffffff" font-size="9" font-weight="600" opacity="0.45">Option A: Babysit every single command</text>
+      <text x="36" y="30" fill="#ffffff" font-size="7.5" opacity="0.2">Approve 15-30+ permission prompts per coding session. Breaks flow completely.</text>
+    </g>
+
+    <!-- OR divider -->
+    <text x="310" y="122" text-anchor="middle" fill="#ffffff" font-size="7.5" opacity="0.12" letter-spacing="3">OR</text>
+
+    <!-- Option B: YOLO -->
+    <g transform="translate(20, 128)">
+      <rect width="580" height="40" rx="3" fill="#ff8844" fill-opacity="0.02" stroke="#ff8844" stroke-width="0.35" opacity="0.2"/>
+      <!-- Tabler: alert-triangle -->
+      <g transform="translate(18, 20)" stroke="#ff8844" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.5">
+        <path d="M0-7 L8 7 L-8 7Z"/><line x1="0" y1="-2" x2="0" y2="2"/><circle cx="0" cy="4.5" r="0.6" fill="#ff8844"/>
+      </g>
+      <text x="36" y="16" fill="#ffffff" font-size="9" font-weight="600" opacity="0.45">Option B: YOLO mode (no safety at all)</text>
+      <text x="36" y="30" fill="#ffffff" font-size="7.5" opacity="0.2">Zero oversight. Someone literally rm -rf'd their home directory. It made the news.</text>
+    </g>
+
+    <!-- Quotes -->
+    <line x1="20" y1="180" x2="600" y2="180" stroke="#ffffff" stroke-width="0.15" opacity="0.05"/>
+    <text x="24" y="196" fill="#ffffff" font-size="8" font-style="italic" opacity="0.2">"AI tools are honestly unusable without running in yolo mode."</text>
+    <text x="24" y="210" fill="#ffffff" font-size="7" opacity="0.1" letter-spacing="0.5">-- @forrestthewoods, Hacker News (Nov 2025)</text>
+  </g>
+
+  <!-- THE SOLUTION -->
+  <g transform="translate(930, 345)">
+    <rect width="620" height="280" fill="url(#fd-d)" stroke="#ffffff" stroke-width="0.5" opacity="0.15"/>
+    <rect x="1" y="1" width="618" height="26" fill="#00d4aa" fill-opacity="0.03"/>
+    <text x="20" y="18" fill="#ffffff" font-size="9" font-weight="700" letter-spacing="3" opacity="0.45">THE SOLUTION</text>
+    <line x1="0" y1="28" x2="620" y2="28" stroke="#ffffff" stroke-width="0.2" opacity="0.06"/>
+
+    <text x="20" y="50" fill="#ffffff" font-size="9" opacity="0.3">Graduated physical control via precision dial:</text>
+
+    <!-- Zone breakdown -->
+    <!-- Flash -->
+    <g transform="translate(20, 66)">
+      <rect width="90" height="8" rx="1" fill="#ffffff" opacity="0.06"/>
+      <rect x="102" y="-6" width="480" height="36" rx="3" fill="none" stroke="#ffffff" stroke-width="0.2" opacity="0.06"/>
+      <text x="112" y="8" fill="#ffffff" font-size="9" font-weight="600" opacity="0.45" letter-spacing="1.5">FLASH</text>
+      <text x="200" y="8" fill="#ffffff" font-size="7.5" opacity="0.2">Quick answers, lightweight. Agent can act freely on small tasks.</text>
+      <text x="112" y="22" fill="#ffffff" font-size="7" opacity="0.12">Use: lookups, simple edits, formatting, one-line fixes</text>
+    </g>
+
+    <!-- Standard -->
+    <g transform="translate(20, 112)">
+      <rect width="90" height="8" rx="1" fill="#ffffff" opacity="0.14"/>
+      <rect x="102" y="-6" width="480" height="36" rx="3" fill="#ffffff" fill-opacity="0.01" stroke="#ffffff" stroke-width="0.3" opacity="0.1"/>
+      <text x="112" y="8" fill="#ffffff" font-size="9" font-weight="600" opacity="0.6" letter-spacing="1.5">STANDARD</text>
+      <text x="200" y="8" fill="#ffffff" font-size="7.5" opacity="0.25">Balanced reasoning. Reviews before committing.</text>
+      <text x="112" y="22" fill="#ffffff" font-size="7" opacity="0.15">Use: code generation, refactoring, multi-file changes</text>
+      <rect x="510" y="-4" width="60" height="16" rx="2" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-width="0.3" opacity="0.25"/>
+      <text x="540" y="8" text-anchor="middle" fill="#ffffff" font-size="6.5" font-weight="600" opacity="0.35" letter-spacing="1">CURRENT</text>
+    </g>
+
+    <!-- Deep Think -->
+    <g transform="translate(20, 158)">
+      <rect width="90" height="8" rx="1" fill="#ffffff" opacity="0.06"/>
+      <rect x="102" y="-6" width="480" height="36" rx="3" fill="none" stroke="#ffffff" stroke-width="0.2" opacity="0.06"/>
+      <text x="112" y="8" fill="#ffffff" font-size="9" font-weight="600" opacity="0.45" letter-spacing="1.5">DEEP THINK</text>
+      <text x="200" y="8" fill="#ffffff" font-size="7.5" opacity="0.2">Extended reasoning. Chain-of-thought planning.</text>
+      <text x="112" y="22" fill="#ffffff" font-size="7" opacity="0.12">Use: architecture decisions, complex debugging, security review</text>
+    </g>
+
+    <!-- Marathon -->
+    <g transform="translate(20, 204)">
+      <rect width="90" height="8" rx="1" fill="#ffffff" opacity="0.03"/>
+      <rect x="102" y="-6" width="480" height="36" rx="3" fill="none" stroke="#ffffff" stroke-width="0.2" opacity="0.04"/>
+      <text x="112" y="8" fill="#ffffff" font-size="9" font-weight="600" opacity="0.35" letter-spacing="1.5">MARATHON</text>
+      <text x="200" y="8" fill="#ffffff" font-size="7.5" opacity="0.15">Full autonomy. Self-planning multi-step tasks.</text>
+      <text x="112" y="22" fill="#ffffff" font-size="7" opacity="0.1">Use: feature implementation, test suite creation, migrations</text>
+    </g>
+
+    <!-- Key insight -->
+    <line x1="20" y1="248" x2="600" y2="248" stroke="#ffffff" stroke-width="0.15" opacity="0.05"/>
+    <text x="24" y="266" fill="#00d4aa" font-size="8" font-weight="600" opacity="0.4">Approve/Reject buttons remain active at every dial position.</text>
+    <text x="380" y="266" fill="#ffffff" font-size="8" opacity="0.2">Deep thinking does not mean blind trust.</text>
+  </g>
+
+  <!-- DEVELOPER DATA -->
+  <g transform="translate(930, 650)">
+    <rect width="620" height="100" fill="url(#fd-d)" stroke="#ffffff" stroke-width="0.4" opacity="0.12"/>
+    <rect x="1" y="1" width="618" height="24" fill="url(#fd-d)"/>
+    <text x="20" y="17" fill="#ffffff" font-size="8" font-weight="700" letter-spacing="3" opacity="0.35">DEVELOPER SURVEY DATA  //  2025</text>
+    <line x1="0" y1="26" x2="620" y2="26" stroke="#ffffff" stroke-width="0.15" opacity="0.05"/>
+
+    <!-- Stats -->
+    <g transform="translate(20, 40)">
+      <text fill="#ffffff" font-size="26" font-weight="700" opacity="0.25">66%</text>
+      <text x="0" y="20" fill="#ffffff" font-size="7.5" opacity="0.18">spend more time correcting AI</text>
+      <text x="0" y="32" fill="#ffffff" font-size="7.5" opacity="0.18">than they save</text>
+    </g>
+    <g transform="translate(170, 40)">
+      <text fill="#ffffff" font-size="26" font-weight="700" opacity="0.25">45%</text>
+      <text x="0" y="20" fill="#ffffff" font-size="7.5" opacity="0.18">cite "almost right" as the</text>
+      <text x="0" y="32" fill="#ffffff" font-size="7.5" opacity="0.18">#1 AI frustration</text>
+    </g>
+    <g transform="translate(340, 40)">
+      <text fill="#ffffff" font-size="26" font-weight="700" opacity="0.25">30+</text>
+      <text x="0" y="20" fill="#ffffff" font-size="7.5" opacity="0.18">upvotes on GitHub #11380</text>
+      <text x="0" y="32" fill="#ffffff" font-size="7.5" opacity="0.18">asking for permission control</text>
+    </g>
+    <g transform="translate(510, 40)">
+      <text fill="#ffffff" font-size="26" font-weight="700" opacity="0.25">0</text>
+      <text x="0" y="20" fill="#ffffff" font-size="7.5" opacity="0.18">developer plugins exist</text>
+      <text x="0" y="32" fill="#ffffff" font-size="7.5" opacity="0.18">on the marketplace today</text>
+    </g>
+
+    <text x="20" y="88" fill="#ffffff" font-size="6.5" opacity="0.1" letter-spacing="0.5">Sources: Stack Overflow Developer Survey 2025, GitHub anthropics/claude-code Issues, Logitech Marketplace</text>
+  </g>
+
+  <!-- HOW IT MAPS -->
+  <g transform="translate(930, 775)">
+    <rect width="620" height="80" fill="url(#fd-d)" stroke="#ffffff" stroke-width="0.4" opacity="0.12"/>
+    <rect x="1" y="1" width="618" height="24" fill="url(#fd-d)"/>
+    <text x="20" y="17" fill="#ffffff" font-size="8" font-weight="700" letter-spacing="3" opacity="0.35">AGENT MAPPING  //  PER-AGENT CONFIG</text>
+    <line x1="0" y1="26" x2="620" y2="26" stroke="#ffffff" stroke-width="0.15" opacity="0.05"/>
+
+    <g transform="translate(20, 40)" fill="#ffffff" font-size="7.5" opacity="0.22">
+      <text><tspan font-weight="600" opacity="0.35">Wispy:</tspan>  Flash=gemini-flash, Standard=gemini-pro, Deep=gemini-pro+thinking, Marathon=marathon-service</text>
+      <text y="16"><tspan font-weight="600" opacity="0.35">Claude Code:</tspan>  Flash=haiku, Standard=sonnet, Deep=opus, Marathon=opus+extended-thinking</text>
+      <text y="32"><tspan font-weight="600" opacity="0.35">Generic:</tspan>  Maps to --temperature and --max-tokens via adapter config. Any agent, any model.</text>
+    </g>
+  </g>
+
+  <!-- Footer -->
+  <line x1="30" y1="900" x2="1570" y2="900" stroke="#ffffff" stroke-width="0.3" opacity="0.05"/>
+  <text x="30" y="920" fill="#ffffff" font-size="7" opacity="0.12" letter-spacing="1">DWG-003  //  THINKING DEPTH CONTROL  //  SHEET 3 OF 8</text>
+  <text x="800" y="920" text-anchor="middle" fill="#ffffff" font-size="7.5" letter-spacing="3.5" opacity="0.15">WISPY CONSOLE  //  UNIVERSAL AI AGENT CONTROL SURFACE  //  LOGITECH ACTIONS SDK  //  HAUSOR LABS 2026</text>
+  <text x="1570" y="920" text-anchor="end" fill="#ffffff" font-size="7" opacity="0.12" letter-spacing="1">REV 2.0  //  2026-02-17</text>
+</svg>

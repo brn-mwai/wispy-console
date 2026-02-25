@@ -1,0 +1,487 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" font-family="'Inter', 'SF Pro', -apple-system, sans-serif">
+  <defs>
+    <pattern id="grid-w" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-width="0.15" stroke-opacity="0.07"/>
+    </pattern>
+    <pattern id="grid-w-sm" width="8" height="8" patternUnits="userSpaceOnUse">
+      <path d="M 8 0 L 0 0 0 8" fill="none" stroke="#ffffff" stroke-width="0.1" stroke-opacity="0.035"/>
+    </pattern>
+    <linearGradient id="fd-w" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="fd-wo" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff8844" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#ff8844" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="fd-wg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#00d4aa" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#00d4aa" stop-opacity="0"/>
+    </linearGradient>
+    <marker id="arr-w" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="10" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 3 L0 6 Z" fill="#ffffff" opacity="0.4"/>
+    </marker>
+    <marker id="arr-wo" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="10" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 3 L0 6 Z" fill="#ff8844" opacity="0.5"/>
+    </marker>
+    <marker id="arr-wg" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="10" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 3 L0 6 Z" fill="#00d4aa" opacity="0.5"/>
+    </marker>
+    <filter id="glow-w">
+      <feGaussianBlur stdDeviation="2.5" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1600" height="1000" fill="#0e0e0e"/>
+  <rect width="1600" height="1000" fill="url(#grid-w-sm)"/>
+  <rect width="1600" height="1000" fill="url(#grid-w)"/>
+
+  <!-- Title block -->
+  <g transform="translate(1140, 24)">
+    <rect width="430" height="56" fill="none" stroke="#ff8844" stroke-width="0.5" opacity="0.25"/>
+    <rect x="1" y="1" width="428" height="28" fill="url(#fd-wo)"/>
+    <line x1="0" y1="29" x2="430" y2="29" stroke="#ff8844" stroke-width="0.3" opacity="0.12"/>
+    <text x="215" y="19" text-anchor="middle" fill="#ff8844" font-size="11" font-weight="700" letter-spacing="4" opacity="0.85">WebMCP INTEGRATION</text>
+    <text x="215" y="46" text-anchor="middle" fill="#ffffff" font-size="8" letter-spacing="2.5" opacity="0.35">GOOGLE W3C STANDARD  //  CHROME 146+</text>
+  </g>
+  <text x="30" y="40" fill="#ffffff" font-size="9" letter-spacing="2.5" opacity="0.25">WISPY CONSOLE  //  HAUSOR LABS</text>
+  <text x="30" y="56" fill="#ffffff" font-size="7" letter-spacing="2" opacity="0.15">BLUEPRINT REV 2.1  //  FEB 2026</text>
+
+  <!-- ================================================================ -->
+  <!-- SECTION 1: WHAT IS WebMCP -->
+  <!-- ================================================================ -->
+  <g transform="translate(50, 100)">
+    <rect width="700" height="200" fill="url(#fd-w)" stroke="#ff8844" stroke-width="0.5" opacity="0.25"/>
+    <rect x="1" y="1" width="698" height="26" fill="url(#fd-wo)"/>
+    <text x="20" y="18" fill="#ff8844" font-size="9" font-weight="700" letter-spacing="3" opacity="0.6">WHAT IS WebMCP?</text>
+    <text x="240" y="18" fill="#ffffff" font-size="7" opacity="0.2" letter-spacing="1">Google  //  W3C Community Group  //  Feb 2026</text>
+
+    <line x1="0" y1="28" x2="700" y2="28" stroke="#ff8844" stroke-width="0.15" opacity="0.1"/>
+
+    <!-- Description -->
+    <g transform="translate(20, 46)" fill="#ffffff" font-size="8" opacity="0.35" letter-spacing="0.3">
+      <text>A browser API that lets websites expose structured tools to AI agents.</text>
+      <text y="16">Instead of scraping pixels, agents call typed JavaScript functions directly.</text>
+      <text y="36" font-weight="600" fill="#ff8844" opacity="0.45">Core API:  navigator.modelContext</text>
+    </g>
+
+    <!-- API surface -->
+    <g transform="translate(20, 106)">
+      <rect width="660" height="76" rx="4" fill="#ffffff" fill-opacity="0.015" stroke="#ffffff" stroke-width="0.3" opacity="0.12"/>
+      <text x="14" y="16" fill="#ffffff" font-size="7.5" font-family="'SF Mono', 'Fira Code', monospace" opacity="0.3" letter-spacing="0.3">interface ModelContext {</text>
+      <text x="28" y="30" fill="#ff8844" font-size="7.5" font-family="'SF Mono', 'Fira Code', monospace" opacity="0.35" letter-spacing="0.3">provideContext(options: { tools: ModelContextTool[] })</text>
+      <text x="28" y="44" fill="#ffffff" font-size="7.5" font-family="'SF Mono', 'Fira Code', monospace" opacity="0.25" letter-spacing="0.3">registerTool(tool: ModelContextTool)</text>
+      <text x="28" y="58" fill="#ffffff" font-size="7.5" font-family="'SF Mono', 'Fira Code', monospace" opacity="0.25" letter-spacing="0.3">unregisterTool(name: string)</text>
+      <text x="14" y="70" fill="#ffffff" font-size="7.5" font-family="'SF Mono', 'Fira Code', monospace" opacity="0.3" letter-spacing="0.3">}</text>
+      <text x="500" y="16" fill="#ffffff" font-size="7" opacity="0.12" letter-spacing="1">SecureContext (HTTPS)</text>
+      <text x="500" y="30" fill="#ffffff" font-size="7" opacity="0.12" letter-spacing="1">Exposed=Window</text>
+    </g>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- SECTION 2: TOOL SCHEMA -->
+  <!-- ================================================================ -->
+  <g transform="translate(780, 100)">
+    <rect width="770" height="200" fill="url(#fd-w)" stroke="#ffffff" stroke-width="0.4" opacity="0.18"/>
+    <rect x="1" y="1" width="768" height="26" fill="url(#fd-w)"/>
+    <text x="20" y="18" fill="#ffffff" font-size="9" font-weight="700" letter-spacing="3" opacity="0.45">TOOL DEFINITION SCHEMA</text>
+
+    <line x1="0" y1="28" x2="770" y2="28" stroke="#ffffff" stroke-width="0.15" opacity="0.06"/>
+
+    <!-- Tool schema code -->
+    <g transform="translate(20, 44)">
+      <rect width="360" height="140" rx="4" fill="#ffffff" fill-opacity="0.015" stroke="#ffffff" stroke-width="0.3" opacity="0.12"/>
+      <text x="12" y="16" fill="#ff8844" font-size="7.5" font-family="'SF Mono', monospace" opacity="0.4">dictionary ModelContextTool {</text>
+      <text x="24" y="30" fill="#ffffff" font-size="7.5" font-family="'SF Mono', monospace" opacity="0.3">required DOMString <tspan fill="#00d4aa" opacity="0.5">name</tspan></text>
+      <text x="24" y="44" fill="#ffffff" font-size="7.5" font-family="'SF Mono', monospace" opacity="0.3">required DOMString <tspan fill="#00d4aa" opacity="0.5">description</tspan></text>
+      <text x="24" y="58" fill="#ffffff" font-size="7.5" font-family="'SF Mono', monospace" opacity="0.3">object <tspan fill="#00d4aa" opacity="0.5">inputSchema</tspan>  // JSON Schema</text>
+      <text x="24" y="72" fill="#ffffff" font-size="7.5" font-family="'SF Mono', monospace" opacity="0.3">required Callback <tspan fill="#ff8844" opacity="0.5">execute</tspan></text>
+      <text x="24" y="86" fill="#ffffff" font-size="7.5" font-family="'SF Mono', monospace" opacity="0.3">ToolAnnotations <tspan fill="#00d4aa" opacity="0.5">annotations</tspan></text>
+      <text x="12" y="100" fill="#ff8844" font-size="7.5" font-family="'SF Mono', monospace" opacity="0.4">}</text>
+      <text x="12" y="120" fill="#ffffff" font-size="7" opacity="0.15">// execute: (input, client) => Promise&lt;any&gt;</text>
+      <text x="12" y="132" fill="#ffffff" font-size="7" opacity="0.15">// client.requestUserInteraction(cb)</text>
+    </g>
+
+    <!-- Real example -->
+    <g transform="translate(400, 44)">
+      <rect width="350" height="140" rx="4" fill="#ff8844" fill-opacity="0.015" stroke="#ff8844" stroke-width="0.3" opacity="0.15"/>
+      <text x="12" y="16" fill="#ff8844" font-size="7.5" font-weight="600" opacity="0.4" letter-spacing="1">EXAMPLE: DEPLOY TOOL</text>
+      <text x="12" y="36" fill="#ffffff" font-size="7" font-family="'SF Mono', monospace" opacity="0.25">{</text>
+      <text x="22" y="50" fill="#ffffff" font-size="7" font-family="'SF Mono', monospace" opacity="0.25">name: "deployToStaging",</text>
+      <text x="22" y="64" fill="#ffffff" font-size="7" font-family="'SF Mono', monospace" opacity="0.25">description: "Deploy current</text>
+      <text x="34" y="76" fill="#ffffff" font-size="7" font-family="'SF Mono', monospace" opacity="0.25">branch to staging env",</text>
+      <text x="22" y="90" fill="#ffffff" font-size="7" font-family="'SF Mono', monospace" opacity="0.25">inputSchema: { properties:</text>
+      <text x="34" y="104" fill="#ffffff" font-size="7" font-family="'SF Mono', monospace" opacity="0.25">{ branch: { type: "string" }}},</text>
+      <text x="22" y="118" fill="#ff8844" font-size="7" font-family="'SF Mono', monospace" opacity="0.35">execute: (input) => deploy(input)</text>
+      <text x="12" y="132" fill="#ffffff" font-size="7" font-family="'SF Mono', monospace" opacity="0.25">}</text>
+    </g>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- SECTION 3: HOW WISPY CONSOLE INTEGRATES -->
+  <!-- ================================================================ -->
+  <g transform="translate(50, 330)">
+    <text x="0" y="0" fill="#00d4aa" font-size="10" font-weight="700" letter-spacing="4" opacity="0.55">HOW WISPY CONSOLE INTEGRATES WebMCP</text>
+    <text x="580" y="0" fill="#ffffff" font-size="7" opacity="0.18" letter-spacing="1">Chrome Actions Ring context unlocks structured web interaction</text>
+
+    <!-- Integration flow: 5 connected panels -->
+
+    <!-- Panel 1: Hardware trigger -->
+    <g transform="translate(0, 24)">
+      <rect width="240" height="150" rx="6" fill="url(#fd-w)" stroke="#ffffff" stroke-width="0.5" opacity="0.22"/>
+      <rect x="1" y="1" width="238" height="24" fill="url(#fd-w)"/>
+
+      <!-- Tabler: click icon -->
+      <g transform="translate(20, 13)" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.35">
+        <circle cx="0" cy="0" r="6"/><circle cx="0" cy="0" r="2"/>
+      </g>
+      <text x="34" y="17" fill="#ffffff" font-size="8" font-weight="700" letter-spacing="2" opacity="0.45">1. USER TRIGGER</text>
+
+      <line x1="10" y1="28" x2="230" y2="28" stroke="#ffffff" stroke-width="0.15" opacity="0.05"/>
+
+      <g transform="translate(16, 42)" fill="#ffffff" font-size="7.5" opacity="0.25">
+        <text>User is browsing in Chrome</text>
+        <text y="16">Presses SEARCH on Actions Ring</text>
+        <text y="32">or ANALYZE button on keypad</text>
+        <text y="52" font-weight="600" fill="#ff8844" opacity="0.35">Context detected: Chrome</text>
+        <text y="68">Actions Ring auto-switches</text>
+        <text y="82">to web-specific tools</text>
+      </g>
+    </g>
+
+    <!-- Arrow 1->2 -->
+    <line x1="245" y1="99" x2="278" y2="99" stroke="#ffffff" stroke-width="0.6" opacity="0.18" marker-end="url(#arr-w)"/>
+
+    <!-- Panel 2: WebMCP Discovery -->
+    <g transform="translate(283, 24)">
+      <rect width="260" height="150" rx="6" fill="url(#fd-wo)" stroke="#ff8844" stroke-width="0.6" opacity="0.3"/>
+      <rect x="1" y="1" width="258" height="24" fill="url(#fd-wo)"/>
+
+      <!-- Tabler: search icon -->
+      <g transform="translate(20, 13)" stroke="#ff8844" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.45">
+        <circle cx="-2" cy="-2" r="5"/><line x1="2" y1="2" x2="6" y2="6"/>
+      </g>
+      <text x="34" y="17" fill="#ff8844" font-size="8" font-weight="700" letter-spacing="2" opacity="0.55">2. TOOL DISCOVERY</text>
+
+      <line x1="10" y1="28" x2="250" y2="28" stroke="#ff8844" stroke-width="0.15" opacity="0.08"/>
+
+      <g transform="translate(16, 42)" fill="#ffffff" font-size="7.5" opacity="0.25">
+        <text>Plugin queries Chrome tab:</text>
+        <text y="18" font-family="'SF Mono', monospace" fill="#ff8844" opacity="0.35" font-size="7">navigator.modelContext</text>
+        <text y="36">Site returns tool list:</text>
+        <text y="52" font-family="'SF Mono', monospace" font-size="7" opacity="0.2">[ "search", "filter",</text>
+        <text y="66" font-family="'SF Mono', monospace" font-size="7" opacity="0.2">  "addToCart", "checkout" ]</text>
+        <text y="84" fill="#ff8844" opacity="0.35" font-weight="600">Tools mapped to LCD buttons</text>
+      </g>
+    </g>
+
+    <!-- Arrow 2->3 -->
+    <line x1="548" y1="99" x2="581" y2="99" stroke="#ff8844" stroke-width="0.6" opacity="0.25" marker-end="url(#arr-wo)"/>
+
+    <!-- Panel 3: Agent Decides -->
+    <g transform="translate(586, 24)">
+      <rect width="240" height="150" rx="6" fill="url(#fd-wg)" stroke="#00d4aa" stroke-width="0.6" opacity="0.3"/>
+      <rect x="1" y="1" width="238" height="24" fill="url(#fd-wg)"/>
+
+      <!-- Tabler: brain icon -->
+      <g transform="translate(20, 13)" stroke="#00d4aa" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.45">
+        <path d="M-5 2C-5-5 5-5 5 2C8 2 8 8 5 8L-5 8C-8 8-8 2-5 2Z"/><line x1="0" y1="-5" x2="0" y2="8"/>
+      </g>
+      <text x="34" y="17" fill="#00d4aa" font-size="8" font-weight="700" letter-spacing="2" opacity="0.55">3. AGENT INVOKES</text>
+
+      <line x1="10" y1="28" x2="230" y2="28" stroke="#00d4aa" stroke-width="0.15" opacity="0.08"/>
+
+      <g transform="translate(16, 42)" fill="#ffffff" font-size="7.5" opacity="0.25">
+        <text>Agent selects best tool</text>
+        <text y="16">from discovered schema</text>
+        <text y="34" font-family="'SF Mono', monospace" font-size="7" fill="#00d4aa" opacity="0.35">tool.execute({</text>
+        <text y="48" font-family="'SF Mono', monospace" font-size="7" fill="#00d4aa" opacity="0.35">  query: "auth JWT"</text>
+        <text y="62" font-family="'SF Mono', monospace" font-size="7" fill="#00d4aa" opacity="0.35">})</text>
+        <text y="82">Typed params, no guessing</text>
+      </g>
+    </g>
+
+    <!-- Arrow 3->4 -->
+    <line x1="831" y1="99" x2="864" y2="99" stroke="#00d4aa" stroke-width="0.6" opacity="0.25" marker-end="url(#arr-wg)"/>
+
+    <!-- Panel 4: Browser Executes -->
+    <g transform="translate(869, 24)">
+      <rect width="240" height="150" rx="6" fill="url(#fd-w)" stroke="#ffffff" stroke-width="0.5" opacity="0.22"/>
+      <rect x="1" y="1" width="238" height="24" fill="url(#fd-w)"/>
+
+      <!-- Tabler: browser icon -->
+      <g transform="translate(20, 13)" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.35">
+        <rect x="-8" y="-6" width="16" height="12" rx="1.5"/><line x1="-8" y1="-2" x2="8" y2="-2"/>
+        <circle cx="-5" cy="-4" r="0.8" fill="#ffffff" opacity="0.3"/><circle cx="-2" cy="-4" r="0.8" fill="#ffffff" opacity="0.3"/>
+      </g>
+      <text x="34" y="17" fill="#ffffff" font-size="8" font-weight="700" letter-spacing="2" opacity="0.45">4. SITE EXECUTES</text>
+
+      <line x1="10" y1="28" x2="230" y2="28" stroke="#ffffff" stroke-width="0.15" opacity="0.05"/>
+
+      <g transform="translate(16, 42)" fill="#ffffff" font-size="7.5" opacity="0.25">
+        <text>Website runs JS function</text>
+        <text y="16">UI updates in real-time</text>
+        <text y="32">User sees results visually</text>
+        <text y="52">Returns structured JSON:</text>
+        <text y="68" font-family="'SF Mono', monospace" font-size="7" opacity="0.2">{ content: [{ type: "text",</text>
+        <text y="82" font-family="'SF Mono', monospace" font-size="7" opacity="0.2">  text: "Found 3 results" }]}</text>
+      </g>
+    </g>
+
+    <!-- Arrow 4->5 -->
+    <line x1="1114" y1="99" x2="1147" y2="99" stroke="#ffffff" stroke-width="0.6" opacity="0.18" marker-end="url(#arr-w)"/>
+
+    <!-- Panel 5: LCD Feedback -->
+    <g transform="translate(1152, 24)">
+      <rect width="240" height="150" rx="6" fill="url(#fd-w)" stroke="#ffffff" stroke-width="0.5" opacity="0.22"/>
+      <rect x="1" y="1" width="238" height="24" fill="url(#fd-w)"/>
+
+      <!-- Tabler: screen icon -->
+      <g transform="translate(20, 13)" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.35">
+        <rect x="-8" y="-5" width="16" height="10" rx="1"/><line x1="0" y1="5" x2="0" y2="8"/><line x1="-4" y1="8" x2="4" y2="8"/>
+      </g>
+      <text x="34" y="17" fill="#ffffff" font-size="8" font-weight="700" letter-spacing="2" opacity="0.45">5. LCD FEEDBACK</text>
+
+      <line x1="10" y1="28" x2="230" y2="28" stroke="#ffffff" stroke-width="0.15" opacity="0.05"/>
+
+      <g transform="translate(16, 42)" fill="#ffffff" font-size="7.5" opacity="0.25">
+        <text>LCD buttons update to show</text>
+        <text y="16">discovered site tools</text>
+        <text y="34">Status icon turns green</text>
+        <text y="50">Haptic: success wave</text>
+        <text y="70" font-weight="600" fill="#00d4aa" opacity="0.35">Physical feedback for</text>
+        <text y="84" font-weight="600" fill="#00d4aa" opacity="0.35">browser-side actions</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- SECTION 4: BEFORE vs AFTER COMPARISON -->
+  <!-- ================================================================ -->
+  <g transform="translate(50, 530)">
+    <text x="0" y="0" fill="#ffffff" font-size="10" font-weight="700" letter-spacing="4" opacity="0.4">BEFORE vs AFTER</text>
+    <text x="250" y="0" fill="#ffffff" font-size="7" opacity="0.15" letter-spacing="1">Why WebMCP changes everything for hardware-agent integration</text>
+
+    <!-- BEFORE: Screen Scraping -->
+    <g transform="translate(0, 20)">
+      <rect width="680" height="180" rx="6" fill="url(#fd-w)" stroke="#ff4466" stroke-width="0.5" opacity="0.25"/>
+      <rect x="1" y="1" width="678" height="26" fill="#ff4466" fill-opacity="0.03"/>
+
+      <!-- Tabler: x icon -->
+      <g transform="translate(20, 14)" stroke="#ff4466" stroke-width="1.6" stroke-linecap="round" fill="none" opacity="0.5">
+        <line x1="-4" y1="-4" x2="4" y2="4"/><line x1="4" y1="-4" x2="-4" y2="4"/>
+      </g>
+      <text x="34" y="18" fill="#ff4466" font-size="9" font-weight="700" letter-spacing="2" opacity="0.55">BEFORE: SCREEN SCRAPING</text>
+      <text x="340" y="18" fill="#ffffff" font-size="7" opacity="0.15" letter-spacing="1">Current approach for browser agents</text>
+
+      <line x1="0" y1="30" x2="680" y2="30" stroke="#ff4466" stroke-width="0.15" opacity="0.08"/>
+
+      <!-- Flow diagram -->
+      <g transform="translate(20, 46)">
+        <rect width="120" height="36" rx="3" fill="#ffffff" fill-opacity="0.02" stroke="#ffffff" stroke-width="0.3" opacity="0.15"/>
+        <text x="60" y="15" text-anchor="middle" fill="#ffffff" font-size="7" opacity="0.25">Screenshot</text>
+        <text x="60" y="28" text-anchor="middle" fill="#ffffff" font-size="6.5" opacity="0.15">1280x800px</text>
+
+        <line x1="125" y1="18" x2="150" y2="18" stroke="#ffffff" stroke-width="0.5" opacity="0.15" marker-end="url(#arr-w)"/>
+
+        <rect x="155" width="120" height="36" rx="3" fill="#ffffff" fill-opacity="0.02" stroke="#ffffff" stroke-width="0.3" opacity="0.15"/>
+        <text x="215" y="15" text-anchor="middle" fill="#ffffff" font-size="7" opacity="0.25">Vision Model</text>
+        <text x="215" y="28" text-anchor="middle" fill="#ffffff" font-size="6.5" opacity="0.15">GPT-4V / Gemini</text>
+
+        <line x1="280" y1="18" x2="305" y2="18" stroke="#ffffff" stroke-width="0.5" opacity="0.15" marker-end="url(#arr-w)"/>
+
+        <rect x="310" width="120" height="36" rx="3" fill="#ffffff" fill-opacity="0.02" stroke="#ffffff" stroke-width="0.3" opacity="0.15"/>
+        <text x="370" y="15" text-anchor="middle" fill="#ffffff" font-size="7" opacity="0.25">DOM Guess</text>
+        <text x="370" y="28" text-anchor="middle" fill="#ffffff" font-size="6.5" opacity="0.15">click(x, y)</text>
+
+        <line x1="435" y1="18" x2="460" y2="18" stroke="#ffffff" stroke-width="0.5" opacity="0.15" marker-end="url(#arr-w)"/>
+
+        <rect x="465" width="120" height="36" rx="3" fill="#ff4466" fill-opacity="0.02" stroke="#ff4466" stroke-width="0.3" opacity="0.2"/>
+        <text x="525" y="15" text-anchor="middle" fill="#ff4466" font-size="7" opacity="0.35">Maybe works?</text>
+        <text x="525" y="28" text-anchor="middle" fill="#ff4466" font-size="6.5" opacity="0.2">60-85% accuracy</text>
+      </g>
+
+      <!-- Stats -->
+      <g transform="translate(20, 100)">
+        <g fill="#ff4466" font-size="8" opacity="0.4">
+          <text font-weight="700" font-size="18">~2s</text>
+          <text x="0" y="20" font-size="7" opacity="0.6">latency per step</text>
+        </g>
+        <g transform="translate(160, 0)" fill="#ff4466" font-size="8" opacity="0.4">
+          <text font-weight="700" font-size="18">$0.01</text>
+          <text x="0" y="20" font-size="7" opacity="0.6">per screenshot</text>
+        </g>
+        <g transform="translate(320, 0)" fill="#ff4466" font-size="8" opacity="0.4">
+          <text font-weight="700" font-size="18">15-40%</text>
+          <text x="0" y="20" font-size="7" opacity="0.6">error rate on complex sites</text>
+        </g>
+        <g transform="translate(520, 0)" fill="#ff4466" font-size="8" opacity="0.4">
+          <text font-weight="700" font-size="18">Brittle</text>
+          <text x="0" y="20" font-size="7" opacity="0.6">breaks when UI changes</text>
+        </g>
+      </g>
+    </g>
+
+    <!-- AFTER: WebMCP -->
+    <g transform="translate(720, 20)">
+      <rect width="680" height="180" rx="6" fill="url(#fd-wg)" stroke="#00d4aa" stroke-width="0.6" opacity="0.3"/>
+      <rect x="1" y="1" width="678" height="26" fill="#00d4aa" fill-opacity="0.03"/>
+
+      <!-- Tabler: check icon -->
+      <g transform="translate(20, 14)" stroke="#00d4aa" stroke-width="1.8" stroke-linecap="round" fill="none" opacity="0.6">
+        <polyline points="-5,0 -1,4 6,-4"/>
+      </g>
+      <text x="34" y="18" fill="#00d4aa" font-size="9" font-weight="700" letter-spacing="2" opacity="0.6">AFTER: WebMCP</text>
+      <text x="230" y="18" fill="#ffffff" font-size="7" opacity="0.15" letter-spacing="1">Structured tool calls via navigator.modelContext</text>
+
+      <line x1="0" y1="30" x2="680" y2="30" stroke="#00d4aa" stroke-width="0.15" opacity="0.1"/>
+
+      <!-- Flow diagram -->
+      <g transform="translate(20, 46)">
+        <rect width="120" height="36" rx="3" fill="#ff8844" fill-opacity="0.03" stroke="#ff8844" stroke-width="0.3" opacity="0.2"/>
+        <text x="60" y="15" text-anchor="middle" fill="#ff8844" font-size="7" opacity="0.4">modelContext</text>
+        <text x="60" y="28" text-anchor="middle" fill="#ff8844" font-size="6.5" opacity="0.25">JSON tools[]</text>
+
+        <line x1="125" y1="18" x2="150" y2="18" stroke="#00d4aa" stroke-width="0.6" opacity="0.25" marker-end="url(#arr-wg)"/>
+
+        <rect x="155" width="120" height="36" rx="3" fill="#00d4aa" fill-opacity="0.02" stroke="#00d4aa" stroke-width="0.3" opacity="0.2"/>
+        <text x="215" y="15" text-anchor="middle" fill="#00d4aa" font-size="7" opacity="0.4">Agent Selects</text>
+        <text x="215" y="28" text-anchor="middle" fill="#00d4aa" font-size="6.5" opacity="0.25">Schema match</text>
+
+        <line x1="280" y1="18" x2="305" y2="18" stroke="#00d4aa" stroke-width="0.6" opacity="0.25" marker-end="url(#arr-wg)"/>
+
+        <rect x="310" width="120" height="36" rx="3" fill="#00d4aa" fill-opacity="0.02" stroke="#00d4aa" stroke-width="0.3" opacity="0.2"/>
+        <text x="370" y="15" text-anchor="middle" fill="#00d4aa" font-size="7" opacity="0.4">tool.execute()</text>
+        <text x="370" y="28" text-anchor="middle" fill="#00d4aa" font-size="6.5" opacity="0.25">Typed params</text>
+
+        <line x1="435" y1="18" x2="460" y2="18" stroke="#00d4aa" stroke-width="0.6" opacity="0.25" marker-end="url(#arr-wg)"/>
+
+        <rect x="465" width="120" height="36" rx="3" fill="#00d4aa" fill-opacity="0.03" stroke="#00d4aa" stroke-width="0.4" opacity="0.25"/>
+        <text x="525" y="15" text-anchor="middle" fill="#00d4aa" font-size="7" opacity="0.5">Guaranteed</text>
+        <text x="525" y="28" text-anchor="middle" fill="#00d4aa" font-size="6.5" opacity="0.3">~0% error rate</text>
+      </g>
+
+      <!-- Stats -->
+      <g transform="translate(20, 100)">
+        <g fill="#00d4aa" font-size="8" opacity="0.5">
+          <text font-weight="700" font-size="18">~50ms</text>
+          <text x="0" y="20" font-size="7" opacity="0.6">latency per call</text>
+        </g>
+        <g transform="translate(160, 0)" fill="#00d4aa" font-size="8" opacity="0.5">
+          <text font-weight="700" font-size="18">~$0</text>
+          <text x="0" y="20" font-size="7" opacity="0.6">no vision model needed</text>
+        </g>
+        <g transform="translate(320, 0)" fill="#00d4aa" font-size="8" opacity="0.5">
+          <text font-weight="700" font-size="18">~0%</text>
+          <text x="0" y="20" font-size="7" opacity="0.6">typed schema = no guessing</text>
+        </g>
+        <g transform="translate(520, 0)" fill="#00d4aa" font-size="8" opacity="0.5">
+          <text font-weight="700" font-size="18">Stable</text>
+          <text x="0" y="20" font-size="7" opacity="0.6">site maintains its own tools</text>
+        </g>
+      </g>
+    </g>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- SECTION 5: SECURITY MODEL -->
+  <!-- ================================================================ -->
+  <g transform="translate(50, 760)">
+    <rect width="500" height="160" fill="url(#fd-w)" stroke="#ffffff" stroke-width="0.4" opacity="0.18"/>
+    <rect x="1" y="1" width="498" height="26" fill="url(#fd-w)"/>
+
+    <!-- Tabler: shield-lock icon -->
+    <g transform="translate(20, 14)" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.35">
+      <path d="M-7-2 L0-7 L7-2 L7 3C7 8 0 11 0 11S-7 8-7 3Z"/><rect x="-2" y="0" width="4" height="4" rx="0.5"/>
+    </g>
+    <text x="34" y="18" fill="#ffffff" font-size="9" font-weight="700" letter-spacing="3" opacity="0.45">SECURITY MODEL</text>
+    <text x="230" y="18" fill="#ffffff" font-size="7" opacity="0.15" letter-spacing="1">Permission-first protocol</text>
+
+    <line x1="0" y1="30" x2="500" y2="30" stroke="#ffffff" stroke-width="0.15" opacity="0.06"/>
+
+    <g transform="translate(20, 46)" fill="#ffffff" font-size="7.5" opacity="0.25">
+      <text><tspan fill="#00d4aa" opacity="0.4" font-weight="600">Browser-mediated:</tspan> Chrome arbitrates all tool access</text>
+      <text y="18"><tspan fill="#00d4aa" opacity="0.4" font-weight="600">User consent:</tspan> "Allow AI to perform [action]?" prompt</text>
+      <text y="36"><tspan fill="#00d4aa" opacity="0.4" font-weight="600">SecureContext:</tspan> HTTPS only, no insecure origins</text>
+      <text y="54"><tspan fill="#00d4aa" opacity="0.4" font-weight="600">Window scope:</tspan> Tools only available in page context</text>
+      <text y="72"><tspan fill="#00d4aa" opacity="0.4" font-weight="600">Read-only hints:</tspan> Tools can declare side-effect-free ops</text>
+      <text y="90"><tspan fill="#00d4aa" opacity="0.4" font-weight="600">User interaction:</tspan> Tools can request user input mid-execution</text>
+    </g>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- SECTION 6: WISPY CONSOLE ADVANTAGE -->
+  <!-- ================================================================ -->
+  <g transform="translate(580, 760)">
+    <rect width="470" height="160" fill="url(#fd-wg)" stroke="#00d4aa" stroke-width="0.5" opacity="0.25"/>
+    <rect x="1" y="1" width="468" height="26" fill="url(#fd-wg)"/>
+
+    <text x="20" y="18" fill="#00d4aa" font-size="9" font-weight="700" letter-spacing="3" opacity="0.55">WHY THIS MATTERS</text>
+    <text x="260" y="18" fill="#ffffff" font-size="7" opacity="0.15" letter-spacing="1">For the Wispy Console plugin</text>
+
+    <line x1="0" y1="30" x2="470" y2="30" stroke="#00d4aa" stroke-width="0.15" opacity="0.08"/>
+
+    <g transform="translate(20, 46)" fill="#ffffff" font-size="7.5" opacity="0.28">
+      <text><tspan fill="#00d4aa" opacity="0.5" font-weight="600">1.</tspan> Actions Ring Chrome context can discover site tools dynamically</text>
+      <text y="18"><tspan fill="#00d4aa" opacity="0.5" font-weight="600">2.</tspan> LCD buttons auto-populate with available WebMCP tools</text>
+      <text y="36"><tspan fill="#00d4aa" opacity="0.5" font-weight="600">3.</tspan> Structured calls = reliable one-press actions on any site</text>
+      <text y="54"><tspan fill="#00d4aa" opacity="0.5" font-weight="600">4.</tspan> No vision model overhead = instant haptic feedback</text>
+      <text y="72"><tspan fill="#00d4aa" opacity="0.5" font-weight="600">5.</tspan> First hardware controller with WebMCP integration</text>
+      <text y="90"><tspan fill="#00d4aa" opacity="0.5" font-weight="600">6.</tspan> Works alongside MCP (backend) -- complete agent coverage</text>
+    </g>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- SECTION 7: PROTOCOL COMPARISON -->
+  <!-- ================================================================ -->
+  <g transform="translate(1080, 760)">
+    <rect width="470" height="160" fill="url(#fd-w)" stroke="#ffffff" stroke-width="0.4" opacity="0.18"/>
+    <rect x="1" y="1" width="468" height="26" fill="url(#fd-w)"/>
+
+    <text x="20" y="18" fill="#ffffff" font-size="9" font-weight="700" letter-spacing="3" opacity="0.45">WebMCP vs MCP</text>
+    <text x="200" y="18" fill="#ffffff" font-size="7" opacity="0.15" letter-spacing="1">Complementary, not competing</text>
+
+    <line x1="0" y1="30" x2="470" y2="30" stroke="#ffffff" stroke-width="0.15" opacity="0.06"/>
+
+    <!-- Comparison table -->
+    <g transform="translate(20, 42)">
+      <!-- Headers -->
+      <text x="0" fill="#ffffff" font-size="7" font-weight="700" opacity="0.3" letter-spacing="1">ATTRIBUTE</text>
+      <text x="140" fill="#ff8844" font-size="7" font-weight="700" opacity="0.4" letter-spacing="1">WebMCP</text>
+      <text x="300" fill="#aa66ff" font-size="7" font-weight="700" opacity="0.4" letter-spacing="1">MCP</text>
+
+      <line x1="0" y1="8" x2="430" y2="8" stroke="#ffffff" stroke-width="0.15" opacity="0.06"/>
+
+      <!-- Rows -->
+      <g fill="#ffffff" font-size="7" opacity="0.22">
+        <text y="22">Runs in</text>
+        <text x="140" y="22" fill="#ff8844" opacity="0.35">Browser (client)</text>
+        <text x="300" y="22" fill="#aa66ff" opacity="0.35">Server (backend)</text>
+
+        <text y="38">Protocol</text>
+        <text x="140" y="38" fill="#ff8844" opacity="0.35">JS API</text>
+        <text x="300" y="38" fill="#aa66ff" opacity="0.35">JSON-RPC</text>
+
+        <text y="54">Tools defined by</text>
+        <text x="140" y="54" fill="#ff8844" opacity="0.35">Website owner</text>
+        <text x="300" y="54" fill="#aa66ff" opacity="0.35">Service provider</text>
+
+        <text y="70">Best for</text>
+        <text x="140" y="70" fill="#ff8844" opacity="0.35">Web interactions</text>
+        <text x="300" y="70" fill="#aa66ff" opacity="0.35">Backend services</text>
+
+        <text y="86">Wispy Console</text>
+        <text x="140" y="86" fill="#ff8844" opacity="0.35">Chrome context</text>
+        <text x="300" y="86" fill="#aa66ff" opacity="0.35">Agent adapters</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Footer -->
+  <line x1="30" y1="950" x2="1570" y2="950" stroke="#ffffff" stroke-width="0.3" opacity="0.05"/>
+  <text x="30" y="968" fill="#ffffff" font-size="7" opacity="0.12" letter-spacing="1">DWG-007  //  WebMCP INTEGRATION  //  SHEET 7 OF 8</text>
+  <text x="800" y="968" text-anchor="middle" fill="#ffffff" font-size="7.5" letter-spacing="3.5" opacity="0.15">WISPY CONSOLE  //  UNIVERSAL AI AGENT CONTROL SURFACE  //  LOGITECH ACTIONS SDK  //  HAUSOR LABS 2026</text>
+  <text x="1570" y="968" text-anchor="end" fill="#ffffff" font-size="7" opacity="0.12" letter-spacing="1">REV 2.1  //  2026-02-17</text>
+</svg>

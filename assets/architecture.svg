@@ -1,0 +1,387 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" font-family="'Inter', 'SF Pro', -apple-system, sans-serif">
+  <defs>
+    <pattern id="grid-a" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-width="0.15" stroke-opacity="0.07"/>
+    </pattern>
+    <pattern id="grid-a-sm" width="8" height="8" patternUnits="userSpaceOnUse">
+      <path d="M 8 0 L 0 0 0 8" fill="none" stroke="#ffffff" stroke-width="0.1" stroke-opacity="0.035"/>
+    </pattern>
+    <marker id="arr" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="10" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 3 L0 6 Z" fill="#ffffff" opacity="0.35"/>
+    </marker>
+    <marker id="arr-g" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="10" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 3 L0 6 Z" fill="#00d4aa" opacity="0.5"/>
+    </marker>
+    <marker id="arr-b" viewBox="0 0 10 6" refX="9" refY="3" markerWidth="10" markerHeight="6" orient="auto">
+      <path d="M0 0 L10 3 L0 6 Z" fill="#4488ff" opacity="0.5"/>
+    </marker>
+    <linearGradient id="fd" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="fd-g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#00d4aa" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#00d4aa" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="fd-b" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4488ff" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#4488ff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1600" height="1000" fill="#0e0e0e"/>
+  <rect width="1600" height="1000" fill="url(#grid-a-sm)"/>
+  <rect width="1600" height="1000" fill="url(#grid-a)"/>
+
+  <!-- Title -->
+  <g transform="translate(1140, 24)">
+    <rect width="430" height="56" fill="none" stroke="#ffffff" stroke-width="0.5" opacity="0.18"/>
+    <rect x="1" y="1" width="428" height="28" fill="url(#fd)"/>
+    <line x1="0" y1="29" x2="430" y2="29" stroke="#ffffff" stroke-width="0.3" opacity="0.1"/>
+    <text x="215" y="19" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700" letter-spacing="4" opacity="0.9">SYSTEM ARCHITECTURE</text>
+    <text x="215" y="46" text-anchor="middle" fill="#ffffff" font-size="8" letter-spacing="2.5" opacity="0.35">AI-ENABLED  //  CUSTOMIZABLE  //  4-LAYER STACK</text>
+  </g>
+  <text x="30" y="40" fill="#ffffff" font-size="9" letter-spacing="2.5" opacity="0.25">WISPY CONSOLE  //  HAUSOR LABS</text>
+  <text x="30" y="56" fill="#ffffff" font-size="7" letter-spacing="2" opacity="0.15">BLUEPRINT REV 3.0  //  FEB 2026</text>
+
+  <!-- ================================================================ -->
+  <!-- LAYER 01: HARDWARE -->
+  <!-- ================================================================ -->
+  <g transform="translate(80, 96)">
+    <rect width="1440" height="100" fill="url(#fd)" stroke="#ffffff" stroke-width="0.5" opacity="0.25"/>
+
+    <rect x="16" y="10" width="28" height="18" rx="3" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-width="0.4" opacity="0.3"/>
+    <text x="30" y="23" text-anchor="middle" fill="#ffffff" font-size="9" font-weight="700" opacity="0.5">01</text>
+    <text x="56" y="23" fill="#ffffff" font-size="8" font-weight="600" letter-spacing="3" opacity="0.35">HARDWARE</text>
+    <text x="1400" y="23" text-anchor="end" fill="#ffffff" font-size="7" opacity="0.15" letter-spacing="1">USB-C + BLUETOOTH 5.1</text>
+
+    <!-- Devices -->
+    <g transform="translate(40, 38)">
+      <rect width="640" height="48" rx="4" fill="#ffffff" fill-opacity="0.015" stroke="#ffffff" stroke-width="0.4" opacity="0.25"/>
+      <g transform="translate(20, 24)" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.35">
+        <rect x="-10" y="-8" width="20" height="14" rx="1.5"/><line x1="0" y1="6" x2="0" y2="10"/><line x1="-5" y1="10" x2="5" y2="10"/>
+      </g>
+      <text x="40" y="20" fill="#ffffff" font-size="10" font-weight="600" letter-spacing="1" opacity="0.55">MX Creative Console</text>
+      <text x="40" y="36" fill="#ffffff" font-size="7" opacity="0.2">Keypad: 9 LCD buttons (80x80px), 15 pages  |  Dial: precision rotary encoder</text>
+    </g>
+    <g transform="translate(720, 38)">
+      <rect width="640" height="48" rx="4" fill="#ffffff" fill-opacity="0.015" stroke="#ffffff" stroke-width="0.4" opacity="0.25"/>
+      <g transform="translate(20, 24)" stroke="#ffffff" stroke-width="1.4" stroke-linecap="round" fill="none" opacity="0.35">
+        <path d="M-8-4 C-8-10 8-10 8-4 L8 4 C8 10-8 10-8 4Z"/><line x1="0" y1="-10" x2="0" y2="-2"/>
+      </g>
+      <text x="40" y="20" fill="#ffffff" font-size="10" font-weight="600" letter-spacing="1" opacity="0.55">MX Master 4</text>
+      <text x="40" y="36" fill="#ffffff" font-size="7" opacity="0.2">Actions Ring: 8 contextual bubbles  |  Haptic motor: 15 waveforms  |  Per-app profiles</text>
+    </g>
+  </g>
+
+  <!-- Arrow 01 -> 02 -->
+  <line x1="800" y1="198" x2="800" y2="224" stroke="#ffffff" stroke-width="0.6" opacity="0.2" marker-end="url(#arr)"/>
+  <text x="815" y="215" fill="#ffffff" font-size="6.5" opacity="0.13" letter-spacing="1">LOGI SDK</text>
+
+  <!-- ================================================================ -->
+  <!-- LAYER 02: WISPY CONSOLE PLUGIN (what we build) -->
+  <!-- ================================================================ -->
+  <g transform="translate(80, 228)">
+    <rect width="1440" height="220" fill="url(#fd-g)" stroke="#00d4aa" stroke-width="0.8" opacity="0.35"/>
+
+    <rect x="16" y="10" width="28" height="18" rx="3" fill="#00d4aa" fill-opacity="0.1" stroke="#00d4aa" stroke-width="0.5" opacity="0.5"/>
+    <text x="30" y="23" text-anchor="middle" fill="#00d4aa" font-size="9" font-weight="700" opacity="0.7">02</text>
+    <text x="56" y="23" fill="#00d4aa" font-size="8" font-weight="600" letter-spacing="3" opacity="0.5">WISPY CONSOLE PLUGIN</text>
+    <text x="310" y="23" fill="#ffffff" font-size="7" opacity="0.2" letter-spacing="1">(This is what we build  --  Logitech Actions SDK, C#)</text>
+    <text x="1400" y="23" text-anchor="end" fill="#00d4aa" font-size="7" opacity="0.25" letter-spacing="1">THE PRODUCT</text>
+
+    <!-- Plugin modules: top row -->
+    <g transform="translate(28, 42)">
+      <rect width="220" height="50" rx="4" fill="#00d4aa" fill-opacity="0.04" stroke="#00d4aa" stroke-width="0.4" opacity="0.3"/>
+      <text x="14" y="18" fill="#00d4aa" font-size="7.5" font-weight="600" opacity="0.5" letter-spacing="1">EVENT ROUTER</text>
+      <text x="14" y="34" fill="#ffffff" font-size="7" opacity="0.2">Button press -> action dispatch</text>
+      <text x="14" y="44" fill="#ffffff" font-size="6" opacity="0.12">onKeyDown, onDialRotate, onVoice</text>
+    </g>
+    <g transform="translate(258, 42)">
+      <rect width="220" height="50" rx="4" fill="#00d4aa" fill-opacity="0.04" stroke="#00d4aa" stroke-width="0.4" opacity="0.3"/>
+      <text x="14" y="18" fill="#00d4aa" font-size="7.5" font-weight="600" opacity="0.5" letter-spacing="1">LCD RENDERER</text>
+      <text x="14" y="34" fill="#ffffff" font-size="7" opacity="0.2">Dynamic 80x80px icon generation</text>
+      <text x="14" y="44" fill="#ffffff" font-size="6" opacity="0.12">BitmapBuilder, status colors, labels</text>
+    </g>
+    <g transform="translate(488, 42)">
+      <rect width="220" height="50" rx="4" fill="#00d4aa" fill-opacity="0.04" stroke="#00d4aa" stroke-width="0.4" opacity="0.3"/>
+      <text x="14" y="18" fill="#00d4aa" font-size="7.5" font-weight="600" opacity="0.5" letter-spacing="1">ACTION EXECUTOR</text>
+      <text x="14" y="34" fill="#ffffff" font-size="7" opacity="0.2">Runs shell, HTTP, agent, webhook</text>
+      <text x="14" y="44" fill="#ffffff" font-size="6" opacity="0.12">Shell | REST | WebSocket | CLI | WebMCP</text>
+    </g>
+    <g transform="translate(718, 42)">
+      <rect width="220" height="50" rx="4" fill="#00d4aa" fill-opacity="0.04" stroke="#00d4aa" stroke-width="0.4" opacity="0.3"/>
+      <text x="14" y="18" fill="#00d4aa" font-size="7.5" font-weight="600" opacity="0.5" letter-spacing="1">HAPTIC CTRL</text>
+      <text x="14" y="34" fill="#ffffff" font-size="7" opacity="0.2">Success / error / confirm feedback</text>
+      <text x="14" y="44" fill="#ffffff" font-size="6" opacity="0.12">15 waveform patterns</text>
+    </g>
+    <g transform="translate(948, 42)">
+      <rect width="220" height="50" rx="4" fill="#00d4aa" fill-opacity="0.04" stroke="#00d4aa" stroke-width="0.4" opacity="0.3"/>
+      <text x="14" y="18" fill="#00d4aa" font-size="7.5" font-weight="600" opacity="0.5" letter-spacing="1">VOICE MODULE</text>
+      <text x="14" y="34" fill="#ffffff" font-size="7" opacity="0.2">Mic capture -> STT -> action</text>
+      <text x="14" y="44" fill="#ffffff" font-size="6" opacity="0.12">Gemini audio or Whisper.cpp</text>
+    </g>
+    <g transform="translate(1178, 42)">
+      <rect width="234" height="50" rx="4" fill="#00d4aa" fill-opacity="0.04" stroke="#00d4aa" stroke-width="0.4" opacity="0.3"/>
+      <text x="14" y="18" fill="#00d4aa" font-size="7.5" font-weight="600" opacity="0.5" letter-spacing="1">CONFIG MANAGER</text>
+      <text x="14" y="34" fill="#ffffff" font-size="7" opacity="0.2">Wizard setup + user preferences</text>
+      <text x="14" y="44" fill="#ffffff" font-size="6" opacity="0.12">wispy.console.yaml, presets, per-project</text>
+    </g>
+
+    <!-- Plugin modules: bottom row - THE AI ENGINE (highlighted) -->
+    <g transform="translate(28, 108)">
+      <rect width="1384" height="92" rx="6" fill="#4488ff" fill-opacity="0.02" stroke="#4488ff" stroke-width="0.6" opacity="0.3"/>
+      <rect x="1" y="1" width="1382" height="26" fill="#4488ff" fill-opacity="0.02"/>
+
+      <!-- Tabler: sparkles/brain icon -->
+      <g transform="translate(22, 14)" stroke="#4488ff" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.5">
+        <path d="M0-6 L1-2 5-1 1 0 0 4 -1 0 -5-1 -1-2Z"/>
+        <path d="M8 2 L8.5 4 10.5 4.5 8.5 5 8 7 7.5 5 5.5 4.5 7.5 4Z" transform="scale(0.6)"/>
+      </g>
+      <text x="38" y="18" fill="#4488ff" font-size="9" font-weight="700" letter-spacing="3" opacity="0.6">AI ENGINE</text>
+      <text x="160" y="18" fill="#4488ff" font-size="7" opacity="0.3" letter-spacing="1">Gemini API  //  The intelligence layer</text>
+
+      <line x1="14" y1="30" x2="1370" y2="30" stroke="#4488ff" stroke-width="0.15" opacity="0.08"/>
+
+      <!-- AI capabilities -->
+      <g transform="translate(28, 44)">
+        <rect width="200" height="36" rx="3" fill="#4488ff" fill-opacity="0.02" stroke="#4488ff" stroke-width="0.3" opacity="0.18"/>
+        <text x="14" y="14" fill="#4488ff" font-size="7" font-weight="600" opacity="0.35" letter-spacing="0.5">PROJECT DETECTION</text>
+        <text x="14" y="28" fill="#ffffff" font-size="6.5" opacity="0.18">Scans git, package.json, CI config</text>
+      </g>
+      <g transform="translate(240, 44)">
+        <rect width="220" height="36" rx="3" fill="#4488ff" fill-opacity="0.02" stroke="#4488ff" stroke-width="0.3" opacity="0.18"/>
+        <text x="14" y="14" fill="#4488ff" font-size="7" font-weight="600" opacity="0.35" letter-spacing="0.5">SMART LAYOUT SUGGESTION</text>
+        <text x="14" y="28" fill="#ffffff" font-size="6.5" opacity="0.18">AI suggests button mappings for you</text>
+      </g>
+      <g transform="translate(472, 44)">
+        <rect width="220" height="36" rx="3" fill="#4488ff" fill-opacity="0.02" stroke="#4488ff" stroke-width="0.3" opacity="0.18"/>
+        <text x="14" y="14" fill="#4488ff" font-size="7" font-weight="600" opacity="0.35" letter-spacing="0.5">CONTEXT-AWARE EXECUTION</text>
+        <text x="14" y="28" fill="#ffffff" font-size="6.5" opacity="0.18">AI reasons about what to do, not just run</text>
+      </g>
+      <g transform="translate(704, 44)">
+        <rect width="200" height="36" rx="3" fill="#4488ff" fill-opacity="0.02" stroke="#4488ff" stroke-width="0.3" opacity="0.18"/>
+        <text x="14" y="14" fill="#4488ff" font-size="7" font-weight="600" opacity="0.35" letter-spacing="0.5">VOICE UNDERSTANDING</text>
+        <text x="14" y="28" fill="#ffffff" font-size="6.5" opacity="0.18">Gemini audio -> intelligent action</text>
+      </g>
+      <g transform="translate(916, 44)">
+        <rect width="200" height="36" rx="3" fill="#4488ff" fill-opacity="0.02" stroke="#4488ff" stroke-width="0.3" opacity="0.18"/>
+        <text x="14" y="14" fill="#4488ff" font-size="7" font-weight="600" opacity="0.35" letter-spacing="0.5">ADAPTIVE LEARNING</text>
+        <text x="14" y="28" fill="#ffffff" font-size="6.5" opacity="0.18">Adjusts based on what you use</text>
+      </g>
+      <g transform="translate(1128, 44)">
+        <rect width="240" height="36" rx="3" fill="#ff8844" fill-opacity="0.02" stroke="#ff8844" stroke-width="0.3" opacity="0.18"/>
+        <text x="14" y="14" fill="#ff8844" font-size="7" font-weight="600" opacity="0.35" letter-spacing="0.5">WebMCP DISCOVERY</text>
+        <text x="14" y="28" fill="#ffffff" font-size="6.5" opacity="0.18">navigator.modelContext -> site tools</text>
+      </g>
+    </g>
+  </g>
+
+  <!-- Arrow 02 -> 03 -->
+  <line x1="800" y1="450" x2="800" y2="484" stroke="#00d4aa" stroke-width="0.6" opacity="0.3" marker-end="url(#arr-g)"/>
+  <text x="815" y="472" fill="#00d4aa" font-size="6.5" opacity="0.2" letter-spacing="1">EXECUTE</text>
+
+  <!-- ================================================================ -->
+  <!-- LAYER 03: YOUR WORKFLOW (customizable outputs) -->
+  <!-- ================================================================ -->
+  <g transform="translate(80, 488)">
+    <rect width="1440" height="100" fill="url(#fd)" stroke="#ffffff" stroke-width="0.5" opacity="0.2"/>
+
+    <rect x="16" y="10" width="28" height="18" rx="3" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-width="0.4" opacity="0.3"/>
+    <text x="30" y="23" text-anchor="middle" fill="#ffffff" font-size="9" font-weight="700" opacity="0.5">03</text>
+    <text x="56" y="23" fill="#ffffff" font-size="8" font-weight="600" letter-spacing="3" opacity="0.35">YOUR WORKFLOW</text>
+    <text x="250" y="23" fill="#ffffff" font-size="7" opacity="0.18" letter-spacing="1">(Each button maps to any action you want)</text>
+
+    <!-- Action types -->
+    <g transform="translate(28, 40)">
+      <rect width="164" height="44" rx="4" fill="#ffffff" fill-opacity="0.015" stroke="#ffffff" stroke-width="0.35" opacity="0.2"/>
+      <!-- Tabler: terminal -->
+      <g transform="translate(16, 22)" stroke="#ffffff" stroke-width="1.2" stroke-linecap="round" fill="none" opacity="0.3">
+        <rect x="-6" y="-6" width="12" height="12" rx="1"/><polyline points="-3,-2 -1,0 -3,2"/><line x1="0" y1="2" x2="3" y2="2"/>
+      </g>
+      <text x="32" y="18" fill="#ffffff" font-size="7.5" font-weight="600" opacity="0.35" letter-spacing="0.5">Shell Commands</text>
+      <text x="32" y="32" fill="#ffffff" font-size="6.5" opacity="0.15">git, npm, docker, make</text>
+    </g>
+    <g transform="translate(202, 40)">
+      <rect width="164" height="44" rx="4" fill="#ffffff" fill-opacity="0.015" stroke="#ffffff" stroke-width="0.35" opacity="0.2"/>
+      <text x="14" y="18" fill="#ffffff" font-size="7.5" font-weight="600" opacity="0.35" letter-spacing="0.5">API Calls</text>
+      <text x="14" y="32" fill="#ffffff" font-size="6.5" opacity="0.15">REST, GraphQL, WebSocket</text>
+    </g>
+    <g transform="translate(376, 40)">
+      <rect width="164" height="44" rx="4" fill="#00d4aa" fill-opacity="0.02" stroke="#00d4aa" stroke-width="0.35" opacity="0.25"/>
+      <text x="14" y="18" fill="#00d4aa" font-size="7.5" font-weight="600" opacity="0.4" letter-spacing="0.5">AI Agent Prompts</text>
+      <text x="14" y="32" fill="#ffffff" font-size="6.5" opacity="0.15">Wispy, Claude, Cursor, any</text>
+    </g>
+    <g transform="translate(550, 40)">
+      <rect width="164" height="44" rx="4" fill="#ffffff" fill-opacity="0.015" stroke="#ffffff" stroke-width="0.35" opacity="0.2"/>
+      <text x="14" y="18" fill="#ffffff" font-size="7.5" font-weight="600" opacity="0.35" letter-spacing="0.5">Webhooks</text>
+      <text x="14" y="32" fill="#ffffff" font-size="6.5" opacity="0.15">GitHub, Linear, Slack, any</text>
+    </g>
+    <g transform="translate(724, 40)">
+      <rect width="164" height="44" rx="4" fill="#ff8844" fill-opacity="0.015" stroke="#ff8844" stroke-width="0.35" opacity="0.22"/>
+      <text x="14" y="18" fill="#ff8844" font-size="7.5" font-weight="600" opacity="0.4" letter-spacing="0.5">WebMCP Tools</text>
+      <text x="14" y="32" fill="#ffffff" font-size="6.5" opacity="0.15">Browser site tools (Chrome)</text>
+    </g>
+    <g transform="translate(898, 40)">
+      <rect width="164" height="44" rx="4" fill="#ffffff" fill-opacity="0.015" stroke="#ffffff" stroke-width="0.35" opacity="0.2"/>
+      <text x="14" y="18" fill="#ffffff" font-size="7.5" font-weight="600" opacity="0.35" letter-spacing="0.5">IDE Shortcuts</text>
+      <text x="14" y="32" fill="#ffffff" font-size="6.5" opacity="0.15">VS Code, Cursor, Windsurf</text>
+    </g>
+    <g transform="translate(1072, 40)">
+      <rect width="164" height="44" rx="4" fill="#ffffff" fill-opacity="0.015" stroke="#ffffff" stroke-width="0.35" opacity="0.2"/>
+      <text x="14" y="18" fill="#ffffff" font-size="7.5" font-weight="600" opacity="0.35" letter-spacing="0.5">Custom Scripts</text>
+      <text x="14" y="32" fill="#ffffff" font-size="6.5" opacity="0.15">Python, Bash, Node, any</text>
+    </g>
+    <g transform="translate(1246, 40)">
+      <rect width="164" height="44" rx="4" fill="#ffffff" fill-opacity="0.015" stroke="#ffffff" stroke-width="0.35" stroke-dasharray="3 2" opacity="0.15"/>
+      <text x="14" y="18" fill="#ffffff" font-size="7.5" font-weight="600" opacity="0.25" letter-spacing="0.5">Anything Else</text>
+      <text x="14" y="32" fill="#ffffff" font-size="6.5" opacity="0.1">Your workflow, your rules</text>
+    </g>
+  </g>
+
+  <!-- Arrow 03 -> 04 -->
+  <g stroke="#ffffff" stroke-width="0.5" opacity="0.12">
+    <line x1="240" y1="590" x2="240" y2="640" marker-end="url(#arr)"/>
+    <line x1="560" y1="590" x2="560" y2="640" marker-end="url(#arr)"/>
+    <line x1="880" y1="590" x2="880" y2="640" marker-end="url(#arr)"/>
+    <line x1="1200" y1="590" x2="1200" y2="640" marker-end="url(#arr)"/>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- LAYER 04: PRESETS (example integrations) -->
+  <!-- ================================================================ -->
+  <g transform="translate(80, 644)">
+    <rect x="16" y="0" width="28" height="18" rx="3" fill="#ffffff" fill-opacity="0.06" stroke="#ffffff" stroke-width="0.4" opacity="0.3"/>
+    <text x="30" y="13" text-anchor="middle" fill="#ffffff" font-size="9" font-weight="700" opacity="0.5">04</text>
+    <text x="56" y="13" fill="#ffffff" font-size="8" font-weight="600" letter-spacing="3" opacity="0.35">PRESETS</text>
+    <text x="160" y="13" fill="#ffffff" font-size="7" opacity="0.18" letter-spacing="1">(Ship with plugin  --  one-click setup via wizard)</text>
+  </g>
+
+  <!-- Preset: Wispy -->
+  <g transform="translate(80, 672)">
+    <rect width="340" height="120" fill="url(#fd)" stroke="#00d4aa" stroke-width="0.5" opacity="0.35"/>
+    <rect x="1" y="1" width="338" height="20" fill="#00d4aa" fill-opacity="0.03"/>
+    <line x1="0" y1="0" x2="6" y2="0" stroke="#00d4aa" stroke-width="3" opacity="0.6"/>
+    <text x="16" y="14" fill="#00d4aa" font-size="9" font-weight="700" letter-spacing="1" opacity="0.6">Wispy</text>
+    <text x="75" y="14" fill="#ffffff" font-size="6.5" opacity="0.18">Gemini 2.5  //  32+ tools</text>
+    <g transform="translate(14, 30)" fill="#ffffff" font-size="6.5" opacity="0.2">
+      <text>Full-stack AI agent (file, bash, web, git)</text>
+      <text y="12">Marathon mode for multi-step tasks</text>
+      <text y="24">Memory, embeddings, USDC wallet</text>
+      <text y="36">Thinking depth dial: Flash to Marathon</text>
+      <text y="48">Voice dictation to agent prompts</text>
+      <text y="64" fill="#00d4aa" opacity="0.3" font-weight="600">PRESET: Code Flow + DevOps + Agent Control</text>
+    </g>
+  </g>
+
+  <!-- Preset: OpenClaw -->
+  <g transform="translate(440, 672)">
+    <rect width="340" height="120" fill="url(#fd)" stroke="#4488ff" stroke-width="0.5" opacity="0.35"/>
+    <rect x="1" y="1" width="338" height="20" fill="#4488ff" fill-opacity="0.03"/>
+    <line x1="0" y1="0" x2="6" y2="0" stroke="#4488ff" stroke-width="3" opacity="0.6"/>
+    <text x="16" y="14" fill="#4488ff" font-size="9" font-weight="700" letter-spacing="1" opacity="0.6">OpenClaw</text>
+    <text x="100" y="14" fill="#ffffff" font-size="6.5" opacity="0.18">Browser Agent  //  MIT</text>
+    <g transform="translate(14, 30)" fill="#ffffff" font-size="6.5" opacity="0.2">
+      <text>Browser automation (browse, click, extract)</text>
+      <text y="12">Multi-step web workflows</text>
+      <text y="24">Screenshot analysis + form filling</text>
+      <text y="36">Task tree progress on LCD</text>
+      <text y="48">Approve/reject each browser step</text>
+      <text y="64" fill="#4488ff" opacity="0.3" font-weight="600">PRESET: Browse + Extract + Automate</text>
+    </g>
+  </g>
+
+  <!-- Preset: Claude Code -->
+  <g transform="translate(800, 672)">
+    <rect width="340" height="120" fill="url(#fd)" stroke="#aa66ff" stroke-width="0.5" opacity="0.35"/>
+    <rect x="1" y="1" width="338" height="20" fill="#aa66ff" fill-opacity="0.03"/>
+    <line x1="0" y1="0" x2="6" y2="0" stroke="#aa66ff" stroke-width="3" opacity="0.6"/>
+    <text x="16" y="14" fill="#aa66ff" font-size="9" font-weight="700" letter-spacing="1" opacity="0.6">Claude Code</text>
+    <text x="110" y="14" fill="#ffffff" font-size="6.5" opacity="0.18">CLI stdio  //  Anthropic</text>
+    <g transform="translate(14, 30)" fill="#ffffff" font-size="6.5" opacity="0.2">
+      <text>Code editing (read, edit, write, glob, grep)</text>
+      <text y="12">Bash execution + git operations</text>
+      <text y="24">Permission system (approve/reject)</text>
+      <text y="36">Multi-file refactoring</text>
+      <text y="48">MCP server integration</text>
+      <text y="64" fill="#aa66ff" opacity="0.3" font-weight="600">PRESET: Edit + Search + Git + Approve</text>
+    </g>
+  </g>
+
+  <!-- Custom / Your Workflow -->
+  <g transform="translate(1160, 672)">
+    <rect width="340" height="120" fill="url(#fd)" stroke="#ffffff" stroke-width="0.4" opacity="0.15" stroke-dasharray="4 3"/>
+    <line x1="0" y1="0" x2="6" y2="0" stroke="#ffffff" stroke-width="3" opacity="0.15"/>
+    <text x="16" y="14" fill="#ffffff" font-size="9" font-weight="700" letter-spacing="1" opacity="0.35">Custom</text>
+    <text x="80" y="14" fill="#ffffff" font-size="6.5" opacity="0.12">Your workflow, your buttons</text>
+    <g transform="translate(14, 30)" fill="#ffffff" font-size="6.5" opacity="0.15">
+      <text>Map any button to any action</text>
+      <text y="12">Shell, API, webhook, script, shortcut</text>
+      <text y="24">AI suggests layout from your project</text>
+      <text y="36">Dial maps to any continuous value</text>
+      <text y="48">Voice pipes to any endpoint</text>
+      <text y="64" opacity="0.2" font-weight="600">PRESET: You decide</text>
+    </g>
+  </g>
+
+  <!-- ================================================================ -->
+  <!-- WIZARD CLI SETUP FLOW -->
+  <!-- ================================================================ -->
+  <g transform="translate(80, 820)">
+    <rect width="1440" height="100" fill="url(#fd-b)" stroke="#4488ff" stroke-width="0.5" opacity="0.2"/>
+    <rect x="1" y="1" width="1438" height="22" fill="#4488ff" fill-opacity="0.02"/>
+
+    <text x="20" y="16" fill="#4488ff" font-size="8" font-weight="700" letter-spacing="3" opacity="0.45">SETUP: wispy console setup</text>
+    <text x="290" y="16" fill="#ffffff" font-size="7" opacity="0.18" letter-spacing="1">CLI wizard  --  AI-guided, interactive, takes ~30 seconds</text>
+
+    <line x1="0" y1="24" x2="1440" y2="24" stroke="#4488ff" stroke-width="0.15" opacity="0.06"/>
+
+    <!-- Wizard steps -->
+    <g transform="translate(28, 38)">
+      <rect width="180" height="44" rx="3" fill="#4488ff" fill-opacity="0.02" stroke="#4488ff" stroke-width="0.3" opacity="0.18"/>
+      <text x="14" y="16" fill="#4488ff" font-size="7" font-weight="700" opacity="0.4">1. CONNECT</text>
+      <text x="14" y="32" fill="#ffffff" font-size="6.5" opacity="0.18">Gemini API key or Wispy cloud</text>
+    </g>
+    <g transform="translate(220, 38)">
+      <rect width="200" height="44" rx="3" fill="#4488ff" fill-opacity="0.02" stroke="#4488ff" stroke-width="0.3" opacity="0.18"/>
+      <text x="14" y="16" fill="#4488ff" font-size="7" font-weight="700" opacity="0.4">2. DETECT</text>
+      <text x="14" y="32" fill="#ffffff" font-size="6.5" opacity="0.18">AI scans project (git, npm, docker, CI)</text>
+    </g>
+    <g transform="translate(432, 38)">
+      <rect width="200" height="44" rx="3" fill="#4488ff" fill-opacity="0.02" stroke="#4488ff" stroke-width="0.3" opacity="0.18"/>
+      <text x="14" y="16" fill="#4488ff" font-size="7" font-weight="700" opacity="0.4">3. SUGGEST</text>
+      <text x="14" y="32" fill="#ffffff" font-size="6.5" opacity="0.18">AI proposes button layout for you</text>
+    </g>
+    <g transform="translate(644, 38)">
+      <rect width="200" height="44" rx="3" fill="#4488ff" fill-opacity="0.02" stroke="#4488ff" stroke-width="0.3" opacity="0.18"/>
+      <text x="14" y="16" fill="#4488ff" font-size="7" font-weight="700" opacity="0.4">4. CUSTOMIZE</text>
+      <text x="14" y="32" fill="#ffffff" font-size="6.5" opacity="0.18">Accept, modify, or build from scratch</text>
+    </g>
+    <g transform="translate(856, 38)">
+      <rect width="200" height="44" rx="3" fill="#4488ff" fill-opacity="0.02" stroke="#4488ff" stroke-width="0.3" opacity="0.18"/>
+      <text x="14" y="16" fill="#4488ff" font-size="7" font-weight="700" opacity="0.4">5. PRESET</text>
+      <text x="14" y="32" fill="#ffffff" font-size="6.5" opacity="0.18">Or pick Wispy / OpenClaw / Claude</text>
+    </g>
+    <g transform="translate(1068, 38)">
+      <rect width="180" height="44" rx="3" fill="#00d4aa" fill-opacity="0.03" stroke="#00d4aa" stroke-width="0.35" opacity="0.2"/>
+      <text x="14" y="16" fill="#00d4aa" font-size="7" font-weight="700" opacity="0.4">6. READY</text>
+      <text x="14" y="32" fill="#ffffff" font-size="6.5" opacity="0.18">Hardware activates, LCD lights up</text>
+    </g>
+    <g transform="translate(1260, 38)">
+      <rect width="152" height="44" rx="3" fill="#ffffff" fill-opacity="0.015" stroke="#ffffff" stroke-width="0.3" opacity="0.12"/>
+      <text x="14" y="16" fill="#ffffff" font-size="7" font-weight="600" opacity="0.2">wispy.console.yaml</text>
+      <text x="14" y="32" fill="#ffffff" font-size="6.5" opacity="0.12">Config file (version controlled)</text>
+    </g>
+  </g>
+
+  <!-- Footer -->
+  <line x1="30" y1="950" x2="1570" y2="950" stroke="#ffffff" stroke-width="0.3" opacity="0.05"/>
+  <text x="30" y="968" fill="#ffffff" font-size="7" opacity="0.12" letter-spacing="1">DWG-002  //  SYSTEM ARCHITECTURE  //  SHEET 2 OF 8</text>
+  <text x="800" y="968" text-anchor="middle" fill="#ffffff" font-size="7.5" letter-spacing="3.5" opacity="0.15">WISPY CONSOLE  //  AI-POWERED DEVELOPER CONTROL SURFACE  //  LOGITECH ACTIONS SDK  //  HAUSOR LABS 2026</text>
+  <text x="1570" y="968" text-anchor="end" fill="#ffffff" font-size="7" opacity="0.12" letter-spacing="1">REV 3.0  //  2026-02-17</text>
+</svg>
